@@ -6,3 +6,8 @@ body {
 .nav {
     background-color: #018754;
 }
+
+img {
+    border-radius: 15px 15px 15px 15px;
+    margin-bottom: 8px;
+}
