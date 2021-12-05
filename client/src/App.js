@@ -8,6 +8,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
+
+
 import Home from './pages/Home';
 import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
@@ -41,14 +43,14 @@ function App() {
       <Router>
         <div>
           {/* <StoreProvider> */}
-            <Nav />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
-              <Route component={NoMatch} />
-            </Switch>
+          <Nav />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
+            {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
+            <Route component={NoMatch} />
+          </Switch>
           {/* </StoreProvider> */}
         </div>
       </Router>
