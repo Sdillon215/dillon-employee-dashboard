@@ -10,11 +10,14 @@ import { setContext } from '@apollo/client/link/context';
 
 
 
+
+
 import Home from './pages/Home';
 import NoMatch from './pages/NoMatch';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 // import { StoreProvider } from "./utils/GlobalState";
 // import OrderHistory from './pages/OrderHistory';
 
@@ -37,24 +40,26 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-function App() {
+function App(props) {
+
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={client} {...props}>
       <Router>
-        <div>
-          {/* <StoreProvider> */}
-          <Nav />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/signup" component={Signup} />
-            {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
-            <Route component={NoMatch} />
-          </Switch>
-          {/* </StoreProvider> */}
-        </div>
+        {/* <StoreProvider> */}
+        <Nav />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={Signup} />
+          {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
+          <Route component={NoMatch} />
+        </Switch>
+        <Footer />
+        {/* </StoreProvider> */}
       </Router>
+
     </ApolloProvider>
+
   );
 }
 

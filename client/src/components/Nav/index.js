@@ -69,9 +69,9 @@ import Typography from '@mui/material/Typography';
 // import IconButton from '@mui/material/IconButton';
 // import MenuIcon from '@mui/icons-material/Menu';
 
-export default function Nav() {
+export default function Nav(props) {
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 1, bgcolor: 'secondary.main' }}>
             <AppBar position="static" class="nav">
                 <Toolbar>
                     {/* <IconButton
