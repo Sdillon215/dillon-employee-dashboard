@@ -6,7 +6,7 @@ import Link from '@mui/material/Link';
 export default function Footer() {
     function Copyright(props) {
         return (
-            <Typography variant="body2" color="text.secondary" align="center">
+            <Typography component="div" color="text.secondary" align="center">
                 {'Copyright © '}
                 <Link color="inherit" href="https://dillonfloral.com/">
                     Dillon Floral Corporation
@@ -18,8 +18,8 @@ export default function Footer() {
     }
 
     return (
-        <BottomNavigation sx={{ position: 'static', bottom: 0, left: 0, right: 0, bgcolor: 'secondary.main' }} elevation={3}>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
+        <BottomNavigation sx={{ position: 'static', bottom: 0, width: '100%', bgcolor: 'secondary.main' }}>
+            <Copyright />
         </BottomNavigation>
     );
 }

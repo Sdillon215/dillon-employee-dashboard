@@ -1,6 +1,23 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
 body {
     margin: 0;
+    padding: 0;
     background-color: rgba(46, 214, 138, 1);
+}
+
+.container {
+    width: 85%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
