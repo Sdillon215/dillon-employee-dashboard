@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import Home from './pages/Home';
 import NoMatch from './pages/NoMatch';
-import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
 // import Footer from './components/Footer';
@@ -41,29 +40,18 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: 'rgba(46, 214, 138, 1)'
-//     },
-//     secondary: {
-//       main: '#018754'
-//     }
-//   }
-// });
 
 function App(props) {
 
   return (
-      // <ThemeProvider theme={theme}>
         <ApolloProvider client={client} {...props}>
           <Router>
             {/* <StoreProvider> */}
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
+              {/* <Route exact path="/buyerlogin" component={BuyerLogin} /> */}
+              {/* <Route exact path="/signup" component={Signup} /> */}
               {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
               <Route component={NoMatch} />
             </Switch>
@@ -71,7 +59,6 @@ function App(props) {
             {/* </StoreProvider> */}
           </Router>
         </ApolloProvider>
-      // </ThemeProvider>
   );
 }
 
