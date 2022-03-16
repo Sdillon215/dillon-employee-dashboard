@@ -13,6 +13,7 @@ body {
     /* background-color: rgba(46, 214, 138, 1); */
     background-image: url("assets/images/rose-bg.jpg");
     background-size:cover;
+    background-position: center;
 }
 
 .container {
@@ -33,6 +34,16 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 20px;
     margin: 5px;
+    text-decoration: none;
+}
+
+.blurNav {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .blurBtn:hover {
