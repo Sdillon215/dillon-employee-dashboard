@@ -6,6 +6,14 @@ import Typography from '@mui/material/Typography';
 import Auth from '../../utils/auth';
 
 export default function Nav(props) {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+     function renderButton() {
+        if (token) {
+            return (<button onClick={Auth.logout}>Logout</button>)
+        } else {
+            return false;
+        }
+    };
     return (
         <Box class="blurNav">
             <AppBar position="static" class="nav">
@@ -13,9 +21,10 @@ export default function Nav(props) {
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
                         Dillon Floral Corporation
                     </Typography>
-                    <button onClick={Auth.logout}>Logout</button>
+                    {renderButton()}
                 </Toolbar>
             </AppBar>
         </Box>
+
     );
 };
