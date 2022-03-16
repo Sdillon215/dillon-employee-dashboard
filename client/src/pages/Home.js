@@ -22,7 +22,7 @@ function Home() {
       marginBottom="auto"
     >
       <img src={dillon} alt='dillon-logo' />
-      <Button href="/buyerLogin" variant="contained" sx={{
+      <Button href="/Login" variant="contained" sx={{
         display: 'flex',
         justifyContent: 'center',
         width: '25%',
@@ -38,6 +38,7 @@ function Home() {
         justifyContent: 'center',
         bgcolor: '#018754',
         width: '25%',
+        height: '25%',
         p: 1,
         m: 1
       }}>
