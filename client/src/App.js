@@ -14,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 import Home from './pages/Home';
+import Dashboard from './pages/Dashboard';
 import NoMatch from './pages/NoMatch';
 import Signup from './pages/Signup';
 import Nav from './components/Nav';
@@ -50,7 +51,7 @@ function App(props) {
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
-              {/* <Route exact path="/buyerlogin" component={BuyerLogin} /> */}
+              <Route exact path="/dashboard" component={Dashboard} />
               {/* <Route exact path="/signup" component={Signup} /> */}
               {/* <Route exact path="/orderHistory" component={OrderHistory} /> */}
               <Route component={NoMatch} />

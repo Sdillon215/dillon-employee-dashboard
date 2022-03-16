@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
 import { LOGIN } from '../../utils/mutations';
 import Auth from '../../utils/auth';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import dillon from '../../assets/images/Dillon-Floral-sm.png';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+
 
 
 
@@ -27,6 +22,7 @@ function Login(props) {
             });
             const token = mutationResponse.data.login.token;
             Auth.login(token);
+            console.log(token);
         } catch (e) {
             console.log(e);
         }
@@ -48,6 +44,8 @@ function Login(props) {
                 placeholder='Email'
                 type='email'
                 id='email'
+                name='email'
+                value={formState.email}
                 onChange={handleChange}
             ></input>
             <input
@@ -55,6 +53,8 @@ function Login(props) {
                 placeholder='Password'
                 type='password'
                 id='password'
+                name='password'
+                value={formState.password}
                 onChange={handleChange}
             />
             <button class="blurLogin blurBtn" type="submit">Login</button>
