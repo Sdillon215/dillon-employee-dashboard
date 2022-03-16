@@ -14,7 +14,7 @@ function Buyer() {
       alignItems="center"
       justifyContent="center"
     >
-    Buyer
+    <h1 class="bigboi">Buyer</h1>
     </Grid>
   );
 };

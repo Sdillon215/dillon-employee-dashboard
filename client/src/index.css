@@ -61,6 +61,10 @@ body {
 
 }
 
+.bigboi{
+    font-size: 400px;
+}
+
 .blurBtn:hover {
     background: rgba(255, 255, 255, 0.8);
 }

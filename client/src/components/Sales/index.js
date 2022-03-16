@@ -13,8 +13,9 @@ function Sales() {
       direction="column"
       alignItems="center"
       justifyContent="center"
+      
     >
-     Sales
+     <h1 class="bigboi">Sales</h1>
     </Grid>
   );
 };
