@@ -10,7 +10,9 @@ body {
 body {
     margin: 0;
     padding: 0;
-    background-color: rgba(46, 214, 138, 1);
+    /* background-color: rgba(46, 214, 138, 1); */
+    background-image: url("assets/images/rose-bg.jpg");
+    background-size:cover;
 }
 
 .container {
@@ -20,10 +22,31 @@ body {
     margin-right: auto;
 }
 
+.blurBtn {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 25%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    margin: 5px;
+}
 
-/* .nav {
-    background-color: #018754;
-} */
+.blurBtn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 25%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    margin: 5px;
+}
 
 img {
     border-radius: 15px 15px 15px 15px;

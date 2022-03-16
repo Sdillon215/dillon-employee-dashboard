@@ -71,7 +71,7 @@ import Typography from '@mui/material/Typography';
 
 export default function Nav(props) {
     return (
-        <Box sx={{ flexGrow: 1, bgcolor: 'secondary.main' }}>
+        <Box sx={{ flexGrow: 1, bgcolor: '#018754' }}>
             <AppBar position="static" class="nav">
                 <Toolbar>
                     {/* <IconButton
