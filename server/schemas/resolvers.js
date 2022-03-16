@@ -8,12 +8,6 @@ const resolvers = {
             return User.find()
                 .select('-__v -password');
         }
-        // user: async (parent, { username }) => {
-        //     return User.findOne({ username })
-        //         .select('-__v -password')
-        //         .populate('friends')
-        //         .populate('thoughts');
-        // }
     },
 
     Mutation: {
