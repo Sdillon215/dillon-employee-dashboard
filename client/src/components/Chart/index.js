@@ -22,10 +22,11 @@ class Chart extends Component {
 	
 	render() {
 		const options = {
+			backgroundColor: "rgba(0,0,0,0)",
 			theme: "light2",
 			animationEnabled: true,
 			title:{
-				text: "Sales vs. Purchase Order"
+				text: "Sales & Purchase Order History"
 			},
 			subtitles: [{
 				text: "Click Legend to Hide or Unhide Data Series"
@@ -34,19 +35,19 @@ class Chart extends Component {
 				title: "Months"
 			},
 			axisY: {
-				title: "Purchase Orders",
+				// title: "Purchase Orders",
 				titleFontColor: "#6D78AD",
 				lineColor: "#6D78AD",
-				labelFontColor: "#6D78AD",
+				labelFontColor: "#0a0a0a",
 				tickColor: "#6D78AD"
 			},
-			axisY2: {
-				title: "Sales",
-				titleFontColor: "#51CDA0",
-				lineColor: "#51CDA0",
-				labelFontColor: "#51CDA0",
-				tickColor: "#51CDA0"
-			},
+			// axisY2: {
+			// 	title: "Sales",
+			// 	titleFontColor: "#51CDA0",
+			// 	lineColor: "#51CDA0",
+			// 	labelFontColor: "#51CDA0",
+			// 	tickColor: "#51CDA0"
+			// },
 			toolTip: {
 				shared: true
 			},
@@ -59,7 +60,7 @@ class Chart extends Component {
 				name: "Purchase Orders",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
-				yValueFormatString: "#,##0 Units",
+				yValueFormatString: "$#,##0.#",
 				dataPoints: [
 					{ x: new Date(2021, 0, 1), y: 12007 },
 					{ x: new Date(2021, 1, 1), y: 13500 },
@@ -78,7 +79,7 @@ class Chart extends Component {
 			{
 				type: "spline",
 				name: "Sales",
-				axisYType: "secondary",
+				// axisYType: "secondary",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
 				yValueFormatString: "$#,##0.#",
@@ -95,6 +96,28 @@ class Chart extends Component {
 					{ x: new Date(2021, 9, 1), y: 27234 },
 					{ x: new Date(2021, 10, 1), y: 33548 },
 					{ x: new Date(2021, 11, 1), y: 32534 }
+				]
+			},
+			{
+				type: "spline",
+				name: "Sales",
+				// axisYType: "secondary",
+				showInLegend: true,
+				xValueFormatString: "MMM YYYY",
+				yValueFormatString: "$#,##0.#",
+				dataPoints: [
+					{ x: new Date(2021, 0, 1), y: 9034.5 },
+					{ x: new Date(2021, 1, 1), y: 2001 },
+					{ x: new Date(2021, 2, 1), y: 2734 },
+					{ x: new Date(2021, 3, 1), y: 2008 },
+					{ x: new Date(2021, 4, 1), y: 2023 },
+					{ x: new Date(2021, 5, 1), y: 2903 },
+					{ x: new Date(2021, 6, 1), y: 3048 },
+					{ x: new Date(2021, 7, 1), y: 32523 },
+					{ x: new Date(2021, 8, 1), y: 20234 },
+					{ x: new Date(2021, 9, 1), y: 27234 },
+					{ x: new Date(2021, 10, 1), y: 33548 },
+					{ x: new Date(2021, 11, 1), y: 36534 }
 				]
 			}]
 		}
