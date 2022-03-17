@@ -64,44 +64,6 @@ function Login(props) {
                 </div>
             ) : null}
         </form>
-        // >
-        //     <div id="imgDiv">
-        //     </div>
-        //     <form class="center" onSubmit={handleFormSubmit}>
-        //         <div class="logInput">
-        //             {/* <label htmlFor="email">Email address:</label>
-        //                 <input
-        //                     placeholder="youremail@test.com"
-        //                     name="email"
-        //                     type="email"
-        //                     id="email"
-        //                     onChange={handleChange}
-        //                 /> */}
-        //             <TextField label="Email" variant="outlined" style={{ width: '80%' }} />
-
-        //         </div>
-        //         <div class="logInput">
-        //             {/* <label htmlFor="pwd">Password:</label>
-        //                 <input
-        //                     placeholder="******"
-        //                     name="password"
-        //                     type="password"
-        //                     id="pwd"
-        //                     onChange={handleChange}
-        //                 /> */}
-        //             <TextField label="Password" variant="outlined" style={{ width: '80%' }} />
-
-        //         </div>
-        //         {error ? (
-        //             <div>
-        //                 <p className="error-text">The provided credentials are incorrect</p>
-        //             </div>
-        //         ) : null}
-        //         <div class="logInput">
-        //             <button class="blurBtn" type="submit">Login</button>
-        //         </div>
-        //     </form>
-        // </Grid>
     );
 }
 

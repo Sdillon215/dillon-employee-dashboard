@@ -11,13 +11,15 @@ body,
     padding: 0;
 }
 
+/* .nav {
+    width: 100vw;
+    display: flex;
+} */
 body {
-    
-    /* background-color: rgba(46, 214, 138, 1); */
     background-image: url("assets/images/rose-bg.jpg");
     background-size:cover;
     background-position: center;
-    
+    background-repeat:inherit;
 }
 
 .center {
@@ -41,7 +43,6 @@ body {
     border-radius: 20px;
 }
 .blurLogin {
-    /* color: #fff; */
     background: rgba(255, 255, 255, 0.4);
     display: flex;
     justify-content: center;
@@ -58,28 +59,33 @@ body {
 
 .blurLoginFocus:focus {
     background: rgba(255, 255, 255, 0.8);
-
+    outline: none;
 }
 
 .bigboi{
-    font-size: 400px;
+    font-size: 200px;
+}
+
+.navBtn {
+    background: rgba(255, 255, 255, 0.4);
+    font-size: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    text-decoration: none;
 }
 
 .blurBtn:hover {
-    background: rgba(255, 255, 255, 0.8);
+    transition: all .7s ease;
+    -webkit-transition: all .7s ease;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 
 .blurNav {
-    color: rgb(17, 15, 15);
-    /* background: rgba(255, 255, 255, 0.4); */
-    background-color: rgba(46, 214, 138, 0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
+    background: rgba(255, 255, 255, 0.4);
+    background-color: rgba(46, 214, 138, 0.3);
     position: fixed;
-    width: 100vw;
+    width: 100%;
 }
 
 img {
