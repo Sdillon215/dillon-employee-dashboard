@@ -17,12 +17,27 @@ const typeDefs = gql`
     name: String
     description: String
     image: String
-    price: Number
-    quantity: Number
+    price: Float
+    quantity: Int
     department: Department
   }
 
-  
+  type Department {
+    _id: ID
+    name: String
+  }
+
+  type Porder {
+    username: String
+    purchaseDate: String
+    products: [Product]
+  }
+
+  type Sorder {
+    username: String
+    saleDate: String
+    products: [Product]
+  }
 
   type Auth {
     token: ID
