@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
+import Chart from '../Chart';
 
 
 function Buyer() {
@@ -14,7 +15,7 @@ function Buyer() {
       alignItems="center"
       justifyContent="center"
     >
-    <h1 class="bigboi">Buyer</h1>
+    <Chart />
     </Grid>
   );
 };

@@ -17,6 +17,7 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "@mui/styled-engine-sc": "^5.1.0"
+    "@mui/styled-engine-sc": "^5.1.0",
+    "canvasjs-react-charts": "^1.0.5"
   }
 }
