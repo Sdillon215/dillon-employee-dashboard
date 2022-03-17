@@ -7,14 +7,16 @@ import {Redirect} from 'react-router-dom';
 
 function Dashboard() {
 const token = Auth.loggedIn() ? Auth.getProfile() : null;
-const dept = token.data.dept;
-console.log(dept);
 
-if (dept === 'Sales') {
+
+if (!token) {
+    return <Redirect to='/' />
+}
+if (token.data.dept === 'Sales') {
     return (
       <Sales />
     );
-} if (dept === 'Buyer') {
+} if (token.data.dept === 'Buyer') {
     return (
         <Buyer />
     );

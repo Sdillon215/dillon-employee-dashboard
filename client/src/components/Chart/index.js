@@ -25,23 +25,23 @@ class Chart extends Component {
 			theme: "light2",
 			animationEnabled: true,
 			title:{
-				text: "Units Sold VS Profit"
+				text: "Sales vs. Purchase Order"
 			},
 			subtitles: [{
 				text: "Click Legend to Hide or Unhide Data Series"
 			}],
 			axisX: {
-				title: "States"
+				title: "Months"
 			},
 			axisY: {
-				title: "Units Sold",
+				title: "Purchase Orders",
 				titleFontColor: "#6D78AD",
 				lineColor: "#6D78AD",
 				labelFontColor: "#6D78AD",
 				tickColor: "#6D78AD"
 			},
 			axisY2: {
-				title: "Profit in USD",
+				title: "Sales",
 				titleFontColor: "#51CDA0",
 				lineColor: "#51CDA0",
 				labelFontColor: "#51CDA0",
@@ -56,45 +56,45 @@ class Chart extends Component {
 			},
 			data: [{
 				type: "spline",
-				name: "Units Sold",
+				name: "Purchase Orders",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
 				yValueFormatString: "#,##0 Units",
 				dataPoints: [
-					{ x: new Date(2017, 0, 1), y: 120 },
-					{ x: new Date(2017, 1, 1), y: 135 },
-					{ x: new Date(2017, 2, 1), y: 144 },
-					{ x: new Date(2017, 3, 1), y: 103 },
-					{ x: new Date(2017, 4, 1), y: 93 },
-					{ x: new Date(2017, 5, 1), y: 129 },
-					{ x: new Date(2017, 6, 1), y: 143 },
-					{ x: new Date(2017, 7, 1), y: 156 },
-					{ x: new Date(2017, 8, 1), y: 122 },
-					{ x: new Date(2017, 9, 1), y: 106 },
-					{ x: new Date(2017, 10, 1), y: 137 },
-					{ x: new Date(2017, 11, 1), y: 142 }
+					{ x: new Date(2021, 0, 1), y: 12007 },
+					{ x: new Date(2021, 1, 1), y: 13500 },
+					{ x: new Date(2021, 2, 1), y: 14400 },
+					{ x: new Date(2021, 3, 1), y: 10300 },
+					{ x: new Date(2021, 4, 1), y: 9300 },
+					{ x: new Date(2021, 5, 1), y: 12900 },
+					{ x: new Date(2021, 6, 1), y: 14300 },
+					{ x: new Date(2021, 7, 1), y: 15600 },
+					{ x: new Date(2021, 8, 1), y: 12200 },
+					{ x: new Date(2021, 9, 1), y: 10600 },
+					{ x: new Date(2021, 10, 1), y: 13700 },
+					{ x: new Date(2021, 11, 1), y: 14200 }
 				]
 			},
 			{
 				type: "spline",
-				name: "Profit",
+				name: "Sales",
 				axisYType: "secondary",
 				showInLegend: true,
 				xValueFormatString: "MMM YYYY",
 				yValueFormatString: "$#,##0.#",
 				dataPoints: [
-					{ x: new Date(2017, 0, 1), y: 19034.5 },
-					{ x: new Date(2017, 1, 1), y: 20015 },
-					{ x: new Date(2017, 2, 1), y: 27342 },
-					{ x: new Date(2017, 3, 1), y: 20088 },
-					{ x: new Date(2017, 4, 1), y: 20234 },
-					{ x: new Date(2017, 5, 1), y: 29034 },
-					{ x: new Date(2017, 6, 1), y: 30487 },
-					{ x: new Date(2017, 7, 1), y: 32523 },
-					{ x: new Date(2017, 8, 1), y: 20234 },
-					{ x: new Date(2017, 9, 1), y: 27234 },
-					{ x: new Date(2017, 10, 1), y: 33548 },
-					{ x: new Date(2017, 11, 1), y: 32534 }
+					{ x: new Date(2021, 0, 1), y: 19034.5 },
+					{ x: new Date(2021, 1, 1), y: 20015 },
+					{ x: new Date(2021, 2, 1), y: 27342 },
+					{ x: new Date(2021, 3, 1), y: 20088 },
+					{ x: new Date(2021, 4, 1), y: 20234 },
+					{ x: new Date(2021, 5, 1), y: 29034 },
+					{ x: new Date(2021, 6, 1), y: 30487 },
+					{ x: new Date(2021, 7, 1), y: 32523 },
+					{ x: new Date(2021, 8, 1), y: 20234 },
+					{ x: new Date(2021, 9, 1), y: 27234 },
+					{ x: new Date(2021, 10, 1), y: 33548 },
+					{ x: new Date(2021, 11, 1), y: 32534 }
 				]
 			}]
 		}

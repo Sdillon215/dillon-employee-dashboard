@@ -6,16 +6,17 @@ import Chart from '../Chart';
 function Buyer() {
 
   return (
-    <Grid
-      container
-      height='100vh'
+    <Grid container
+    height='100vh'
       width='100vw'
       spacing={0}
+      display="flex"
       direction="column"
       alignItems="center"
-      justifyContent="center"
-    >
+      justifyContent="center">
+     <div class='chart'>
     <Chart />
+    </div>
     </Grid>
   );
 };
