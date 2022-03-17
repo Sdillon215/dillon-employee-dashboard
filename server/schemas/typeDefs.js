@@ -8,7 +8,21 @@ const typeDefs = gql`
     firstName: String
     lastName: String
     email: String
+    porders: [Porder]
+    sorders: [Sorder]
   }
+
+  type Product {
+    _id: ID
+    name: String
+    description: String
+    image: String
+    price: Number
+    quantity: Number
+    department: Department
+  }
+
+  
 
   type Auth {
     token: ID
