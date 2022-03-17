@@ -11,17 +11,17 @@ db.once('open', async () => {
   await User.deleteMany({});
 
   // create user data
-//   const userData = [];
+  // const userData = [];
 
-//   for (let i = 0; i < 50; i += 1) {
-//     const username = faker.internet.userName();
-//     const email = faker.internet.email(username);
-//     const password = faker.internet.password();
+  // for (let i = 0; i < 10; i += 1) {
+  //   const username = faker.internet.userName();
+  //   const email = faker.internet.email(username);
+  //   const password = faker.internet.password();
 
-//     userData.push({ username, email, password });
-//   }
+  //   userData.push({ username, email, password });
+  // }
 
-//   const createdUsers = await User.collection.insertMany(userData);
+  // const createdUsers = await User.collection.insertMany(userData);
 
 //   // create friends
 //   for (let i = 0; i < 100; i += 1) {
@@ -70,8 +70,8 @@ db.once('open', async () => {
 //       { _id: thoughtId },
 //       { $push: { reactions: { reactionBody, username } } },
 //       { runValidators: true }
-//     );
-//   }
+  //   );
+  // }
 
   console.log('all done!');
   process.exit(0);

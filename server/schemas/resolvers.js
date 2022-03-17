@@ -1,5 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Department, Sorder, Porder} = require('../models');
+const { User, Product, Department, Sorder, Porder } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -7,9 +7,14 @@ const resolvers = {
         user: async () => {
             return User.find()
                 .select('-__v -password');
+        },
+        department: async () => {
+            return Department.find();
+        },
+        product: async () => {
+            return await Product.find().populate('department');
         }
     },
-
     Mutation: {
         addUser: async (parent, args) => {
             const user = await User.create(args);
@@ -32,6 +37,16 @@ const resolvers = {
 
             const token = signToken(user);
             return { token, user };
+        },
+        addProduct: async (parent, args) => {
+            console.log(args);
+            const product = await Product.create(args);
+            return product;
+        },
+        addDepartment: async (parent, args) => {
+            const department = await Department.create(args);
+
+            return department;
         }
     }
 };
