@@ -8,14 +8,17 @@ const resolvers = {
             return User.find()
                 .select('-__v -password');
         },
+        departments: async () => {
+            return Department.find().populate('products');
+        },
         department: async () => {
-            return Department.find();
+            return Department.findById().populate('products');
         },
         product: async (parent, {_id}) => {
-            return await Product.findById(_id).populate('department');
+            return await Product.findById(_id);
         },
         products: async () => {
-            return await Product.find().populate('department');
+            return await Product.find();
         }
     },
     Mutation: {
@@ -42,8 +45,12 @@ const resolvers = {
         },
         addProduct: async (parent, args) => {
             console.log(args);
-            const product = await Product.create(args);
+            const product = await Product.create({ ...args });
 
+            await Department.findByIdAndUpdate(
+                { _id: args.departmentId },
+                { $addToSet: { products: product._id} }
+            );
             return product;
         },
         addDepartment: async (parent, args) => {
