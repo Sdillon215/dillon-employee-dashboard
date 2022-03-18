@@ -11,10 +11,33 @@ const porderSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    supplyTotal: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    freshTotal: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    plantTotal: {
+        type: Number,
+        required: true,
+        min: 0
+    },
+    total: {
+         type: Number,
+         required: true,
+          min: 0
+    },
     products: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Product'
+        },
+        {
+            quantity: Number
         }
     ]
 });

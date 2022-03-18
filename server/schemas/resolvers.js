@@ -50,6 +50,13 @@ const resolvers = {
             const department = await Department.create(args);
 
             return department;
+        },
+        purchaseOrder: async (parent, { args }, context) => {
+            if(context.user.Buyer) {
+                console.log(context);
+                
+
+            }
         }
     }
 };
