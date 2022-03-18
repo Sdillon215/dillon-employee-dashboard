@@ -35,9 +35,6 @@ const porderSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'Product'
-        },
-        {
-            quantity: Number
         }
     ]
 });

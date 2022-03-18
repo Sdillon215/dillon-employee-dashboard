@@ -58,7 +58,7 @@ type User {
   type Mutation {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(name: String!, description: String, image: String, price: Float!, quantity: Int!, department: ID!): Product
-    purchaseOrder(username: String!, purchaseDate: String!, supplyTotal: Float!, freshTotal: Float!, plantTotal: Float!, total: Float!): [Product]
+    purchaseOrder(username: String!, purchaseDate: String!, supplyTotal: Float!, freshTotal: Float!, plantTotal: Float!, total: Float!): Product
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
