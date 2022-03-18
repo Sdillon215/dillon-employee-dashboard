@@ -11,7 +11,10 @@ const resolvers = {
         department: async () => {
             return Department.find();
         },
-        product: async () => {
+        product: async (parent, {_id}) => {
+            return await Product.findById(_id).populate('department');
+        },
+        products: async () => {
             return await Product.find().populate('department');
         }
     },
@@ -24,7 +27,6 @@ const resolvers = {
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials');
             }
@@ -41,6 +43,7 @@ const resolvers = {
         addProduct: async (parent, args) => {
             console.log(args);
             const product = await Product.create(args);
+
             return product;
         },
         addDepartment: async (parent, args) => {

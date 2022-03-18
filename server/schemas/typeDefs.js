@@ -47,7 +47,8 @@ type User {
   type Query {
     user: [User]
     department: [Department]
-    product: [Product]
+    products: [Product]
+    product(_id: ID!): Product
   }
 
   type Mutation {
