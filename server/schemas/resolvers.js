@@ -19,6 +19,9 @@ const resolvers = {
         },
         products: async () => {
             return await Product.find();
+        },
+        porders: async () => {
+            return await Porder.find();
         }
     },
     Mutation: {

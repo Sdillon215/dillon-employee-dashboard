@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const { Schema } = mongoose;
 
@@ -9,7 +10,12 @@ const porderSchema = new Schema({
     },
     purchaseDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+      get: timestamp => dateFormat(timestamp)
+    },
+    productName: {
+        type: String,
+        required: true
     },
     quantity: {
         type: Number,
@@ -23,14 +29,14 @@ const porderSchema = new Schema({
          type: Number,
          required: true,
           min: 0
-    },
-    products: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Product'
         }
-    ]
-});
+    },
+    {
+        toJSON: {
+            getters: true
+        }
+    }
+);
 
 const Porder = mongoose.model('Porder', porderSchema);
 
