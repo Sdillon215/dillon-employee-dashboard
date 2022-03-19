@@ -58,12 +58,17 @@ const resolvers = {
 
             return department;
         },
-        purchaseOrder: async (parent, { args }, context) => {
-            if(context.user.Buyer) {
-                console.log(context);
-                
+        purchaseOrder: async (parent, args) => {
+            const increment = Math.abs(args.quantity) * +1;
+            console.log(args);
+            const porder = await Porder.create({ ...args });
 
-            }
+            await Product.findByIdAndUpdate(
+                { _id: args.productId },
+                { $inc: { quantity: increment }}
+
+                );
+                return porder;
         }
     }
 };

@@ -13,6 +13,12 @@ const departmentSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Product'
     }
+  ],
+  porders: [
+    {
+      type:Schema.Types.ObjectId,
+      ref: 'Porder'
+    }
   ]
 });
 

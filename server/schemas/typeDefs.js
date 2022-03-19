@@ -14,14 +14,14 @@ type Department {
   _id: ID
   name: String
   products: [Product]
+  porders: [Porder]
 }
 
 type Porder {
   username: String
   purchaseDate: String
-  supplyTotal: Float
-  freshTotal: Float
-  plantTotal: Float
+  quantity: Int
+  unitPrice: Float
   total: Float
   products: [Product]
 }
@@ -59,7 +59,7 @@ type User {
   type Mutation {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, quantity: Int!): Product
-    purchaseOrder(username: String!, purchaseDate: String!, supplyTotal: Float!, freshTotal: Float!, plantTotal: Float!, total: Float!): Product
+    purchaseOrder(productId: ID!, username: String!, quantity: Int!, unitPrice: Float!, total: Float!): Porder
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
