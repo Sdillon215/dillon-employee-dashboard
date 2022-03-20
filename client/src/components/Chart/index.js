@@ -1,9 +1,12 @@
 /* App.js */
 import * as React from 'react';
 import {CanvasJSChart} from 'canvasjs-react-charts';
+import GraphInput from '../GraphInput';
+
 
 var Component = React.Component;
- 
+
+
 class Chart extends Component {	
 	constructor() {
 		super();
@@ -19,6 +22,7 @@ class Chart extends Component {
 		}
 		this.chart.render();
 	}
+
 	
 	render() {
 		const options = {
@@ -125,6 +129,7 @@ class Chart extends Component {
 		
 		return (
 		<div>
+				<GraphInput />
 			<CanvasJSChart options = {options} 
 				 onRef={ref => this.chart = ref}
 			/>
