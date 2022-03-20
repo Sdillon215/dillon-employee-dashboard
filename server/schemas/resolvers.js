@@ -9,12 +9,16 @@ const resolvers = {
                 .select('-__v -password');
         },
         departments: async () => {
-            return Department.find().populate('products');
+            return Department.find()
+            .populate('products')
+            .populate('porders');
         },
         department: async () => {
-            return Department.findById().populate('products');
+            return Department.findById()
+            .populate('products')
+            .populate('porders');
         },
-        product: async (parent, {_id}) => {
+        product: async (parent, { _id }) => {
             return await Product.findById(_id);
         },
         products: async () => {
@@ -52,7 +56,8 @@ const resolvers = {
 
             await Department.findByIdAndUpdate(
                 { _id: args.departmentId },
-                { $addToSet: { products: product._id} }
+                { $push: { products: product._id } },
+                { new: true }
             );
             return product;
         },
@@ -68,10 +73,16 @@ const resolvers = {
 
             await Product.findByIdAndUpdate(
                 { _id: args.productId },
-                { $inc: { quantity: increment }}
+                { $inc: { quantity: increment } }
 
-                );
-                return porder;
+            );
+
+            await Department.findByIdAndUpdate(
+                { _id: args.departmentId },
+                { $push: { porders: porder._id }},
+                { new: true }
+            )
+            return porder;
         }
     }
 };

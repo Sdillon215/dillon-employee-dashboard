@@ -13,6 +13,14 @@ const porderSchema = new Schema({
         default: Date.now,
       get: timestamp => dateFormat(timestamp)
     },
+    productId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    departmentId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
     productName: {
         type: String,
         required: true

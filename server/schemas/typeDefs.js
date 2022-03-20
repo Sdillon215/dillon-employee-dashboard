@@ -21,6 +21,8 @@ type Porder {
   _id: ID
   username: String
   purchaseDate: String
+  productId: ID
+  departmentId: ID
   productName: String
   quantity: Int
   unitPrice: Float
@@ -61,7 +63,7 @@ type User {
   type Mutation {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, quantity: Int!): Product
-    purchaseOrder(productId: ID!, username: String!, productName: String!, quantity: Int!, unitPrice: Float!, total: Float!): Porder
+    purchaseOrder(username: String!, productId: ID!, departmentId: ID!, productName: String!, quantity: Int!, unitPrice: Float!, total: Float!): Porder
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
