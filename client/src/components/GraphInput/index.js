@@ -7,15 +7,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 
 import { QUERY_ALL_DEPARTMENTS } from '../../utils/queries';
 
 
 
 export default function GraphInput() {
-  const { data } = useQuery(QUERY_ALL_DEPARTMENTS);
-  console.log(data);
+  // const [inputState, setInputState] = useState([])
+  const [populateGraph, { loading, data }] = useLazyQuery(QUERY_ALL_DEPARTMENTS);
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -28,33 +28,36 @@ export default function GraphInput() {
   };
   
   const names = [
-    'All',
     'Fresh Cut',
     'Plant Kingdom',
     'Supply'
   ];
   
-  function getStyles(name, personName, theme) {
+  function getStyles(name, department, theme) {
     return {
       fontWeight:
-        personName.indexOf(name) === -1
-          ? theme.typography.fontWeightRegular
-          : theme.typography.fontWeightMedium,
+      department.indexOf(name) === -1
+      ? theme.typography.fontWeightRegular
+      : theme.typography.fontWeightMedium,
     };
   }
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [department, setDepartment] = React.useState(['Fresh Cut']);
+  console.log(department);
 
   const handleChange = (event) => {
+  // event.preventDefault();
+
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setDepartment(
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    populateGraph(department);
   };
-
+console.log(data);
   return (
     <div>
       <FormControl sx={{ m: 2, width: '50%' }}>
@@ -63,7 +66,7 @@ export default function GraphInput() {
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={personName}
+          value={department}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
@@ -79,7 +82,7 @@ export default function GraphInput() {
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
+              style={getStyles(name, department, theme)}
             >
               {name}
             </MenuItem>
