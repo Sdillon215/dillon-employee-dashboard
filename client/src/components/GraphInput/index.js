@@ -43,10 +43,9 @@ export default function GraphInput() {
   }
   const theme = useTheme();
   const [department, setDepartment] = React.useState(['Fresh Cut']);
-  console.log(department);
 
   const handleChange = (event) => {
-  // event.preventDefault();
+  event.preventDefault();
 
     const {
       target: { value },
@@ -55,9 +54,7 @@ export default function GraphInput() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
-    populateGraph(department);
   };
-console.log(data);
   return (
     <div>
       <FormControl sx={{ m: 2, width: '50%' }}>

@@ -10,8 +10,8 @@ const porderSchema = new Schema({
     },
     purchaseDate: {
         type: Date,
-        default: Date.now,
-      get: timestamp => dateFormat(timestamp)
+        default: Date.now
+    //   get: timestamp => dateFormat(timestamp)
     },
     productId: {
         type: Schema.Types.ObjectId,
@@ -38,12 +38,12 @@ const porderSchema = new Schema({
          required: true,
           min: 0
         }
-    },
-    {
-        toJSON: {
-            getters: true
-        }
     }
+    // {
+    //     toJSON: {
+    //         getters: true
+    //     }
+    // }
 );
 
 const Porder = mongoose.model('Porder', porderSchema);
