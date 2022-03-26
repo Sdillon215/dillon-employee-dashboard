@@ -55,12 +55,13 @@ db.once('open', async () => {
   ];
   const pkData = [];
   for (let i = 0; i < pk.length; i += 1) {
+    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
     const name = pk[i];
     const description = 'Potted Plants';
     const department = 'Plant Kingdom';
     const image = 'image.png';
-    const price = Math.floor((Math.random() * 50) + 1);
-    const quantity = Math.floor((Math.random() * 70) + 1);
+    const price = unitPrice.toFixed(2);
+    const quantity = 0;
     pkData.push({ name, description, image, price, quantity, department });
   }
 
@@ -77,12 +78,13 @@ db.once('open', async () => {
   ];
   const freshData = [];
   for (let i = 0; i < pk.length; i += 1) {
+    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
     const name = fc[i];
     const description = 'Fresh Flowers';
     const department = 'Fresh Cut';
     const image = 'image.png';
-    const price = Math.floor((Math.random() * 50) + 1);
-    const quantity = Math.floor((Math.random() * 70) + 1);
+    const price = unitPrice.toFixed(2);
+    const quantity = 0;
     freshData.push({ name, description, image, price, quantity, department });
   }
 
@@ -99,12 +101,13 @@ db.once('open', async () => {
   ];
   const supData = [];
   for (let i = 0; i < pk.length; i += 1) {
+    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
     const name = sup[i];
     const description = 'Floral Decorations';
     const department = 'Supply';
     const image = 'image.png';
-    const price = Math.floor((Math.random() * 50) + 1);
-    const quantity = Math.floor((Math.random() * 70) + 1);
+    const price = unitPrice.toFixed(2);
+    const quantity = 0;
     supData.push({ name, description, image, price, quantity, department });
   }
 
@@ -157,15 +160,19 @@ db.once('open', async () => {
   for (let i = 0; i < purchaseOrderDates.length; i += 1) {
     const depId = depIds[Math.floor(Math.random()*depIds.length)];
     const prodId = depId.products[Math.floor(Math.random()*depId.products.length)];
-    const prodName = await Product.findById(prodId);
-    const Uprice = Math.random() * (50 - 5 + 1) + 5;
+    const prodInfo = await Product.findById(prodId);
     const username = 'Sean_sendz';
     const purchaseDate = purchaseOrderDates[i];
     const departmentId = depId;
     const productId = prodId;
-    const productName = prodName.name;
+    const productName = prodInfo.name;
     const quantity = Math.floor(Math.random() * (3000 - 2000 + 1) ) + 500;
-    const unitPrice = Uprice.toFixed(2);
+    const increment = Math.abs(quantity) * +1;
+    const updateQuantity = await Product.findByIdAndUpdate(
+      { _id: prodId },
+      { $inc: { quantity: increment }}
+    );
+    const unitPrice = prodInfo.price;
     const prodTotal = quantity * unitPrice;
     const total = prodTotal.toFixed(2);
     PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
