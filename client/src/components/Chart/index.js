@@ -2,12 +2,15 @@
 import * as React from 'react';
 import {CanvasJSChart} from 'canvasjs-react-charts';
 import { useQuery } from '@apollo/client';
-import { QUERY_PORDERS } from '../../utils/queries';
+import { QUERY_PORDERS, QUERY_SORDERS } from '../../utils/queries';
 // import GraphInput from '../GraphInput';
 
 
 export default function Chart() {
 	const {loading, data} = useQuery(QUERY_PORDERS);
+	// const { salesData} = useQuery(QUERY_PORDERS);
+	// console.log(salesData);
+
 	var porderArr = data?.porders || [];
 	const dataPoints = [];
 

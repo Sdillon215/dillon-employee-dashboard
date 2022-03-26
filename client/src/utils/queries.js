@@ -27,6 +27,16 @@ export const QUERY_PORDERS = gql`
 }
 `;
 
+export const QUERY_SORDERS = gql`
+  {
+    sorders {
+    _id
+    saleDate
+    total
+  }
+}
+`;
+
 export const QUERY_ALL_PRODUCTS = gql`
   {
     products {
