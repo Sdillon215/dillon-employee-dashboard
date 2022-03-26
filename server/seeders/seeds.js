@@ -203,10 +203,14 @@ db.once('open', async () => {
       );
   }
   
-  
-  
-    
   const newSorder = await Sorder.collection.insertMany(SoData);
+  const getSorders = await Sorder.find();
+  for (let i = 0; i < getSorders.length; i += 1) {
+    await Department.findByIdAndUpdate(
+      { _id: getSorders[i].departmentId},
+      { $push: { sorders: getSorders[i]._id}}
+    )
+  }
 
   // create sales order
   // const saleOrderDates = [

@@ -15,6 +15,7 @@ type Department {
   name: String
   products: [Product]
   porders: [Porder]
+  sorders: [Sorder]
 }
 
 type Porder {

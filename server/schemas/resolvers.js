@@ -11,12 +11,14 @@ const resolvers = {
         departments: async () => {
             return Department.find()
             .populate('products')
-            .populate('porders');
+            .populate('porders')
+            .populate('sorders');
         },
         department: async (parent, { _id }) => {
             return Department.findById(_id)
             .populate('products')
-            .populate('porders');
+            .populate('porders')
+            .populate('sorders');
         },
         product: async (parent, { _id }) => {
             return await Product.findById(_id);
