@@ -9,19 +9,35 @@ import { QUERY_PORDERS } from '../../utils/queries';
 export default function Chart() {
 	const {loading, data} = useQuery(QUERY_PORDERS);
 	var porderArr = data?.porders || [];
-	 var graphInput = [];
-	// var dateTest = porderArr[0].purchaseDate;
+	const dataPoints = [];
+
 	console.log(porderArr[0]);
 	for (let i = 0; i < porderArr.length; i++) {
 		console.log(porderArr[i].purchaseDate);
+		var total = porderArr[1].total;
 		var oldDate = porderArr[i].purchaseDate;
 		var parseDate = parseInt(oldDate);
 		var d = new Date(parseDate);
 		var stringDate = d.toISOString();
-		console.log(stringDate);
+		var formatDate = stringDate.replace(/-/g, ', ').split('T', 1).toString();
+		dataPoints.push({x: new Date(formatDate), y: total})
+		console.log(formatDate, total);
 		// pick up here options datapoints must return porders data
 	}
+
 	const test = 20060;
+	// { x: new Date(2021, 0, 1), y: test },
+	// { x: new Date(2021, 1, 1), y: 13500 },
+	// { x: new Date(2021, 2, 1), y: 14400 },
+	// { x: new Date(2021, 3, 1), y: 10300 },
+	// { x: new Date(2021, 4, 1), y: 9300 },
+	// { x: new Date(2021, 5, 1), y: 12900 },
+	// { x: new Date(2021, 6, 1), y: 14300 },
+	// { x: new Date(2021, 7, 1), y: 15600 },
+	// { x: new Date(2021, 8, 1), y: 12200 },
+	// { x: new Date(2021, 9, 1), y: 10600 },
+	// { x: new Date(2021, 10, 1), y: 13700 },
+	// { x: new Date(2021, 11, 1), y: 14200 }
 	const options = {
 				backgroundColor: "rgba(0,0,0,0)",
 				theme: "light2",
@@ -62,20 +78,7 @@ export default function Chart() {
 					showInLegend: true,
 					xValueFormatString: "MMM YYYY",
 					yValueFormatString: "$#,##0.#",
-					dataPoints: [
-						{ x: new Date(2021, 0, 1), y: test },
-						{ x: new Date(2021, 1, 1), y: 13500 },
-						{ x: new Date(2021, 2, 1), y: 14400 },
-						{ x: new Date(2021, 3, 1), y: 10300 },
-						{ x: new Date(2021, 4, 1), y: 9300 },
-						{ x: new Date(2021, 5, 1), y: 12900 },
-						{ x: new Date(2021, 6, 1), y: 14300 },
-						{ x: new Date(2021, 7, 1), y: 15600 },
-						{ x: new Date(2021, 8, 1), y: 12200 },
-						{ x: new Date(2021, 9, 1), y: 10600 },
-						{ x: new Date(2021, 10, 1), y: 13700 },
-						{ x: new Date(2021, 11, 1), y: 14200 }
-					]
+					dataPoints
 				}]
 			}
 			
