@@ -11,10 +11,9 @@ export default function Chart() {
 	var porderArr = data?.porders || [];
 	const dataPoints = [];
 
-	console.log(porderArr[0]);
 	for (let i = 0; i < porderArr.length; i++) {
 		console.log(porderArr[i].purchaseDate);
-		var total = porderArr[1].total;
+		var total = porderArr[i].total;
 		var oldDate = porderArr[i].purchaseDate;
 		var parseDate = parseInt(oldDate);
 		var d = new Date(parseDate);

@@ -4,8 +4,8 @@ const db = require('../config/connection');
 const { Sorder, Porder, Product, Department, User } = require('../models');
 
 db.once('open', async () => {
-  await Sorder.deleteMany({});
   await Porder.deleteMany({});
+  await Sorder.deleteMany({});
   await Product.deleteMany({});
   await Department.deleteMany({});
   await User.deleteMany({});
@@ -110,31 +110,68 @@ db.once('open', async () => {
 
   const supplyData = await Product.collection.insertMany(supData);
 
+  // pushing products to associated departments
   const productDep = await Department.find();
   for (let i = 0; i < productDep.length; i += 1) {
     if (productDep[i].name === 'Supply') {
-      const products = await Product.find({ department: 'Supply'});
+      const products = await Product.find({ department: 'Supply' });
       await Department.findOneAndUpdate(
-        { name: 'Supply'},
-        { $push: { products: products} }
-        );
+        { name: 'Supply' },
+        { $push: { products: products } }
+      );
     }
     if (productDep[i].name === 'Fresh Cut') {
-      const products = await Product.find({ department: 'Fresh Cut'});
+      const products = await Product.find({ department: 'Fresh Cut' });
       await Department.findOneAndUpdate(
-        { name: 'Fresh Cut'},
-        { $push: { products: products} }
-        );
+        { name: 'Fresh Cut' },
+        { $push: { products: products } }
+      );
     }
     if (productDep[i].name === 'Plant Kingdom') {
-      const products = await Product.find({ department: 'Plant Kingdom'});
+      const products = await Product.find({ department: 'Plant Kingdom' });
       await Department.findOneAndUpdate(
-        { name: 'Plant Kingdom'},
-        { $push: { products: products} }
-        );
+        { name: 'Plant Kingdom' },
+        { $push: { products: products } }
+      );
     }
   }
 
+  // create purchase orders
+  const purchaseOrderDates = [
+    '2021, 01, 01',
+    '2021, 02, 01',
+    '2021, 03, 01',
+    '2021, 04, 01',
+    '2021, 05, 01',
+    '2021, 06, 01',
+    '2021, 07, 01',
+    '2021, 08, 01',
+    '2021, 09, 01',
+    '2021, 10, 01',
+    '2021, 11, 01',
+    '2021, 12, 01'
+  ]
+  // const porderUser = await User.find();
+  const PoData = [];
+  const depIds = await Department.find();
+  for (let i = 0; i < purchaseOrderDates.length; i += 1) {
+    const depId = depIds[Math.floor(Math.random()*depIds.length)];
+    const prodId = depId.products[Math.floor(Math.random()*depId.products.length)];
+    const prodName = await Product.findById(prodId);
+    const Uprice = Math.random() * (50 - 5 + 1) + 5;
+    const username = 'Sean_sendz';
+    const purchaseDate = purchaseOrderDates[i];
+    const departmentId = depId;
+    const productId = prodId;
+    const productName = prodName.name;
+    const quantity = Math.floor(Math.random() * (3000 - 2000 + 1) ) + 500;
+    const unitPrice = Uprice.toFixed(2);
+    const prodTotal = quantity * unitPrice;
+    const total = prodTotal.toFixed(2);
+    PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
+  }
+
+  const newPorder = await Porder.collection.insertMany(PoData);
   console.log('all done!');
   process.exit(0);
 });
