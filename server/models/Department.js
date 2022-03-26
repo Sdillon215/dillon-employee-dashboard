@@ -19,6 +19,12 @@ const departmentSchema = new Schema({
       type:Schema.Types.ObjectId,
       ref: 'Porder'
     }
+  ],
+  sorders: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Sorder'
+    }
   ]
 });
 

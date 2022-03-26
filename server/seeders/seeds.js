@@ -155,22 +155,6 @@ db.once('open', async () => {
     '2021, 12, 01'
   ];
 
-  // sales order dates
-  const saleOrderDates = [
-    '2021, 01, 10',
-    '2021, 02, 10',
-    '2021, 03, 10',
-    '2021, 04, 10',
-    '2021, 05, 10',
-    '2021, 06, 10',
-    '2021, 07, 10',
-    '2021, 08, 10',
-    '2021, 09, 10',
-    '2021, 10, 10',
-    '2021, 11, 10',
-    '2021, 12, 10'
-  ]
-
   const PoData = [];
   const SoData = [];
   const depIds = await Department.find();
@@ -196,7 +180,7 @@ db.once('open', async () => {
 
     // Sales order
     const saleDate = purchaseDate;
-    const saleQuan = quantity * .8; 
+    const saleQuan = quantity * .8;
     const salePerc = unitPrice * .4;
     const salePrice = salePerc + unitPrice;
     const saleUnitPrice = salePrice.toFixed(2);
@@ -211,6 +195,17 @@ db.once('open', async () => {
 
   }
   const newPorder = await Porder.collection.insertMany(PoData);
+  const getPorders = await Porder.find();
+  for (let i = 0; i < getPorders.length; i += 1) {
+    await Department.findByIdAndUpdate(
+      { _id: getPorders[i].departmentId},
+      { $push: { porders: getPorders[i]._id}}
+      );
+  }
+  
+  
+  
+    
   const newSorder = await Sorder.collection.insertMany(SoData);
 
   // create sales order

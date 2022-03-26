@@ -13,8 +13,8 @@ const resolvers = {
             .populate('products')
             .populate('porders');
         },
-        department: async () => {
-            return Department.findById()
+        department: async (parent, { _id }) => {
+            return Department.findById(_id)
             .populate('products')
             .populate('porders');
         },

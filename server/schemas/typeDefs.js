@@ -59,7 +59,7 @@ type User {
 
   type Query {
     user: [User]
-    department(_id: ID!): [Department]
+    department(_id: ID!): Department
     departments: [Department]
     products: [Product]
     product(_id: ID!): Product
