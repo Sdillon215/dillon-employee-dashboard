@@ -26,6 +26,9 @@ const resolvers = {
         },
         porders: async () => {
             return await Porder.find();
+        },
+        sorders: async () => {
+            return await Sorder.find();
         }
     },
     Mutation: {

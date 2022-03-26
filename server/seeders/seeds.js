@@ -153,32 +153,106 @@ db.once('open', async () => {
     '2021, 10, 01',
     '2021, 11, 01',
     '2021, 12, 01'
+  ];
+
+  // sales order dates
+  const saleOrderDates = [
+    '2021, 01, 10',
+    '2021, 02, 10',
+    '2021, 03, 10',
+    '2021, 04, 10',
+    '2021, 05, 10',
+    '2021, 06, 10',
+    '2021, 07, 10',
+    '2021, 08, 10',
+    '2021, 09, 10',
+    '2021, 10, 10',
+    '2021, 11, 10',
+    '2021, 12, 10'
   ]
-  // const porderUser = await User.find();
+
   const PoData = [];
+  const SoData = [];
   const depIds = await Department.find();
   for (let i = 0; i < purchaseOrderDates.length; i += 1) {
-    const depId = depIds[Math.floor(Math.random()*depIds.length)];
-    const prodId = depId.products[Math.floor(Math.random()*depId.products.length)];
+    const depId = depIds[Math.floor(Math.random() * depIds.length)];
+    const prodId = depId.products[Math.floor(Math.random() * depId.products.length)];
     const prodInfo = await Product.findById(prodId);
     const username = 'Sean_sendz';
     const purchaseDate = purchaseOrderDates[i];
     const departmentId = depId;
     const productId = prodId;
     const productName = prodInfo.name;
-    const quantity = Math.floor(Math.random() * (3000 - 2000 + 1) ) + 500;
+    const quantity = Math.floor(Math.random() * (3000 - 2000 + 1)) + 500;
     const increment = Math.abs(quantity) * +1;
     const updateQuantity = await Product.findByIdAndUpdate(
       { _id: prodId },
-      { $inc: { quantity: increment }}
+      { $inc: { quantity: increment } }
     );
     const unitPrice = prodInfo.price;
     const prodTotal = quantity * unitPrice;
     const total = prodTotal.toFixed(2);
     PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
-  }
 
+    // Sales order
+    const saleDate = purchaseDate;
+    const saleQuan = quantity * .8; 
+    const salePerc = unitPrice * .4;
+    const salePrice = salePerc + unitPrice;
+    const saleUnitPrice = salePrice.toFixed(2);
+    const saleQuantity = saleQuan.toFixed();
+    const decrement = Math.abs(saleQuantity) * -1;
+    const updateSaleQuantity = await Product.findByIdAndUpdate(
+      { _id: prodId },
+      { $inc: { quantity: decrement } }
+    );
+    const saleTotal = saleUnitPrice * saleQuantity;
+    SoData.push({ username, saleDate, productId, departmentId, productName, quantity: saleQuantity, salePrice: saleUnitPrice, total: saleTotal });
+
+  }
   const newPorder = await Porder.collection.insertMany(PoData);
+  const newSorder = await Sorder.collection.insertMany(SoData);
+
+  // create sales order
+  // const saleOrderDates = [
+  //   '2021, 01, 01',
+  //   '2021, 02, 01',
+  //   '2021, 03, 01',
+  //   '2021, 04, 01',
+  //   '2021, 05, 01',
+  //   '2021, 06, 01',
+  //   '2021, 07, 01',
+  //   '2021, 08, 01',
+  //   '2021, 09, 01',
+  //   '2021, 10, 01',
+  //   '2021, 11, 01',
+  //   '2021, 12, 01'
+  // ]
+
+  // const soData = [];
+  // const depIds = await Department.find();
+  // for (let i = 0; i < purchaseOrderDates.length; i += 1) {
+  //   const depId = depIds[Math.floor(Math.random() * depIds.length)];
+  //   const prodId = depId.products[Math.floor(Math.random() * depId.products.length)];
+  //   const prodInfo = await Product.findById(prodId);
+  //   const username = 'Sean_sendz';
+  //   const purchaseDate = purchaseOrderDates[i];
+  //   const departmentId = depId;
+  //   const productId = prodId;
+  //   const productName = prodInfo.name;
+  //   const quantity = Math.floor(Math.random() * (3000 - 2000 + 1)) + 500;
+  //   const increment = Math.abs(quantity) * +1;
+  //   const updateQuantity = await Product.findByIdAndUpdate(
+  //     { _id: prodId },
+  //     { $inc: { quantity: increment } }
+  //   );
+  //   const unitPrice = prodInfo.price;
+  //   const prodTotal = quantity * unitPrice;
+  //   const total = prodTotal.toFixed(2);
+  //   PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
+  // }
+
+  // const newPorder = await Porder.collection.insertMany(PoData);
   console.log('all done!');
   process.exit(0);
 });

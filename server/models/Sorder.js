@@ -10,14 +10,40 @@ const sorderSchema = new Schema({
     saleDate: {
         type: Date,
         default: Date.now
+    //   get: timestamp => dateFormat(timestamp)
     },
-    products: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Product'
+    productId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    departmentId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    productName: {
+        type: String,
+        required: true
+    },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    salePrice: {
+        type: Number,
+        required: true
+    },
+    total: {
+         type: Number,
+         required: true,
+          min: 0
         }
-    ]
-});
+    }
+    // {
+    //     toJSON: {
+    //         getters: true
+    //     }
+    // }
+);
 
 const Sorder = mongoose.model('Sorder', sorderSchema);
 
