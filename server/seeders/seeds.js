@@ -181,7 +181,7 @@ db.once('open', async () => {
     // Sales order
     const saleDate = purchaseDate;
     const saleQuan = quantity * .8;
-    const salePerc = unitPrice * .4;
+    const salePerc = unitPrice * .5;
     const salePrice = salePerc + unitPrice;
     const saleUnitPrice = salePrice.toFixed(2);
     const saleQuantity = saleQuan.toFixed();
@@ -212,46 +212,6 @@ db.once('open', async () => {
     )
   }
 
-  // create sales order
-  // const saleOrderDates = [
-  //   '2021, 01, 01',
-  //   '2021, 02, 01',
-  //   '2021, 03, 01',
-  //   '2021, 04, 01',
-  //   '2021, 05, 01',
-  //   '2021, 06, 01',
-  //   '2021, 07, 01',
-  //   '2021, 08, 01',
-  //   '2021, 09, 01',
-  //   '2021, 10, 01',
-  //   '2021, 11, 01',
-  //   '2021, 12, 01'
-  // ]
-
-  // const soData = [];
-  // const depIds = await Department.find();
-  // for (let i = 0; i < purchaseOrderDates.length; i += 1) {
-  //   const depId = depIds[Math.floor(Math.random() * depIds.length)];
-  //   const prodId = depId.products[Math.floor(Math.random() * depId.products.length)];
-  //   const prodInfo = await Product.findById(prodId);
-  //   const username = 'Sean_sendz';
-  //   const purchaseDate = purchaseOrderDates[i];
-  //   const departmentId = depId;
-  //   const productId = prodId;
-  //   const productName = prodInfo.name;
-  //   const quantity = Math.floor(Math.random() * (3000 - 2000 + 1)) + 500;
-  //   const increment = Math.abs(quantity) * +1;
-  //   const updateQuantity = await Product.findByIdAndUpdate(
-  //     { _id: prodId },
-  //     { $inc: { quantity: increment } }
-  //   );
-  //   const unitPrice = prodInfo.price;
-  //   const prodTotal = quantity * unitPrice;
-  //   const total = prodTotal.toFixed(2);
-  //   PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
-  // }
-
-  // const newPorder = await Porder.collection.insertMany(PoData);
   console.log('all done!');
   process.exit(0);
 });
