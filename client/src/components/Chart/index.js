@@ -2,12 +2,12 @@
 import * as React from 'react';
 import {CanvasJSChart} from 'canvasjs-react-charts';
 import { useQuery } from '@apollo/client';
-import { QUERY_ALL_DEPARTMENTS } from '../../utils/queries';
+import { QUERY_DEP_ORDERS } from '../../utils/queries';
 // import GraphInput from '../GraphInput';
 
 
 export default function Chart() {
-	const {loading, data} = useQuery(QUERY_ALL_DEPARTMENTS);
+	const {loading, data} = useQuery(QUERY_DEP_ORDERS);
 	const orderData = [];
 	const saleData = [];
 	const porderArr = [];
@@ -16,14 +16,15 @@ export default function Chart() {
 		const porderI = deptData[i].porders;
 		for (let i = 0; i < porderI.length; i++) {
 			const milli = porderI[i].purchaseDate;
-			const total = porderI[i].total;
+			const total = porderI[i].orderTotal;
 			const pOrS = 'porder';
 			time(milli, total, pOrS);
 		}
 		const sorderI = deptData[i].sorders;
+		console.log(sorderI);
 		for (let i = 0; i < sorderI.length; i++) {
 			const milli = sorderI[i].saleDate;
-			const total = sorderI[i].total;
+			const total = sorderI[i].saleTotal;
 			const pOrS = 'sorder';
 			time(milli, total, pOrS);
 		}
@@ -96,20 +97,20 @@ export default function Chart() {
 				},
 				data: [
 					{
-						type: "spline",
-						name: "Sales",
-						showInLegend: true,
-						xValueFormatString: "MMM YYYY",
-						yValueFormatString: "$#,##0.#",
-						dataPoints: saleData
-					},
-					{
 					type: "spline",
-					name: "Purchase Orders",
+					name: "Sales",
 					showInLegend: true,
 					xValueFormatString: "MMM YYYY",
 					yValueFormatString: "$#,##0.#",
-					dataPoints: orderData
+					dataPoints: saleData
+					},
+					{
+						type: "spline",
+						name: "Purchase Orders",
+						showInLegend: true,
+						xValueFormatString: "MMM YYYY",
+						yValueFormatString: "$#,##0.#",
+						dataPoints: orderData
 					}
 			]
 			}

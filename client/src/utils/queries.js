@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_ALL_DEPARTMENTS = gql`
+export const QUERY_DEP_ORDERS = gql`
 {
   departments {
     _id
@@ -8,16 +8,15 @@ export const QUERY_ALL_DEPARTMENTS = gql`
     porders {
       _id
       purchaseDate
-      total
+      orderTotal
     }
     sorders {
       _id
       saleDate
-      total
+      saleTotal
     }
   }
-  }
-`;
+}`;
 
 export const QUERY_DEP_PRODUCTS = gql`
 {

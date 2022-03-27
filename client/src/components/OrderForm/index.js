@@ -46,15 +46,14 @@ const StyledButton = styled('button')(
   font-size: 0.875rem;
   box-sizing: border-box;
   min-height: calc(1.5em + 22px);
-  min-width: 300px;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  height: 4em;
+  width: 25vw;
+  background: rgba(255, 255, 255, 0.6);
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[300]};
-  border-radius: 0.75em;
-  // margin: 0.5em;
+  border-radius: 0.27em;
   padding: 10px;
   text-align: left;
   line-height: 1.5;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
 
   &:hover {
     background: ${theme.palette.mode === 'dark' ? '' : grey[100]};
@@ -84,12 +83,11 @@ const StyledListbox = styled('ul')(
   font-size: 0.875rem;
   box-sizing: border-box;
   padding: 5px;
-  margin: 10px 0;
-  min-width: 300px;
+  width: 25vw;
   max-height: 400px;
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
+  background: rgba(255, 255, 255, 1);
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[300]};
-  border-radius: 0.75em;
+  border-radius: 0.27em;
   color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
   overflow: auto;
   outline: 0px;
@@ -99,7 +97,8 @@ const StyledListbox = styled('ul')(
 const StyledOption = styled(OptionUnstyled)(
   ({ theme }) => `
   list-style: none;
-  padding: 8px;
+  padding: 4px;
+  margin-top: 0;
   border-radius: 0.45em;
   cursor: default;
 
@@ -209,10 +208,10 @@ CustomOptionGroup.propTypes = {
   }),
 };
 
-function UnstyledSelectGrouping() {
+function UnstyledSelectGrouping(e) {
   const { loading, data } = useQuery(QUERY_DEP_PRODUCTS);
   const prodData = data?.departments || [];
-  console.log(prodData[0]);
+  // console.log(prodData[0]);
   return (
     <CustomSelect>
       {prodData.map((department) => (
@@ -234,14 +233,18 @@ function createInput(product, quantity, unitPrice, total) {
   return { product, quantity, unitPrice, total };
 }
 
-const rows = [1, 2
-];
+const rows = [];
+function handleAddBtn(e) {
+  rows.push('newRow');
+  UnstyledSelectGrouping();
+}
 
 export default function OrderForm() {
   return (
     <TableContainer sx={{
-      width: '80vw',
-      marginTop: '10px'
+      width: '100%',
+      marginTop: '10px',
+      padding: '10px'
     }}>
       <Table aria-label="simple table">
         <TableHead>
@@ -268,7 +271,11 @@ export default function OrderForm() {
                 <TextField
                   id="outlined-number"
                   type="number"
-                  sx={{ width: '10vw' }}
+                  sx={{
+                    width: '10vw',
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    borderRadius: '.27em'
+                  }}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -280,7 +287,11 @@ export default function OrderForm() {
                 <OutlinedInput
                   id="outlined-adornment-amount"
                   // type="number"
-                  sx={{ width: '10vw' }}
+                  sx={{
+                    width: '10vw',
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    borderRadius: '.27em'
+                  }}
                   startAdornment={<InputAdornment position="start">$</InputAdornment>}
                   InputLabelProps={{
                     shrink: true,
@@ -292,7 +303,11 @@ export default function OrderForm() {
                 <TextField
                   id="outlined-read-only-input"
                   defaultValue=""
-                  sx={{ width: '10vw' }}
+                  sx={{
+                    width: '10vw',
+                    background: 'rgba(255, 255, 255, 0.6)',
+                    borderRadius: '.27em'
+                  }}
                   InputProps={{
                     readOnly: true,
                     startAdornment: (
@@ -307,7 +322,7 @@ export default function OrderForm() {
             </TableRow>
           ))}
           <TableRow>
-            <button>Add to Order</button>
+            <button onClick={handleAddBtn}>Add to Order</button>
           </TableRow>
         </TableBody>
       </Table>
