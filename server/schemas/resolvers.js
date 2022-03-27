@@ -72,15 +72,17 @@ const resolvers = {
             return department;
         },
         purchaseOrder: async (parent, args) => {
-            const increment = Math.abs(args.quantity) * +1;
-            console.log(args);
             const porder = await Porder.create({ ...args });
-
-            await Product.findByIdAndUpdate(
-                { _id: args.productId },
-                { $inc: { quantity: increment } }
-
-            );
+            const pItemArr = args.porderItems;
+            console.log(pItemArr);
+            for (let i = 0; i < pItemArr.length; i++) {
+                const increment = Math.abs(pItemArr[i].quantity) * +1;
+                await Product.findByIdAndUpdate(
+                    { _id: pItemArr[i].productId },
+                    { $inc: { quantity: increment } }
+    
+                );
+            }
 
             await Department.findByIdAndUpdate(
                 { _id: args.departmentId },
