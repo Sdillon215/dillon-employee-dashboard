@@ -16,6 +16,9 @@ import PopperUnstyled from '@mui/base/PopperUnstyled';
 import { styled } from '@mui/system';
 import { OutlinedInput } from '@mui/material';
 
+import { useQuery } from '@apollo/client';
+import { QUERY_DEP_PRODUCTS } from '../../utils/queries';
+
 const blue = {
   100: '#DAECFF',
   200: '#99CCF3',
@@ -82,7 +85,8 @@ const StyledListbox = styled('ul')(
   box-sizing: border-box;
   padding: 5px;
   margin: 10px 0;
-  min-width: 320px;
+  min-width: 300px;
+  max-height: 400px;
   background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
   border: 1px solid ${theme.palette.mode === 'dark' ? grey[800] : grey[300]};
   border-radius: 0.75em;
@@ -206,18 +210,22 @@ CustomOptionGroup.propTypes = {
 };
 
 function UnstyledSelectGrouping() {
+  const { loading, data } = useQuery(QUERY_DEP_PRODUCTS);
+  const prodData = data?.departments || [];
+  console.log(prodData[0]);
   return (
     <CustomSelect>
-      <CustomOptionGroup label="Hobbits">
-        <StyledOption value="Frodo">Frodo</StyledOption>
-        <StyledOption value="Sam">Sam</StyledOption>
-        <StyledOption value="Merry">Merry</StyledOption>
-        <StyledOption value="Pippin">Pippin</StyledOption>
-      </CustomOptionGroup>
-      <CustomOptionGroup label="Elves">
+      {prodData.map((department) => (
+        <CustomOptionGroup label={department.name}>
+          {department.products.map((product) => (
+            <StyledOption value={product.name}>{product.name}</StyledOption>
+          ))}
+        </CustomOptionGroup>
+      ))}
+      {/* <CustomOptionGroup label="Elves">
         <StyledOption value="Galadriel">Galadriel</StyledOption>
         <StyledOption value="Legolas">Legolas</StyledOption>
-      </CustomOptionGroup>
+      </CustomOptionGroup> */}
     </CustomSelect>
   );
 }

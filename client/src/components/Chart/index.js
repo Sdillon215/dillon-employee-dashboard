@@ -34,7 +34,6 @@ export default function Chart() {
 		const d = new Date(parseDate);
 		const stringDate = d.toISOString();
 		const formatDate = stringDate.replace(/-/g, ', ').split('T', 1).toString();
-		console.log(formatDate, total);
 		
 		if (pOrS === 'porder') {
 		orderData.push({x: new Date(formatDate), y: total});
