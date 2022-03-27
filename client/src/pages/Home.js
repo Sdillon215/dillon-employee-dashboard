@@ -13,7 +13,7 @@ if (token) {
   return (
     <Grid
       container
-      height='100vh'
+      height='80vh'
       width='100vw'
       spacing={0}
       direction="column"

@@ -8,14 +8,18 @@ function Buyer() {
 
   return (
     <Grid container
-      height='100vh'
+      height='100%'
       width='100vw'
       spacing={0}
       display="flex"
+      flexWrap={'nowrap'}
       direction="column"
       alignItems="center"
       justifyContent="center">
-      <div class='chart'>
+      <div class='blurContainer'>
+        <OrderForm />
+        </div>
+      <div class='blurContainer'>
         <Chart />
       </div>
     </Grid>
