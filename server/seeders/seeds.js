@@ -9,6 +9,8 @@ db.once('open', async () => {
   await Product.deleteMany({});
   await Department.deleteMany({});
   await User.deleteMany({});
+  
+  
 
   // create departments
   const depData = [];
@@ -156,6 +158,8 @@ db.once('open', async () => {
   ];
 
   const PoData = [];
+  const porderItems = [];
+  const saleItems = [];
   const SoData = [];
   const depIds = await Department.find();
   for (let i = 0; i < purchaseOrderDates.length; i += 1) {
@@ -175,8 +179,10 @@ db.once('open', async () => {
     );
     const unitPrice = prodInfo.price;
     const prodTotal = quantity * unitPrice;
-    const total = prodTotal.toFixed(2);
-    PoData.push({ username, purchaseDate, productId, departmentId, productName, quantity, unitPrice, total });
+    const orderTotal = prodTotal.toFixed(2);
+    const productTotal = orderTotal;
+    porderItems.push({ productId, departmentId, productName, quantity, unitPrice, productTotal });
+    PoData.push({ username, purchaseDate, departmentId,  orderTotal, porderItems });
 
     // Sales order
     const saleDate = purchaseDate;
@@ -191,7 +197,8 @@ db.once('open', async () => {
       { $inc: { quantity: decrement } }
     );
     const saleTotal = saleUnitPrice * saleQuantity;
-    SoData.push({ username, saleDate, productId, departmentId, productName, quantity: saleQuantity, salePrice: saleUnitPrice, total: saleTotal });
+    saleItems.push({ productId, departmentId, productName, quantity: saleQuantity, unitPrice: saleUnitPrice, productTotal: saleTotal});
+    SoData.push({ username, departmentId, saleDate, saleTotal, saleItems });
 
   }
   const newPorder = await Porder.collection.insertMany(PoData);

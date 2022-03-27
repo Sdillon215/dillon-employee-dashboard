@@ -94,7 +94,6 @@ const resolvers = {
         saleOrder: async (parent, args) => {
             const sorder = await Sorder.create({ ...args });
             const sItemArr = args.saleItems;
-            console.log(sItemArr);
             for (let i = 0; i < sItemArr.length; i++) {
                 const decrement = Math.abs(sItemArr[i].quantity) * -1;
                 await Product.findByIdAndUpdate(

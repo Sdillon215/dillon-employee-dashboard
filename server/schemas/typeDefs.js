@@ -69,6 +69,7 @@ input SaleItemsInput {
 type Sorder {
   _id: ID
   username: String
+  saleDate: String
   departmentId: ID
   saleTotal: Float
   saleItems: [SaleItems]
@@ -103,8 +104,8 @@ type User {
   type Mutation {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, quantity: Int!): Product
-    purchaseOrder(username: String!, departmentId: ID!, orderTotal: Float!, porderItems: [PorderItemsInput]): Porder
-    saleOrder(username: String!, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Sorder
+    purchaseOrder(username: String!, purchaseDate: String, departmentId: ID!, orderTotal: Float!, porderItems: [PorderItemsInput]): Porder
+    saleOrder(username: String!, saleDate: String, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Sorder
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth
