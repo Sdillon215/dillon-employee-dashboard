@@ -36,7 +36,28 @@ type Porder {
   orderTotal: Float
   porderItems: [PorderItems]
 }
+
 input PorderItemsInput {
+  productId: ID
+  departmentId: ID
+  productName: String
+  quantity: Int
+  unitPrice: Float
+  productTotal: Float
+}
+
+type SaleItems {
+  _id: ID
+  productId: ID
+  departmentId: ID
+  productName: String
+  quantity: Int
+  unitPrice: Float
+  productTotal: Float
+}
+
+input SaleItemsInput {
+  _id: ID
   productId: ID
   departmentId: ID
   productName: String
@@ -48,13 +69,9 @@ input PorderItemsInput {
 type Sorder {
   _id: ID
   username: String
-  saleDate: String
-  productId: ID
   departmentId: ID
-  productName: String
-  quantity: Int
-  salePrice: Float
-  total: Float
+  saleTotal: Float
+  saleItems: [SaleItems]
 }
 
 type User {
@@ -87,7 +104,7 @@ type User {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, quantity: Int!): Product
     purchaseOrder(username: String!, departmentId: ID!, orderTotal: Float!, porderItems: [PorderItemsInput]): Porder
-    saleOrder(username: String!, productId: ID!, departmentId: ID!, productName: String!, quantity: Int!, salePrice: Float!, total: Float!): Sorder
+    saleOrder(username: String!, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Sorder
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth

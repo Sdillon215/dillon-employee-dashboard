@@ -21,8 +21,7 @@ const porderSchema = new Schema({
         min: 0
     },
     porderItems: [porderItemSchema]
-    }
-);
+});
 
 const Porder = mongoose.model('Porder', porderSchema);
 

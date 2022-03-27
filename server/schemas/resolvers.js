@@ -90,6 +90,26 @@ const resolvers = {
                 { new: true }
             )
             return porder;
+        },
+        saleOrder: async (parent, args) => {
+            const sorder = await Sorder.create({ ...args });
+            const sItemArr = args.saleItems;
+            console.log(sItemArr);
+            for (let i = 0; i < sItemArr.length; i++) {
+                const decrement = Math.abs(sItemArr[i].quantity) * -1;
+                await Product.findByIdAndUpdate(
+                    { _id: sItemArr[i].productId },
+                    { $inc: { quantity: decrement } }
+    
+                );
+            }
+
+            await Department.findByIdAndUpdate(
+                { _id: args.departmentId },
+                { $push: { sorders: sorder._id }},
+                { new: true }
+            )
+            return sorder;
         }
     }
 };
