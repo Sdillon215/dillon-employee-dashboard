@@ -233,7 +233,7 @@ function createInput(product, quantity, unitPrice, total) {
   return { product, quantity, unitPrice, total };
 }
 
-const rows = [];
+const rows = [1,2,3,4,5,6,7,8];
 function handleAddBtn(e) {
   rows.push('newRow');
   UnstyledSelectGrouping();

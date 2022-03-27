@@ -19,7 +19,7 @@ function Buyer() {
       <div class='blurContainer'>
         <OrderForm />
         </div>
-      <div class='blurContainer'>
+      <div class='blurContainer btm'>
         <Chart />
       </div>
     </Grid>

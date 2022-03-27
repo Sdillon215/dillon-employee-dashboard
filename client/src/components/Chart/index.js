@@ -118,7 +118,6 @@ export default function Chart() {
 			
 			return (
 			<div>
-					{/* <GraphInput /> */}
 				<CanvasJSChart options = {options} 
 				/>
 			</div>
