@@ -9,8 +9,8 @@ db.once('open', async () => {
   await Product.deleteMany({});
   await Department.deleteMany({});
   await User.deleteMany({});
-  
-  
+
+
 
   // create departments
   const depData = [];
@@ -57,7 +57,7 @@ db.once('open', async () => {
   ];
   const pkData = [];
   for (let i = 0; i < pk.length; i += 1) {
-    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
+    const unitPrice = Math.random() * (50 - 30 + 1) + 30;
     const name = pk[i];
     const description = 'Potted Plants';
     const department = 'Plant Kingdom';
@@ -80,7 +80,7 @@ db.once('open', async () => {
   ];
   const freshData = [];
   for (let i = 0; i < pk.length; i += 1) {
-    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
+    const unitPrice = Math.random() * (50 - 30 + 1) + 30;
     const name = fc[i];
     const description = 'Fresh Flowers';
     const department = 'Fresh Cut';
@@ -103,7 +103,7 @@ db.once('open', async () => {
   ];
   const supData = [];
   for (let i = 0; i < pk.length; i += 1) {
-    const unitPrice = Math.random() * (50 - 5 + 1) + 5;
+    const unitPrice = Math.random() * (50 - 30 + 1) + 30;
     const name = sup[i];
     const description = 'Floral Decorations';
     const department = 'Supply';
@@ -157,21 +157,19 @@ db.once('open', async () => {
     '2021, 12, 01'
   ];
 
-  const PoData = [];
-  const porderItems = [];
-  const saleItems = [];
-  const SoData = [];
+
   const depIds = await Department.find();
   for (let i = 0; i < purchaseOrderDates.length; i += 1) {
+    const PoData = [];
+    const porderItems = [];
     const depId = depIds[Math.floor(Math.random() * depIds.length)];
     const prodId = depId.products[Math.floor(Math.random() * depId.products.length)];
     const prodInfo = await Product.findById(prodId);
     const username = 'Sean_sendz';
     const purchaseDate = purchaseOrderDates[i];
-    const departmentId = depId;
-    const productId = prodId;
+    const departmentId = depId._id;
     const productName = prodInfo.name;
-    const quantity = Math.floor(Math.random() * (3000 - 2000 + 1)) + 500;
+    const quantity = Math.floor(Math.random() * (10000 - 8000 + 1)) + 8000;
     const increment = Math.abs(quantity) * +1;
     const updateQuantity = await Product.findByIdAndUpdate(
       { _id: prodId },
@@ -181,11 +179,47 @@ db.once('open', async () => {
     const prodTotal = quantity * unitPrice;
     const orderTotal = prodTotal.toFixed(2);
     const productTotal = orderTotal;
-    porderItems.push({ productId, departmentId, productName, quantity, unitPrice, productTotal });
-    PoData.push({ username, purchaseDate, departmentId,  orderTotal, porderItems });
+    porderItems.push({ productId: prodId, departmentId, productName, quantity, unitPrice, productTotal });
+    PoData.push({ username, purchaseDate, departmentId, orderTotal, porderItems });
+    const newPorder = await Porder.collection.insertMany(PoData);
+  }
+  const getPorders = await Porder.find();
+  for (let i = 0; i < getPorders.length; i += 1) {
+    const order = getPorders[i];
+    await Department.findByIdAndUpdate(
+      { _id: order.departmentId },
+      { $push: { porders: order._id } }
+    );
+  }
 
-    // Sales order
-    const saleDate = purchaseDate;
+  const saleOrderDates = [
+    '2021, 01, 10',
+    '2021, 02, 10',
+    '2021, 03, 10',
+    '2021, 04, 10',
+    '2021, 05, 10',
+    '2021, 06, 10',
+    '2021, 07, 10',
+    '2021, 08, 10',
+    '2021, 09, 10',
+    '2021, 10, 10',
+    '2021, 11, 10',
+    '2021, 12, 10'
+  ];
+  for (let i = 0; i < saleOrderDates.length; i += 1) {
+    const saleItems = [];
+    const SoData = [];
+    const depId = depIds[Math.floor(Math.random() * depIds.length)];
+    const prodId = depId.products[Math.floor(Math.random() * depId.products.length)];
+    const prodInfo = await Product.findById(prodId);
+    const username = 'Sean_sendz';
+    const saleDate = saleOrderDates[i];
+    const departmentId = depId._id;
+    const productName = prodInfo.name;
+    const quantity = Math.floor(Math.random() * (10000 - 8000 + 1)) + 8000;
+    
+    
+    const unitPrice = prodInfo.price;
     const saleQuan = quantity * .8;
     const salePerc = unitPrice * .5;
     const salePrice = salePerc + unitPrice;
@@ -197,25 +231,17 @@ db.once('open', async () => {
       { $inc: { quantity: decrement } }
     );
     const saleTotal = saleUnitPrice * saleQuantity;
-    saleItems.push({ productId, departmentId, productName, quantity: saleQuantity, unitPrice: saleUnitPrice, productTotal: saleTotal});
+    saleItems.push({ productId: prodId, departmentId, productName, quantity: saleQuantity, unitPrice: saleUnitPrice, productTotal: saleTotal });
     SoData.push({ username, departmentId, saleDate, saleTotal, saleItems });
-
-  }
-  const newPorder = await Porder.collection.insertMany(PoData);
-  const getPorders = await Porder.find();
-  for (let i = 0; i < getPorders.length; i += 1) {
-    await Department.findByIdAndUpdate(
-      { _id: getPorders[i].departmentId},
-      { $push: { porders: getPorders[i]._id}}
-      );
+    const newSorder = await Sorder.collection.insertMany(SoData);
   }
   
-  const newSorder = await Sorder.collection.insertMany(SoData);
   const getSorders = await Sorder.find();
   for (let i = 0; i < getSorders.length; i += 1) {
+    const sale = getSorders[i];
     await Department.findByIdAndUpdate(
-      { _id: getSorders[i].departmentId},
-      { $push: { sorders: getSorders[i]._id}}
+      { _id: sale.departmentId },
+      { $push: { sorders: sale._id } }
     )
   }
 
