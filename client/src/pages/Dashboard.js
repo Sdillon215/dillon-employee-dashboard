@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
 import Auth from '../utils/auth';
 import Sales from '../components/Sales';
 import Buyer from '../components/Buyer';

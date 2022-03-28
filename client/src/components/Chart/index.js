@@ -7,10 +7,9 @@ import { QUERY_DEP_ORDERS } from '../../utils/queries';
 
 
 export default function Chart() {
-	const {loading, data} = useQuery(QUERY_DEP_ORDERS);
+	const { data } = useQuery(QUERY_DEP_ORDERS);
 	const orderData = [];
 	const saleData = [];
-	const porderArr = [];
 	const deptData = data?.departments || [];
 	for (let i = 0; i < deptData.length; i++) {
 		const porderI = deptData[i].porders;

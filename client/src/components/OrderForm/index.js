@@ -21,9 +21,10 @@ import { useQuery } from '@apollo/client';
 import { QUERY_DEP_PRODUCTS } from '../../utils/queries';
 
 export default function OrderForm() {
-  const { loading, data } = useQuery(QUERY_DEP_PRODUCTS);
+  const { data } = useQuery(QUERY_DEP_PRODUCTS);
   const prodData = data?.departments || [];
-  const [rowsState, setRowsState ] = useState({ rows: [{ key: 0 }]});
+  const [rowsState, setRowsState] = useState({ rows: [{ key: 0, name: '', quantity: '', unitPrice: '', total: '' }] });
+  const [inputState, setInputState] = useState({ rows: [{ key: 0, name: '', quantity: '', unitPrice: '', total: '' }] });
   // const rows = [
   //   { key: 0 }
   // ];
@@ -219,19 +220,53 @@ export default function OrderForm() {
   };
 
   function handleAddBtn(e) {
-    // e.preventDefault();
     const rows = rowsState.rows;
     const key = rows.length;
-    rows.push({ key: key });
+    const newRow = { key: key, name: '', quantity: '', unitPrice: '', total: '' };
+    rows.push({ newRow });
     setRowsState({ ...rowsState, rows });
+    // setInputState({ ...inputState, rows });
+    console.log(rowsState);
     UnstyledSelectGrouping();
+    e.preventDefault();
   }
 
-  function UnstyledSelectGrouping(props) {
+  const handleOrderSubmit = async (e) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setRowsState({
+      ...rowsState,
+      [name]: value,
+    });
+    console.log(rowsState);
+    // try {
+    //     const mutationResponse = await login({
+    //         variables: { email: formState.email, password: formState.password },
+    //     });
+    //     const token = mutationResponse.data.login.token;
+    //     Auth.login(token);
+    //     console.log(token);
+    // } catch (e) {
+    //     console.log(e);
+    // }
+  };
+
+  
+  function UnstyledSelectGrouping() {
+    const handleChange = (e) => {
+      e.preventDefault();
+      const { name, value } = e.target;
+      setRowsState({
+          ...rowsState,
+          [name]: value,
+      });
+      console.log(rowsState);
+    };
     return (
       <>
         {rowsState.rows.map((row) => (
           <TableRow
+          onSubmit={handleOrderSubmit}
             key={row.key}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
@@ -239,18 +274,20 @@ export default function OrderForm() {
               {/* {row.product} */}
               <CustomSelect >
                 {prodData.map((department) => (
-                  <CustomOptionGroup key={department.name}  label={department.name}>
+                  <CustomOptionGroup key={row.key} label={department.name}>
                     {department.products.map((product) => (
-                      <StyledOption  key={product.name} value={product.name}>{product.name}</StyledOption>
+                      <StyledOption key={row.key} value={product.name}>{product.name}</StyledOption>
                     ))}
                   </CustomOptionGroup>
                 ))}
               </CustomSelect>
             </TableCell>
-            <TableCell  align="right">
+            <TableCell align="right">
               {/* {row.quantity} */}
               <TextField
-                
+              key={row.key}
+                value={row.quantity}
+                onChange={handleChange}
                 id="outlined-number"
                 type="number"
                 sx={{
@@ -264,10 +301,11 @@ export default function OrderForm() {
               />
 
             </TableCell>
-            <TableCell  align="right">
-              {/* {row.unitPrice} */}
+            <TableCell align="right">
               <OutlinedInput
-                
+                onChange={handleChange}
+                key={row.key}
+                value={row.unitPrice}
                 id="outlined-adornment-amount"
                 // type="number"
                 sx={{
@@ -281,10 +319,12 @@ export default function OrderForm() {
                 }}
               />
             </TableCell>
-            <TableCell  align="right">
+            <TableCell align="right">
               {/* {row.total} */}
               <TextField
-                
+                onChange={handleChange}
+                key={row.key}
+                value={row.total}
                 id="outlined-read-only-input"
                 defaultValue=""
                 sx={{
@@ -297,19 +337,14 @@ export default function OrderForm() {
                   startAdornment: (
                     <InputAdornment position="start">$</InputAdornment>
                   )
-                }}
-              />
+                }}>{row.unitPrice * row.quantity}</TextField>
             </TableCell>
-            <TableCell  align="right">
-              <button>Add</button>
+            <TableCell align="right">
+              <button type="submit">Add</button>
             </TableCell>
           </TableRow>
         ))}</>
     );
-  }
-
-  function createInput(product, quantity, unitPrice, total) {
-    return { product, quantity, unitPrice, total };
   }
 
 
@@ -322,17 +357,20 @@ export default function OrderForm() {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell align="right">Quantity</TableCell>
-            <TableCell align="right">Unit Price</TableCell>
-            <TableCell align="right">Total</TableCell>
-            <TableCell align="right"></TableCell>
+            <TableCell align="center">Product</TableCell>
+            <TableCell align="center">Quantity</TableCell>
+            <TableCell align="center">Unit Price</TableCell>
+            <TableCell align="center">Total</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           <UnstyledSelectGrouping />
-          <TableRow>
-            <button onClick={handleAddBtn}>Add to Order</button>
+          <TableRow align="center">
+            <TableCell colSpan={6} align="center">
+              <button onClick={handleAddBtn}>Add Product</button>
+              {/* <button type="submit" onClick={handleOrderSubmit}>Submit Order</button> */}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

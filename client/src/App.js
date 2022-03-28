@@ -12,7 +12,6 @@ import { setContext } from '@apollo/client/link/context';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NoMatch from './pages/NoMatch';
-import Signup from './pages/Signup';
 import Nav from './components/Nav';
 // import { StoreProvider } from "./utils/GlobalState";
 
