@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,29 +20,38 @@ import { OutlinedInput } from '@mui/material';
 import { useQuery } from '@apollo/client';
 import { QUERY_DEP_PRODUCTS } from '../../utils/queries';
 
-const blue = {
-  100: '#DAECFF',
-  200: '#99CCF3',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-  900: '#003A75',
-};
+export default function OrderForm() {
+  const { loading, data } = useQuery(QUERY_DEP_PRODUCTS);
+  const prodData = data?.departments || [];
+  const [rowsState, setRowsState ] = useState({ rows: [{ key: 0 }]});
+  // const rows = [
+  //   { key: 0 }
+  // ];
 
-const grey = {
-  100: '#E7EBF0',
-  200: '#E0E3E7',
-  300: '#CDD2D7',
-  400: '#B2BAC2',
-  500: '#A0AAB4',
-  600: '#6F7E8C',
-  700: '#3E5060',
-  800: '#2D3843',
-  900: '#1A2027',
-};
 
-const StyledButton = styled('button')(
-  ({ theme }) => `
+  const blue = {
+    100: '#DAECFF',
+    200: '#99CCF3',
+    400: '#3399FF',
+    500: '#007FFF',
+    600: '#0072E5',
+    900: '#003A75',
+  };
+
+  const grey = {
+    100: '#E7EBF0',
+    200: '#E0E3E7',
+    300: '#CDD2D7',
+    400: '#B2BAC2',
+    500: '#A0AAB4',
+    600: '#6F7E8C',
+    700: '#3E5060',
+    800: '#2D3843',
+    900: '#1A2027',
+  };
+
+  const StyledButton = styled('button')(
+    ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
@@ -75,10 +85,10 @@ const StyledButton = styled('button')(
     float: right;
   }
   `,
-);
+  );
 
-const StyledListbox = styled('ul')(
-  ({ theme }) => `
+  const StyledListbox = styled('ul')(
+    ({ theme }) => `
   font-family: IBM Plex Sans, sans-serif;
   font-size: 0.875rem;
   box-sizing: border-box;
@@ -92,10 +102,10 @@ const StyledListbox = styled('ul')(
   overflow: auto;
   outline: 0px;
   `,
-);
+  );
 
-const StyledOption = styled(OptionUnstyled)(
-  ({ theme }) => `
+  const StyledOption = styled(OptionUnstyled)(
+    ({ theme }) => `
   list-style: none;
   padding: 4px;
   margin-top: 0;
@@ -130,13 +140,13 @@ const StyledOption = styled(OptionUnstyled)(
     color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
   }
   `,
-);
+  );
 
-const StyledGroupRoot = styled('li')`
+  const StyledGroupRoot = styled('li')`
   list-style: none;
 `;
 
-const StyledGroupHeader = styled('span')`
+  const StyledGroupHeader = styled('span')`
   display: block;
   padding: 15px 0 5px 10px;
   font-size: 0.75em;
@@ -146,7 +156,7 @@ const StyledGroupHeader = styled('span')`
   color: ${grey[600]};
 `;
 
-const StyledGroupOptions = styled('ul')`
+  const StyledGroupOptions = styled('ul')`
   list-style: none;
   margin-left: 0;
   padding: 0;
@@ -156,90 +166,153 @@ const StyledGroupOptions = styled('ul')`
   }
 `;
 
-const StyledPopper = styled(PopperUnstyled)`
+  const StyledPopper = styled(PopperUnstyled)`
   z-index: 1;
 `;
 
-function CustomSelect(props) {
-  const components = {
-    Root: StyledButton,
-    Listbox: StyledListbox,
-    Popper: StyledPopper,
-    ...props.components,
+  function CustomSelect(props) {
+    const components = {
+      Root: StyledButton,
+      Listbox: StyledListbox,
+      Popper: StyledPopper,
+      ...props.components,
+    };
+
+    return <SelectUnstyled {...props} components={components} />;
+  }
+
+  CustomSelect.propTypes = {
+    /**
+     * The components used for each slot inside the Select.
+     * Either a string to use a HTML element or a component.
+     * @default {}
+     */
+    components: PropTypes.shape({
+      Listbox: PropTypes.elementType,
+      Popper: PropTypes.func,
+      Root: PropTypes.elementType,
+    }),
   };
 
-  return <SelectUnstyled {...props} components={components} />;
-}
+  const CustomOptionGroup = React.forwardRef(function CustomOptionGroup(props, ref) {
+    const components = {
+      Root: StyledGroupRoot,
+      Label: StyledGroupHeader,
+      List: StyledGroupOptions,
+      ...props.components,
+    };
 
-CustomSelect.propTypes = {
-  /**
-   * The components used for each slot inside the Select.
-   * Either a string to use a HTML element or a component.
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Listbox: PropTypes.elementType,
-    Popper: PropTypes.func,
-    Root: PropTypes.elementType,
-  }),
-};
+    return <OptionGroupUnstyled {...props} ref={ref} components={components} />;
+  });
 
-const CustomOptionGroup = React.forwardRef(function CustomOptionGroup(props, ref) {
-  const components = {
-    Root: StyledGroupRoot,
-    Label: StyledGroupHeader,
-    List: StyledGroupOptions,
-    ...props.components,
+  CustomOptionGroup.propTypes = {
+    /**
+     * The components used for each slot inside the OptionGroupUnstyled.
+     * Either a string to use a HTML element or a component.
+     * @default {}
+     */
+    components: PropTypes.shape({
+      Label: PropTypes.elementType,
+      List: PropTypes.elementType,
+      Root: PropTypes.elementType,
+    }),
   };
 
-  return <OptionGroupUnstyled {...props} ref={ref} components={components} />;
-});
+  function handleAddBtn(e) {
+    // e.preventDefault();
+    const rows = rowsState.rows;
+    const key = rows.length;
+    rows.push({ key: key });
+    setRowsState({ ...rowsState, rows });
+    UnstyledSelectGrouping();
+  }
 
-CustomOptionGroup.propTypes = {
-  /**
-   * The components used for each slot inside the OptionGroupUnstyled.
-   * Either a string to use a HTML element or a component.
-   * @default {}
-   */
-  components: PropTypes.shape({
-    Label: PropTypes.elementType,
-    List: PropTypes.elementType,
-    Root: PropTypes.elementType,
-  }),
-};
+  function UnstyledSelectGrouping(props) {
+    return (
+      <>
+        {rowsState.rows.map((row) => (
+          <TableRow
+            key={row.key}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell component="th" scope="row" >
+              {/* {row.product} */}
+              <CustomSelect >
+                {prodData.map((department) => (
+                  <CustomOptionGroup key={department.name}  label={department.name}>
+                    {department.products.map((product) => (
+                      <StyledOption  key={product.name} value={product.name}>{product.name}</StyledOption>
+                    ))}
+                  </CustomOptionGroup>
+                ))}
+              </CustomSelect>
+            </TableCell>
+            <TableCell  align="right">
+              {/* {row.quantity} */}
+              <TextField
+                
+                id="outlined-number"
+                type="number"
+                sx={{
+                  width: '10vw',
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  borderRadius: '.27em'
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
 
-function UnstyledSelectGrouping(e) {
-  const { loading, data } = useQuery(QUERY_DEP_PRODUCTS);
-  const prodData = data?.departments || [];
-  // console.log(prodData[0]);
-  return (
-    <CustomSelect>
-      {prodData.map((department) => (
-        <CustomOptionGroup label={department.name}>
-          {department.products.map((product) => (
-            <StyledOption value={product.name}>{product.name}</StyledOption>
-          ))}
-        </CustomOptionGroup>
-      ))}
-      {/* <CustomOptionGroup label="Elves">
-        <StyledOption value="Galadriel">Galadriel</StyledOption>
-        <StyledOption value="Legolas">Legolas</StyledOption>
-      </CustomOptionGroup> */}
-    </CustomSelect>
-  );
-}
+            </TableCell>
+            <TableCell  align="right">
+              {/* {row.unitPrice} */}
+              <OutlinedInput
+                
+                id="outlined-adornment-amount"
+                // type="number"
+                sx={{
+                  width: '10vw',
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  borderRadius: '.27em'
+                }}
+                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </TableCell>
+            <TableCell  align="right">
+              {/* {row.total} */}
+              <TextField
+                
+                id="outlined-read-only-input"
+                defaultValue=""
+                sx={{
+                  width: '10vw',
+                  background: 'rgba(255, 255, 255, 0.6)',
+                  borderRadius: '.27em'
+                }}
+                InputProps={{
+                  readOnly: true,
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  )
+                }}
+              />
+            </TableCell>
+            <TableCell  align="right">
+              <button>Add</button>
+            </TableCell>
+          </TableRow>
+        ))}</>
+    );
+  }
 
-function createInput(product, quantity, unitPrice, total) {
-  return { product, quantity, unitPrice, total };
-}
+  function createInput(product, quantity, unitPrice, total) {
+    return { product, quantity, unitPrice, total };
+  }
 
-const rows = [1,2,3,4,5,6,7,8];
-function handleAddBtn(e) {
-  rows.push('newRow');
-  UnstyledSelectGrouping();
-}
 
-export default function OrderForm() {
   return (
     <TableContainer sx={{
       width: '100%',
@@ -257,70 +330,7 @@ export default function OrderForm() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.product}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {/* {row.product} */}
-                <UnstyledSelectGrouping />
-              </TableCell>
-              <TableCell align="right">
-                {/* {row.quantity} */}
-                <TextField
-                  id="outlined-number"
-                  type="number"
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-
-              </TableCell>
-              <TableCell align="right">
-                {/* {row.unitPrice} */}
-                <OutlinedInput
-                  id="outlined-adornment-amount"
-                  // type="number"
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </TableCell>
-              <TableCell align="right">
-                {/* {row.total} */}
-                <TextField
-                  id="outlined-read-only-input"
-                  defaultValue=""
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    )
-                  }}
-                />
-              </TableCell>
-              <TableCell align="right">
-                <button>Add</button>
-              </TableCell>
-            </TableRow>
-          ))}
+          <UnstyledSelectGrouping />
           <TableRow>
             <button onClick={handleAddBtn}>Add to Order</button>
           </TableRow>

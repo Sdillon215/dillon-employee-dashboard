@@ -21,7 +21,6 @@ export default function Chart() {
 			time(milli, total, pOrS);
 		}
 		const sorderI = deptData[i].sorders;
-		console.log(sorderI);
 		for (let i = 0; i < sorderI.length; i++) {
 			const milli = sorderI[i].saleDate;
 			const total = sorderI[i].saleTotal;
