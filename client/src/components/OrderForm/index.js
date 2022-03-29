@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import Table from '@mui/material/Table';
+import { Button } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -26,7 +27,12 @@ export default function OrderForm() {
   const { data } = useQuery(QUERY_DEP_PRODUCTS);
   const prodData = data?.departments || [];
   const [rowsState, setRowsState] = useState({ rows: [{ key: 0, name: '', quantity: '', unitPrice: '', total: '' }] });
-  const [inputState, setInputState] = useState({ rows: [{ key: 0, name: '', quantity: '', unitPrice: '', total: '' }] });
+  const [inputState, setInputState] = useState({
+    product: '',
+    quantity: '',
+    unitPrice: '',
+    total: ''
+  });
 
   // Order Modal
   const BackdropUnstyled = React.forwardRef((props, ref) => {
@@ -68,12 +74,12 @@ export default function OrderForm() {
   -webkit-tap-highlight-color: transparent;
 `;
 
-  const style = (theme) => ({
-    width: 400,
-    bgcolor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
-    border: '2px solid currentColor',
-    padding: '16px 32px 24px 32px',
-  });
+  // const style = (theme) => ({
+  //   width: 400,
+  //   bgcolor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
+  //   border: '2px solid currentColor',
+  //   padding: '16px 32px 24px 32px',
+  // });
 
 
 
@@ -267,16 +273,16 @@ export default function OrderForm() {
     }),
   };
 
-  function handleAddBtn(e) {
-    const rows = rowsState.rows;
-    const key = rows.length;
-    const newRow = { key: key, name: '', quantity: '', unitPrice: '', total: '' };
-    rows.push({ newRow });
-    setRowsState({ ...rowsState, rows });
-    // setInputState({ ...inputState, rows });
-    console.log(rowsState);
-    e.preventDefault();
-  }
+  // function handleAddBtn(e) {
+  //   const rows = rowsState.rows;
+  //   const key = rows.length;
+  //   const newRow = { key: key, name: '', quantity: '', unitPrice: '', total: '' };
+  //   rows.push({ newRow });
+  //   setRowsState({ ...rowsState, rows });
+  //   // setInputState({ ...inputState, rows });
+  //   console.log(rowsState);
+  //   e.preventDefault();
+  // }
 
   const handleOrderSubmit = async (e) => {
     e.preventDefault();
@@ -297,136 +303,99 @@ export default function OrderForm() {
     //     console.log(e);
     // }
   };
-
-  // const handleChange = (e) => {
-  //   e.preventDefault();
-  //   const { name, value } = e.target;
-  //   setRowsState({
-  //     ...rowsState,
-  //     [name]: value,
-  //   });
-  //   console.log(rowsState);
-  // };
-  function OrderModal() {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    let modalText = '';
-
-    if (!rowsState.rows.length) {
-      modalText = 'Start Order'
-    }
-    if (rowsState.rows.length) {
-      modalText = 'Add Item'
-    }
-    return (
-      <div>
-        <button type="button" onClick={handleOpen}>
-          {modalText}
-        </button>
-        <Modal
-          aria-labelledby="unstyled-modal-title"
-          aria-describedby="unstyled-modal-description"
-          open={open}
-          onClose={handleClose}
-          BackdropComponent={Backdrop}
-        >
-          <Box sx={{
-            width: '70vw',
-            border: '1px solid rgba(255, 255, 255, 0.6)',
-            borderRadius: '10px',
-            background: 'rgba(255, 255, 255, .9)'
-          }}>
-            <TableContainer sx={{
-              width: '100%',
-              marginTop: '10px',
-              padding: '10px'
-            }}>
-              <Table aria-label="simple table" sx={{ width: '100%', padding: '5vw' }}>
-                <TableHead sx={{ width: '100%' }}>
-                  <TableRow sx={{ width: '100%' }}>
-                    <TableCell align="center">Product</TableCell>
-                    <TableCell align="center">Quantity</TableCell>
-                    <TableCell align="center">Unit Price</TableCell>
-                    <TableCell align="center">Total</TableCell>
-                    <TableCell align="center"></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    onSubmit={handleOrderSubmit}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 }, width: '100%' }}
-                  >
-                    <TableCell component="th" scope="row" >
-                      <CustomSelect >
-                        {prodData.map((department) => (
-                          <CustomOptionGroup  label={department.name}>
-                            {department.products.map((product) => (
-                              <StyledOption value={product.name}>{product.name}</StyledOption>
-                            ))}
-                          </CustomOptionGroup>
-                        ))}
-                      </CustomSelect>
-                    </TableCell>
-                    <TableCell align="right">
-                      <TextField
-                        id="outlined-number"
-                        type="number"
-                        sx={{
-                          width: '10vw',
-                          background: 'rgba(255, 255, 255, 0.6)',
-                          borderRadius: '.27em'
-                        }}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-
-                    </TableCell>
-                    <TableCell align="right">
-                      <OutlinedInput
-                        id="outlined-adornment-amount"
-                        sx={{
-                          width: '10vw',
-                          background: 'rgba(255, 255, 255, 0.6)',
-                          borderRadius: '.27em'
-                        }}
-                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      <TextField
-                        id="outlined-read-only-input"
-                        defaultValue=""
-                        sx={{
-                          width: '10vw',
-                          background: 'rgba(255, 255, 255, 0.6)',
-                          borderRadius: '.27em'
-                        }}
-                        InputProps={{
-                          readOnly: true,
-                          startAdornment: (
-                            <InputAdornment position="start">$</InputAdornment>
-                          )
-                        }}></TextField>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow align="center" sx={{ width: '100%' }}>
-                    <TableCell colSpan={6} align="center">
-                      <button>Add To Order</button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Box>
-        </Modal>
-      </div>
-    );
+  const getSelection= (e) => {
+    console.log(e.currentTarget);
   }
+  const handleAddSubmit = (e) => {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const product = data.get('product');
+    const quantString = data.get('quantity');
+    console.log(product);
+  }
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = (e) => {
+    e.stopPropagation();
+    setOpen(false);
+  }
+
+
+
+
+  let modalText = '';
+
+  if (!rowsState.rows.length) {
+    modalText = 'Start Order'
+  }
+  if (rowsState.rows.length) {
+    modalText = 'Add Item'
+  }
+
+
+
+  const displayPo = rowsState.rows.map((row, index) => (
+    <TableRow
+      onSubmit={handleOrderSubmit}
+      key={index}
+      sx={{ width: '100%' }}
+    >
+      <TableCell align="left">
+        <TextField
+          id="outlined-read-only-input"
+          inputProps={{ readOnly: true }}
+          sx={{
+            width: '20vw',
+            background: 'rgba(255, 255, 255, 0.6)',
+            borderRadius: '.27em'
+          }} />
+      </TableCell>
+      <TableCell align="right">
+        <TextField
+          key={row.key}
+          value={row.quantity}
+          id="outlined-number"
+          type="number"
+          sx={{
+            width: '10vw',
+            background: 'rgba(255, 255, 255, 0.6)',
+            borderRadius: '.27em'
+          }}
+        />
+
+      </TableCell>
+      <TableCell align="right">
+        <OutlinedInput
+          key={row.key}
+          id="outlined-adornment-amount"
+          sx={{
+            width: '10vw',
+            background: 'rgba(255, 255, 255, 0.6)',
+            borderRadius: '.27em'
+          }}
+          startAdornment={<InputAdornment position="start">$</InputAdornment>}
+        />
+      </TableCell>
+      <TableCell align="right">
+        <TextField
+          key={row.key}
+          value={row.total}
+          id="outlined-read-only-input"
+          sx={{
+            width: '10vw',
+            background: 'rgba(255, 255, 255, 0.6)',
+            borderRadius: '.27em'
+          }}
+          InputProps={{
+            readOnly: true,
+            startAdornment: (
+              <InputAdornment position="start">$</InputAdornment>
+            )
+          }}>{row.unitPrice * row.quantity}</TextField>
+      </TableCell>
+    </TableRow>
+  ));
 
   return (
     <TableContainer sx={{
@@ -437,88 +406,103 @@ export default function OrderForm() {
       <Table aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="center">Product</TableCell>
-            <TableCell align="center">Quantity</TableCell>
-            <TableCell align="center">Unit Price</TableCell>
-            <TableCell align="center">Total</TableCell>
-            <TableCell align="center"></TableCell>
+            <TableCell align="left">Product</TableCell>
+            <TableCell align="right">Quantity</TableCell>
+            <TableCell align="right">Unit Price</TableCell>
+            <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rowsState.rows.map((row) => (
-            <TableRow
-              onSubmit={handleOrderSubmit}
-              key={row.key}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row" >
-                <TextField
-                  id="outlined-read-only-input"
-                  inputProps={{ readOnly: true }}
-                  sx={{
-                    width: '20vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }} />
-              </TableCell>
-              <TableCell align="right">
-                <TextField
-                  key={row.key}
-                  value={row.quantity}
-                  id="outlined-number"
-                  type="number"
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-
-              </TableCell>
-              <TableCell align="right">
-                <OutlinedInput
-                  key={row.key}
-                  id="outlined-adornment-amount"
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </TableCell>
-              <TableCell align="right">
-                <TextField
-                  key={row.key}
-                  value={row.total}
-                  id="outlined-read-only-input"
-                  defaultValue=""
-                  sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                  }}
-                  InputProps={{
-                    readOnly: true,
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    )
-                  }}>{row.unitPrice * row.quantity}</TextField>
-              </TableCell>
-              <TableCell align="right">
-                <button type="submit">Add</button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {displayPo}
           <TableRow align="center">
             <TableCell colSpan={6} align="center">
-              <OrderModal />
+
+              <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
+                {modalText}
+              </Button>
+              <Modal
+                aria-labelledby="unstyled-modal-title"
+                aria-describedby="unstyled-modal-description"
+                open={open}
+                onClose={handleClose}
+                BackdropComponent={Backdrop}
+              >
+                <Box
+                  component="form"
+                  onSubmit={handleAddSubmit}
+                  sx={{
+                    width: '60vw',
+                    border: '1px solid rgba(255, 255, 255, 0.6)',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 255, .9)'
+                  }}>
+                  <TableContainer sx={{
+                    width: '100%',
+                    marginTop: '10px',
+                    padding: '10px'
+                  }}>
+                    <Table aria-label="simple table" sx={{ width: '100%', padding: '5vw' }}>
+                      <TableHead sx={{ width: '100%' }}>
+                        <TableRow sx={{ width: '100%' }}>
+                          <TableCell align="left">Product</TableCell>
+                          <TableCell align="right">Quantity</TableCell>
+                          <TableCell align="right">Unit Price</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        <TableRow
+                          sx={{ width: '100%' }}
+                        >
+                          <TableCell align="left">
+                            <CustomSelect>
+                              {prodData.map((department) => (
+                                <CustomOptionGroup label={department.name}>
+                                  {department.products.map((product, index) => (
+                                    <StyledOption
+                                      name="product"
+                                      onChange={getSelection}
+                                      departmentId={product.departmentId}
+                                      value={product.name}>{product.name}</StyledOption>
+                                  ))}
+                                </CustomOptionGroup>
+                              ))}
+                            </CustomSelect>
+                          </TableCell>
+                          <TableCell align="right">
+                            <TextField
+                              id="outlined-number"
+                              name="quantity"
+                              sx={{
+                                width: '10vw',
+                                background: 'rgba(255, 255, 255, 0.6)',
+                                borderRadius: '.27em'
+                              }}
+                            />
+
+                          </TableCell>
+                          <TableCell align="right">
+                            <OutlinedInput
+                              id="outlined-adornment-amount"
+                              name="unitPrice"
+                              sx={{
+                                width: '10vw',
+                                background: 'rgba(255, 255, 255, 0.6)',
+                                borderRadius: '.27em'
+                              }}
+                              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                            />
+                          </TableCell>
+                        </TableRow>
+                        <TableRow align="center" sx={{ width: '100%' }}>
+                          <TableCell colSpan={6} align="center">
+                            <button type="submit">Add To Order</button>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </Modal>
             </TableCell>
           </TableRow>
         </TableBody>
