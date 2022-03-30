@@ -17,7 +17,7 @@ function Buyer() {
       alignItems="center"
       justifyContent="center">
       <div class='blurContainer'>
-        {/* <OrderForm /> */}
+        <OrderForm />
         </div>
       <div class='blurContainer btm'>
         <Chart />

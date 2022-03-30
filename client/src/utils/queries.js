@@ -15,20 +15,13 @@ export const QUERY_DEP_ORDERS = gql`
       saleDate
       saleTotal
     }
+    products {
+      _id
+      name
+    }
   }
 }`;
 
-// export const QUERY_DEP_PRODUCTS = gql`
-// {
-//   departments {
-//     _id
-//     name
-//     products {
-//       _id
-//       name
-//     }
-//   }
-// }`;
 
 export const QUERY_PORDERS = gql`
   {
