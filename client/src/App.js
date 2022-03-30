@@ -13,7 +13,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import NoMatch from './pages/NoMatch';
 import Nav from './components/Nav';
-// import { StoreProvider } from "./utils/GlobalState";
+import { StoreProvider } from './utils/GlobalState';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -35,21 +35,23 @@ const client = new ApolloClient({
 });
 
 
-function App(props) {
+function App() {
 
   return (
-        <ApolloProvider client={client} {...props}>
-          <Router>
-            {/* <StoreProvider> */}
+    <ApolloProvider client={client}>
+      <Router>
+        <div>
+          <StoreProvider>
             <Nav />
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route component={NoMatch} />
             </Switch>
-            {/* </StoreProvider> */}
-          </Router>
-        </ApolloProvider>
+          </StoreProvider>
+        </div>
+      </Router>
+    </ApolloProvider>
   );
 }
 

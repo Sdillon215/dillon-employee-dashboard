@@ -9,16 +9,17 @@ import { UPDATE_DEP_ORDERS } from '../../utils/actions';
 
 export default function Chart() {
 	const [state, dispatch] = useStoreContext();
-	const { loading, data } = useQuery(QUERY_DEP_ORDERS);
+	const { depOrders } = state;
+	const { loading, data: depData } = useQuery(QUERY_DEP_ORDERS);
 
 	useEffect(() => {
-		if (data) {
+		if (depData) {
 		  dispatch({
 			type: UPDATE_DEP_ORDERS,
-			depOrders: data?.departments
+			depOrders: depData.departments
 		  });
 	
-		  data.products.forEach((depOrders) => {
+		  depData.departments.forEach((depOrders) => {
 			idbPromise('depOrders', 'put', depOrders);
 		  });
 		  // add else if to check if `loading` is undefined in `useQuery()` Hook
@@ -32,257 +33,107 @@ export default function Chart() {
 			});
 		  });
 		}
-	  }, [data, loading, dispatch]);
+	}, [depData, dispatch]);
 
-	  const getState = () => {
-		return state.departments;
-	  }
-	// console.log(state.depOrders);
-	// const orderData = [];
-	// const saleData = [];
-	// // const deptData = data?.departments || [];
-	// for (let i = 0; i < deptData.length; i++) {
-	// 	const porderI = deptData[i].porders;
-	// 	for (let i = 0; i < porderI.length; i++) {
-	// 		const milli = porderI[i].purchaseDate;
-	// 		const total = porderI[i].orderTotal;
-	// 		const pOrS = 'porder';
-	// 		time(milli, total, pOrS);
-	// 	}
-	// 	const sorderI = deptData[i].sorders;
-	// 	for (let i = 0; i < sorderI.length; i++) {
-	// 		const milli = sorderI[i].saleDate;
-	// 		const total = sorderI[i].saleTotal;
-	// 		const pOrS = 'sorder';
-	// 		time(milli, total, pOrS);
-	// 	}
-	// }
-	
-	// function time(milli, total, pOrS) {
-	// 	const parseDate = parseInt(milli);
-	// 	const d = new Date(parseDate);
-	// 	const stringDate = d.toISOString();
-	// 	const formatDate = stringDate.replace(/-/g, ', ').split('T', 1).toString();
-		
-	// 	if (pOrS === 'porder') {
-	// 	orderData.push({x: new Date(formatDate), y: total});
-	// 	orderData.sort((a, b) => {
-	// 		return a.x -b.x;
-	// 	});
-	// 	}
-		
-	// 	if (pOrS === 'sorder') {
-	// 		saleData.push({x: new Date(formatDate), y: total});
-	// 		saleData.sort((a, b) => {
-	// 			return a.x -b.x;
-	// 		});
-	// 	}
-	// }
-	// for (let i = 0; i < porderArr.length; i++) {
-	// 	console.log(porderArr[i].purchaseDate);
-	// 	const total = porderArr[i].total;
-	// 	const oldDate = porderArr[i].purchaseDate;
-	// 	const parseDate = parseInt(oldDate);
-	// 	const d = new Date(parseDate);
-	// 	const stringDate = d.toISOString();
-	// 	const formatDate = stringDate.replace(/-/g, ', ').split('T', 1).toString();
-	// 	dataPoints.push({x: new Date(formatDate), y: total})
-	// }
-	
-	const options = {};
-	// 			backgroundColor: "rgba(0,0,0,0)",
-	// 			theme: "light2",
-	// 			animationEnabled: true,
-	// 			title:{
-	// 				text: "Sales & Purchase Order History"
-	// 			},
-	// 			subtitles: [{
-	// 				text: "Click Legend to Hide or Unhide Data Series"
-	// 			}],
-	// 			axisX: {
-	// 				title: "Months"
-	// 			},
-	// 			axisY: {
-	// 				// title: "Purchase Orders",
-	// 				titleFontColor: "#6D78AD",
-	// 				lineColor: "#6D78AD",
-	// 				labelFontColor: "#0a0a0a",
-	// 				tickColor: "#6D78AD"
-	// 			},
-	// 			// axisY2: {
-	// 			// 	title: "Sales",
-	// 			// 	titleFontColor: "#51CDA0",
-	// 			// 	lineColor: "#51CDA0",
-	// 			// 	labelFontColor: "#51CDA0",
-	// 			// 	tickColor: "#51CDA0"
-	// 			// },
-	// 			toolTip: {
-	// 				shared: true
-	// 			},
-	// 			legend: {
-	// 				cursor: "pointer",
-	// 				// itemclick: this.toggleDataSeries
-	// 			},
-	// 			data: [
-	// 				{
-	// 				type: "spline",
-	// 				name: "Sales",
-	// 				showInLegend: true,
-	// 				xValueFormatString: "MMM YYYY",
-	// 				yValueFormatString: "$#,##0.#",
-	// 				dataPoints: saleData
-	// 				},
-	// 				{
-	// 					type: "spline",
-	// 					name: "Purchase Orders",
-	// 					showInLegend: true,
-	// 					xValueFormatString: "MMM YYYY",
-	// 					yValueFormatString: "$#,##0.#",
-	// 					dataPoints: orderData
-	// 				}
-	// 		]
-	// 		}
-			
-			
-			return (
-			<div>
-				<CanvasJSChart options = {options} 
-				/>
-			</div>
-			);	
+	const orderData = [];
+	const saleData = [];
+	for (let i = 0; i < depOrders.length; i++) {
+		const porderI = depOrders[i].porders;
+		for (let i = 0; i < porderI.length; i++) {
+			const milli = porderI[i].purchaseDate;
+			const total = porderI[i].orderTotal;
+			const pOrS = 'porder';
+			time(milli, total, pOrS);
+		}
+		const sorderI = depOrders[i].sorders;
+		for (let i = 0; i < sorderI.length; i++) {
+			const milli = sorderI[i].saleDate;
+			const total = sorderI[i].saleTotal;
+			const pOrS = 'sorder';
+			time(milli, total, pOrS);
+		}
 	};
-
-// class Chart extends Component {	
-// 	constructor() {
-// 		super();
-// 		this.toggleDataSeries = this.toggleDataSeries.bind(this);
-// 	}
 	
-// 	toggleDataSeries(e){
-// 		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-// 			e.dataSeries.visible = false;
-// 		}
-// 		else{
-// 			e.dataSeries.visible = true;
-// 		}
-// 		this.chart.render();
-// 	}
-
+	function time(milli, total, pOrS) {
+		const parseDate = parseInt(milli);
+		const d = new Date(parseDate);
+		const stringDate = d.toISOString();
+		const formatDate = stringDate.replace(/-/g, ', ').split('T', 1).toString();
+		
+		if (pOrS === 'porder') {
+		orderData.push({x: new Date(formatDate), y: total});
+		orderData.sort((a, b) => {
+			return a.x -b.x;
+		});
+		}
+		
+		if (pOrS === 'sorder') {
+			saleData.push({x: new Date(formatDate), y: total});
+			saleData.sort((a, b) => {
+				return a.x -b.x;
+			});
+		}
+	};
 	
-// 	render() {
-// 		const options = {
-// 			backgroundColor: "rgba(0,0,0,0)",
-// 			theme: "light2",
-// 			animationEnabled: true,
-// 			title:{
-// 				text: "Sales & Purchase Order History"
-// 			},
-// 			subtitles: [{
-// 				text: "Click Legend to Hide or Unhide Data Series"
-// 			}],
-// 			axisX: {
-// 				title: "Months"
-// 			},
-// 			axisY: {
-// 				// title: "Purchase Orders",
-// 				titleFontColor: "#6D78AD",
-// 				lineColor: "#6D78AD",
-// 				labelFontColor: "#0a0a0a",
-// 				tickColor: "#6D78AD"
-// 			},
-// 			// axisY2: {
-// 			// 	title: "Sales",
-// 			// 	titleFontColor: "#51CDA0",
-// 			// 	lineColor: "#51CDA0",
-// 			// 	labelFontColor: "#51CDA0",
-// 			// 	tickColor: "#51CDA0"
-// 			// },
-// 			toolTip: {
-// 				shared: true
-// 			},
-// 			legend: {
-// 				cursor: "pointer",
-// 				itemclick: this.toggleDataSeries
-// 			},
-// 			data: [{
-// 				type: "spline",
-// 				name: "Purchase Orders",
-// 				showInLegend: true,
-// 				xValueFormatString: "MMM YYYY",
-// 				yValueFormatString: "$#,##0.#",
-// 				dataPoints: [
-// 					{ x: new Date(2021, 0, 1), y: 12007 },
-// 					{ x: new Date(2021, 1, 1), y: 13500 },
-// 					{ x: new Date(2021, 2, 1), y: 14400 },
-// 					{ x: new Date(2021, 3, 1), y: 10300 },
-// 					{ x: new Date(2021, 4, 1), y: 9300 },
-// 					{ x: new Date(2021, 5, 1), y: 12900 },
-// 					{ x: new Date(2021, 6, 1), y: 14300 },
-// 					{ x: new Date(2021, 7, 1), y: 15600 },
-// 					{ x: new Date(2021, 8, 1), y: 12200 },
-// 					{ x: new Date(2021, 9, 1), y: 10600 },
-// 					{ x: new Date(2021, 10, 1), y: 13700 },
-// 					{ x: new Date(2021, 11, 1), y: 14200 }
-// 				]
-// 			},
-// 			{
-// 				type: "spline",
-// 				name: "Sales",
-// 				// axisYType: "secondary",
-// 				showInLegend: true,
-// 				xValueFormatString: "MMM YYYY",
-// 				yValueFormatString: "$#,##0.#",
-// 				dataPoints: [
-// 					{ x: new Date(2021, 0, 1), y: 19034.5 },
-// 					{ x: new Date(2021, 1, 1), y: 20015 },
-// 					{ x: new Date(2021, 2, 1), y: 27342 },
-// 					{ x: new Date(2021, 3, 1), y: 20088 },
-// 					{ x: new Date(2021, 4, 1), y: 20234 },
-// 					{ x: new Date(2021, 5, 1), y: 29034 },
-// 					{ x: new Date(2021, 6, 1), y: 30487 },
-// 					{ x: new Date(2021, 7, 1), y: 32523 },
-// 					{ x: new Date(2021, 8, 1), y: 20234 },
-// 					{ x: new Date(2021, 9, 1), y: 27234 },
-// 					{ x: new Date(2021, 10, 1), y: 33548 },
-// 					{ x: new Date(2021, 11, 1), y: 32534 }
-// 				]
-// 			},
-// 			{
-// 				type: "spline",
-// 				name: "Sales",
-// 				// axisYType: "secondary",
-// 				showInLegend: true,
-// 				xValueFormatString: "MMM YYYY",
-// 				yValueFormatString: "$#,##0.#",
-// 				dataPoints: [
-// 					{ x: new Date(2021, 0, 1), y: 9034.5 },
-// 					{ x: new Date(2021, 1, 1), y: 2001 },
-// 					{ x: new Date(2021, 2, 1), y: 2734 },
-// 					{ x: new Date(2021, 3, 1), y: 2008 },
-// 					{ x: new Date(2021, 4, 1), y: 2023 },
-// 					{ x: new Date(2021, 5, 1), y: 2903 },
-// 					{ x: new Date(2021, 6, 1), y: 3048 },
-// 					{ x: new Date(2021, 7, 1), y: 32523 },
-// 					{ x: new Date(2021, 8, 1), y: 20234 },
-// 					{ x: new Date(2021, 9, 1), y: 27234 },
-// 					{ x: new Date(2021, 10, 1), y: 33548 },
-// 					{ x: new Date(2021, 11, 1), y: 36534 }
-// 				]
-// 			}]
-// 		}
-		
-		
-// 		return (
-// 		<div>
-// 				{/* <GraphInput /> */}
-// 			<CanvasJSChart options = {options} 
-// 				 onRef={ref => this.chart = ref}
-// 			/>
-// 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
-// 		</div>
-// 		);
-// 	}
+	const options = {
+				backgroundColor: "rgba(0,0,0,0)",
+				theme: "light2",
+				animationEnabled: true,
+				title:{
+					text: "Sales & Purchase Order History"
+				},
+				subtitles: [{
+					text: ""
+				}],
+				axisX: {
+					title: "Months"
+				},
+				axisY: {
+					// title: "Purchase Orders",
+					titleFontColor: "#6D78AD",
+					lineColor: "#6D78AD",
+					labelFontColor: "#0a0a0a",
+					tickColor: "#6D78AD"
+				},
+				// axisY2: {
+				// 	title: "Sales",
+				// 	titleFontColor: "#51CDA0",
+				// 	lineColor: "#51CDA0",
+				// 	labelFontColor: "#51CDA0",
+				// 	tickColor: "#51CDA0"
+				// },
+				toolTip: {
+					shared: true
+				},
+				legend: {
+					cursor: "pointer",
+					// itemclick: this.toggleDataSeries
+				},
+				data: [
+					{
+					type: "spline",
+					name: "Sales",
+					showInLegend: true,
+					xValueFormatString: "MMM YYYY",
+					yValueFormatString: "$#,##0.#",
+					dataPoints: saleData
+					},
+					{
+						type: "spline",
+						name: "Purchase Orders",
+						showInLegend: true,
+						xValueFormatString: "MMM YYYY",
+						yValueFormatString: "$#,##0.#",
+						dataPoints: orderData
+					}
+			]
+		}
 			
-// }
- 
-// export default Chart; 
+			
+		return (
+		<div>
+			<CanvasJSChart options = {options} 
+			/>
+		</div>
+		);	
+	};
