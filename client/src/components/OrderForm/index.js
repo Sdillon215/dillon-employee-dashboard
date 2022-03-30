@@ -277,7 +277,7 @@ export default function OrderForm(props) {
 
         console.log(name, value);
     };
-    
+
 
     const handleAddSubmit = (e) => {
         e.preventDefault();
@@ -429,63 +429,59 @@ export default function OrderForm(props) {
                                                     <TableCell align="left">
                                                         <CustomSelect
                                                             name="product"
-                                                            // // value={props.button}
-                                                            // // ref={SelectUnstyled}
-                                                            // value={SelectUnstyled.value}
-                                                            // // onChange={handleChange}
                                                         >
-                                                            {depOrders.map((department) => (
-                                                                <CustomOptionGroup 
-                                                                key={department.name} 
+                                                        {depOrders.map((department) => (
+                                                            <CustomOptionGroup
+                                                                key={department.name}
                                                                 label={department.name}>
-                                                                    {department.products.map((product, index) => (
-                                                                        <StyledOption
+                                                                {department.products.map((product, index) => (
+                                                                    <StyledOption
                                                                         key={product.name}
                                                                         value={product.name}>{product.name}</StyledOption>
-                                                                    ))}
-                                                                </CustomOptionGroup>
-                                                            ))}
-                                                        </CustomSelect>
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <TextField
-                                                            id="outlined-number"
-                                                            name="quantity"
-                                                            sx={{
-                                                                width: '10vw',
-                                                                background: 'rgba(255, 255, 255, 0.6)',
-                                                                borderRadius: '.27em'
-                                                            }}
-                                                        />
+                                                                ))}
+                                                            </CustomOptionGroup>
+                                                        ))}
+                                                    </CustomSelect>
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    <TextField
+                                                        id="outlined-number"
+                                                        name="quantity"
+                                                        sx={{
+                                                            width: '10vw',
+                                                            background: 'rgba(255, 255, 255, 0.6)',
+                                                            borderRadius: '.27em'
+                                                        }}
+                                                    />
 
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <OutlinedInput
-                                                            id="outlined-adornment-amount"
-                                                            name="unitPrice"
-                                                            sx={{
-                                                                width: '10vw',
-                                                                background: 'rgba(255, 255, 255, 0.6)',
-                                                                borderRadius: '.27em'
-                                                            }}
-                                                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow align="center" sx={{ width: '100%' }}>
-                                                    <TableCell colSpan={6} align="center">
-                                                        <button type="submit">Add To Order</button>
-                                                    </TableCell>
-                                                </TableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </Box>
-                            </Modal>
-                        </TableCell>
-                    </TableRow>
-                </TableBody>
-            </Table>
-        </TableContainer>
+                                                </TableCell>
+                                                <TableCell align="right">
+                                                    <OutlinedInput
+                                                        id="outlined-adornment-amount"
+                                                        name="unitPrice"
+                                                        sx={{
+                                                            width: '10vw',
+                                                            background: 'rgba(255, 255, 255, 0.6)',
+                                                            borderRadius: '.27em'
+                                                        }}
+                                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                                    />
+                                                </TableCell>
+                                            </TableRow>
+                                            <TableRow align="center" sx={{ width: '100%' }}>
+                                                <TableCell colSpan={6} align="center">
+                                                    <button type="submit">Add To Order</button>
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Modal>
+                    </TableCell>
+                </TableRow>
+            </TableBody>
+        </Table>
+        </TableContainer >
     );
 }
