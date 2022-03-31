@@ -2,12 +2,10 @@ import { useReducer } from 'react';
 import {
     UPDATE_PRODUCTS,
     UPDATE_CURRENT_CATEGORY,
-    ADD_TO_CART,
-    ADD_MULTIPLE_TO_CART,
-    REMOVE_FROM_CART,
-    UPDATE_CART_QUANTITY,
-    CLEAR_CART,
-    TOGGLE_CART,
+    ADD_TO_PO_CART,
+    REMOVE_FROM_PO_CART,
+    UPDATE_PO_CART_QUANTITY,
+    CLEAR_PO_CART,
     UPDATE_DEP_ORDERS
 } from "./actions";
 
@@ -32,53 +30,37 @@ export const reducer = (state, action) => {
                 currentCategory: action.currentCategory
             };
 
-        case ADD_TO_CART:
+        case ADD_TO_PO_CART:
             return {
                 ...state,
-                cartOpen: true,
-                cart: [...state.cart, action.product]
+                poCart: [...state.poCart, action.product]
             };
 
-        case ADD_MULTIPLE_TO_CART:
-            return {
-                ...state,
-                cart: [...state.cart, ...action.products],
-            };
-
-        case REMOVE_FROM_CART:
-            let newState = state.cart.filter(product => {
+        case REMOVE_FROM_PO_CART:
+            let newState = state.poCart.filter(product => {
                 return product._id !== action._id;
             });
 
             return {
                 ...state,
-                cartOpen: newState.length > 0,
-                cart: newState
+                poCart: newState
             };
 
-        case UPDATE_CART_QUANTITY:
+        case UPDATE_PO_CART_QUANTITY:
             return {
                 ...state,
-                cartOpen: true,
-                cart: state.cart.map(product => {
+                poCart: state.poCart.map(product => {
                     if (action._id === product._id) {
-                        product.purchaseQuantity = action.purchaseQuantity;
+                        product.quantity = action.quantity;
                     }
                     return product;
                 })
             };
 
-        case CLEAR_CART:
+        case CLEAR_PO_CART:
             return {
                 ...state,
-                cartOpen: false,
                 cart: []
-            };
-
-        case TOGGLE_CART:
-            return {
-                ...state,
-                cartOpen: !state.cartOpen
             };
             
         default:

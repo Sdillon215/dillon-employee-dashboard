@@ -16,14 +16,16 @@ import ModalUnstyled from '@mui/base/ModalUnstyled';
 import clsx from 'clsx';
 import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
+import PorderItem from '../PorderItem';
+// import { idbPromise } from '../../utils/helpers';
+// import { useLazyQuery } from "@apollo/client";
 
 
 
 export default function OrderForm(props) {
-    const [state] = useStoreContext();
-    const [formState, setFormState] = useState({ product: '', quantity: '', unitPrice: '' });
+    const [state, dispatch] = useStoreContext();
+    // const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
-    const rows = [{ key: '' }];
 
     // Order Modal
     const BackdropUnstyled = React.forwardRef((props, ref) => {
@@ -66,8 +68,21 @@ export default function OrderForm(props) {
     `;
 
 
+    
 
+    // function submitCheckout() {
+    //     const productIds = [];
 
+    //     state.poCart.forEach((porderItem) => {
+    //         for (let i = 0; i < porderItem.purchaseQuantity; i++) {
+    //             productIds.push(porderItem._id);
+    //         }
+    //     });
+
+    //     getCheckout({
+    //         variables: { products: productIds }
+    //     });
+    // };
 
     // function handleAddBtn(e) {
     //   const rows = rowsState.rows;
@@ -90,77 +105,14 @@ export default function OrderForm(props) {
 
 
 
-    let modalText = '';
+    // let modalText = '';
 
-    if (!rows.length) {
-        modalText = 'Start Order'
-    }
-    if (rows.length) {
-        modalText = 'Add Item'
-    }
-
-
-    const displayPo = rows.map((row, index) => (
-        <TableRow
-            // onSubmit={handleOrderSubmit}
-            key={index}
-            sx={{ width: '100%' }}
-        >
-            <TableCell align="left">
-                <TextField
-                    id="outlined-read-only-input"
-                    inputProps={{ readOnly: true }}
-                    sx={{
-                        width: '20vw',
-                        background: 'rgba(255, 255, 255, 0.6)',
-                        borderRadius: '.27em'
-                    }} />
-            </TableCell>
-            <TableCell align="right">
-                <TextField
-                    key={row.key}
-                    value={row.quantity}
-                    id="outlined-number"
-                    type="number"
-                    sx={{
-                        width: '10vw',
-                        background: 'rgba(255, 255, 255, 0.6)',
-                        borderRadius: '.27em'
-                    }}
-                />
-
-            </TableCell>
-            <TableCell align="right">
-                <OutlinedInput
-                    key={row.key}
-                    id="outlined-adornment-amount"
-                    sx={{
-                        width: '10vw',
-                        background: 'rgba(255, 255, 255, 0.6)',
-                        borderRadius: '.27em'
-                    }}
-                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                />
-            </TableCell>
-            <TableCell align="right">
-                <TextField
-                    key={row.key}
-                    value={row.total}
-                    id="outlined-read-only-input"
-                    sx={{
-                        width: '10vw',
-                        background: 'rgba(255, 255, 255, 0.6)',
-                        borderRadius: '.27em'
-                    }}
-                    InputProps={{
-                        readOnly: true,
-                        startAdornment: (
-                            <InputAdornment position="start">$</InputAdornment>
-                        )
-                    }}>{row.unitPrice * row.quantity}</TextField>
-            </TableCell>
-        </TableRow>
-    ));
+    // if (!rows.length) {
+    //     modalText = 'Start Order'
+    // }
+    // if (rows.length) {
+    //     modalText = 'Add porderItem'
+    // }
 
     return (
         <TableContainer sx={{
@@ -178,11 +130,20 @@ export default function OrderForm(props) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {displayPo}
+                    {state.poCart.length ? (
+                        <div>
+                            {state.poCart.map(porderItem => (
+                                <PorderItem key={porderItem._id} porderItem={porderItem} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div>no products</div>
+                    )}
                     <TableRow align="center">
                         <TableCell colSpan={6} align="center">
                             <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
-                                {modalText}
+                                {/* {modalText} */}
+                                Add To Order
                             </Button>
                             <Modal
                                 aria-labelledby="unstyled-modal-title"

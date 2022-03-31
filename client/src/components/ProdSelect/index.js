@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
@@ -15,14 +14,20 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Box } from '@mui/system';
+import { ADD_TO_PO_CART, UPDATE_PO_CART_QUANTITY } from '../../utils/actions';
+import { idbPromise } from '../../utils/helpers';
 
 
 
 
-
-export default function BasicSelect() {
+export default function ProductSelect() {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
+    const [state, dispatch] = useStoreContext();
+    const { products, poCart } = state;
+    const theme = useTheme();
+    const [productId, setproductId] = React.useState([]);
+
     const MenuProps = {
         PaperProps: {
             style: {
@@ -32,8 +37,6 @@ export default function BasicSelect() {
         },
     };
 
-
-
     function getStyles(product, productId, theme) {
         return {
             fontWeight:
@@ -42,12 +45,6 @@ export default function BasicSelect() {
                     : theme.typography.fontWeightMedium,
         };
     }
-
-
-    const [state] = useStoreContext();
-    const { products } = state;
-    const theme = useTheme();
-    const [productId, setproductId] = React.useState([]);
 
     const handleChange = (event) => {
         const {
@@ -62,11 +59,28 @@ export default function BasicSelect() {
         e.preventDefault();
         const data = new FormData(e.target);
 
-        const productId = data.getAll('product');
-        const quantString = data.get('quantity');
-        const priceString = data.get('unitPrice');
-
-        console.log(productId, quantString, priceString);
+        const _id = data.get('product');
+        const quantity = data.get('quantity');
+        const unitPrice = data.get('unitPrice');
+        const porderItem = { _id, quantity, unitPrice };
+        const itemInCart = poCart.find((porderItem) => porderItem._id === _id)
+        if (itemInCart) {
+            dispatch({
+                type: UPDATE_PO_CART_QUANTITY,
+                _id: productId,
+                quantity: parseInt(itemInCart.quantity) + 1
+            });
+            idbPromise('poCart', 'put', {
+                ...itemInCart,
+                quantity: parseInt(itemInCart.quantity) + 1
+            });
+        } else {
+            dispatch({
+                type: ADD_TO_PO_CART,
+                product: porderItem 
+            });
+            idbPromise('poCart', 'put', porderItem);
+        }
     }
 
 
