@@ -63,6 +63,11 @@ export default function PorderItem({ porderItem }) {
                     background: 'rgba(255, 255, 255, 0.6)',
                     borderRadius: '.27em'
                 }}
+                // calculate total is putting out same total every time fix
+                // 
+                // 
+                // 
+                // fix BUG fix BUG
             >${calculateTotal()}</TableCell>
             <span
                 role="img"
