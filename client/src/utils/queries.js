@@ -42,3 +42,16 @@ export const QUERY_SORDERS = gql`
   }
 }
 `;
+
+export const QUERY_PRODUCTS = gql`
+{
+  products {
+    _id
+    name
+    description
+    image
+    price
+    quantity
+  }
+}
+`;
