@@ -1,8 +1,9 @@
 import { useReducer } from 'react';
 import {
     UPDATE_PRODUCTS,
-    UPDATE_CURRENT_CATEGORY,
+    UPDATE_CURRENT_DEPARTMENT,
     ADD_TO_PO_CART,
+    ADD_MULTIPLE_TO_PO_CART,
     REMOVE_FROM_PO_CART,
     UPDATE_PO_CART_QUANTITY,
     CLEAR_PO_CART,
@@ -24,16 +25,22 @@ export const reducer = (state, action) => {
                 products: [...action.products]
             };
 
-        case UPDATE_CURRENT_CATEGORY:
+        case UPDATE_CURRENT_DEPARTMENT:
             return {
                 ...state,
-                currentCategory: action.currentCategory
+                currentDepartment: action.currentDepartment
             };
 
         case ADD_TO_PO_CART:
             return {
                 ...state,
                 poCart: [...state.poCart, action.product]
+            };
+
+        case ADD_MULTIPLE_TO_PO_CART:
+            return {
+                ...state,
+                poCart: [...state.poCart, ...action.products],
             };
 
         case REMOVE_FROM_PO_CART:
@@ -62,7 +69,7 @@ export const reducer = (state, action) => {
                 ...state,
                 cart: []
             };
-            
+
         default:
             return state;
     }

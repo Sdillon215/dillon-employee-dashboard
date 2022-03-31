@@ -59,11 +59,14 @@ export default function ProductSelect() {
         e.preventDefault();
         const data = new FormData(e.target);
 
-        const _id = data.get('product');
+        const productId = data.get('product');
+        const addItem = products.find((product) => product._id === productId);
+        console.log(addItem);
+        const _id = productId;
         const quantity = data.get('quantity');
         const unitPrice = data.get('unitPrice');
         const porderItem = { _id, quantity, unitPrice };
-        const itemInCart = poCart.find((porderItem) => porderItem._id === _id)
+        const itemInCart = poCart.find((porderItem) => porderItem._id === productId)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_PO_CART_QUANTITY,
@@ -124,7 +127,6 @@ export default function ProductSelect() {
                                         >
                                             {products.map((product) => (
                                                 <MenuItem
-                                                    key={product._id}
                                                     value={product._id}
                                                     style={getStyles(product, productId, theme)}
                                                 >

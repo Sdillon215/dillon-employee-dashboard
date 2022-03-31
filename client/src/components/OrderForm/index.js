@@ -17,15 +17,30 @@ import clsx from 'clsx';
 import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
 import PorderItem from '../PorderItem';
-// import { idbPromise } from '../../utils/helpers';
-// import { useLazyQuery } from "@apollo/client";
+import { idbPromise } from '../../utils/helpers';
+import { ADD_MULTIPLE_TO_PO_CART, UPDATE_CURRENT_DEPARTMENT, UPDATE_DEP_ORDERS } from '../../utils/actions';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 
-export default function OrderForm(props) {
+
+export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
-    // const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+    const { currentDepartment, depOrders } = state;
+    useEffect(() => {
+        async function getPoCart() {
+            const poCart = await idbPromise('poCart', 'get');
+            dispatch({ type: ADD_MULTIPLE_TO_PO_CART, products: [...poCart] });
+        };
 
+        if (!state.poCart.length) {
+            getPoCart();
+        }
+    }, [state.poCart.length, dispatch]);
 
     // Order Modal
     const BackdropUnstyled = React.forwardRef((props, ref) => {
@@ -67,9 +82,6 @@ export default function OrderForm(props) {
       -webkit-tap-highlight-color: transparent;
     `;
 
-
-    
-
     // function submitCheckout() {
     //     const productIds = [];
 
@@ -84,17 +96,6 @@ export default function OrderForm(props) {
     //     });
     // };
 
-    // function handleAddBtn(e) {
-    //   const rows = rowsState.rows;
-    //   const key = rows.length;
-    //   const newRow = { key: key, name: '', quantity: '', unitPrice: '', total: '' };
-    //   rows.push({ newRow });
-    //   setRowsState({ ...rowsState, rows });
-    //   // setInputState({ ...inputState, rows });
-    //   console.log(rowsState);
-    //   e.preventDefault();
-    // }
-
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -102,8 +103,6 @@ export default function OrderForm(props) {
         e.stopPropagation();
         setOpen(false);
     }
-
-
 
     // let modalText = '';
 
@@ -113,6 +112,13 @@ export default function OrderForm(props) {
     // if (rows.length) {
     //     modalText = 'Add porderItem'
     // }
+
+    const handleClick = name => {
+        dispatch({
+          type: UPDATE_CURRENT_DEPARTMENT,
+          currentDepartment: name
+        });
+      };
 
     return (
         <TableContainer sx={{
@@ -127,6 +133,28 @@ export default function OrderForm(props) {
                         <TableCell align="right">Quantity</TableCell>
                         <TableCell align="right">Unit Price</TableCell>
                         <TableCell align="right">Total</TableCell>
+                        <TableCell align="right">
+                            <Box sx={{ minWidth: 120 }}>
+                                <FormControl fullWidth>
+                                    <InputLabel id="demo-simple-select-label">{currentDepartment}</InputLabel>
+                                    <Select
+                                        value={currentDepartment}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Age"
+                                    >
+                                        {depOrders.map(department => (
+                                            <MenuItem 
+                                            onClick={() => {
+                                                handleClick(department.name)
+                                            }}
+                                            >{department.name}</MenuItem>
+                                        ))}
+                                        
+                                    </Select>
+                                </FormControl>
+                            </Box>
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
