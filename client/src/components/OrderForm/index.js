@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import Table from '@mui/material/Table';
-import { Button } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -10,12 +9,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import clsx from 'clsx';
-import { styled, Box } from '@mui/system';
-import ModalUnstyled from '@mui/base/ModalUnstyled';
 import ProdSelect from '../ProdSelect';
-import PropTypes from 'prop-types';
+import { Button } from '@mui/material';
 import { OutlinedInput } from '@mui/material';
+import ModalUnstyled from '@mui/base/ModalUnstyled';
+import clsx from 'clsx';
+import { styled } from '@mui/system';
+import PropTypes from 'prop-types';
 
 
 
@@ -24,7 +24,6 @@ export default function OrderForm(props) {
     const [formState, setFormState] = useState({ product: '', quantity: '', unitPrice: '' });
 
     const rows = [{ key: '' }];
-
 
     // Order Modal
     const BackdropUnstyled = React.forwardRef((props, ref) => {
@@ -44,30 +43,31 @@ export default function OrderForm(props) {
     };
 
     const Modal = styled(ModalUnstyled)`
-  position: fixed;
-  z-index: 1300;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+      position: fixed;
+      z-index: 1300;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
 
     const Backdrop = styled(BackdropUnstyled)`
-  z-index: -1;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  -webkit-tap-highlight-color: transparent;
-`;
+      z-index: -1;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      -webkit-tap-highlight-color: transparent;
+    `;
 
 
-   
+
+
 
     // function handleAddBtn(e) {
     //   const rows = rowsState.rows;
@@ -79,23 +79,7 @@ export default function OrderForm(props) {
     //   console.log(rowsState);
     //   e.preventDefault();
     // }
-    const handleChange = (e) => {
-        const { name, value } = e.target;
 
-        console.log(name, value);
-    };
-
-
-    const handleAddSubmit = (e) => {
-        e.preventDefault();
-        const data = new FormData(e.target);
-
-        const product = data.getAll('product');
-
-        const quantString = data.get('quantity');
-        const priceString = data.get('unitPrice');
-        console.log(product, quantString, priceString);
-    }
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -197,7 +181,6 @@ export default function OrderForm(props) {
                     {displayPo}
                     <TableRow align="center">
                         <TableCell colSpan={6} align="center">
-
                             <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
                                 {modalText}
                             </Button>
@@ -208,74 +191,12 @@ export default function OrderForm(props) {
                                 onClose={handleClose}
                                 BackdropComponent={Backdrop}
                             >
-                                <Box
-                                    component="form"
-                                    onSubmit={handleAddSubmit}
-                                    sx={{
-                                        width: '60vw',
-                                        border: '1px solid rgba(255, 255, 255, 0.6)',
-                                        borderRadius: '10px',
-                                        background: 'rgba(255, 255, 255, .9)'
-                                    }}>
-                                    <TableContainer sx={{
-                                        width: '100%',
-                                        marginTop: '10px',
-                                        padding: '10px'
-                                    }}>
-                                        <Table aria-label="simple table" sx={{ width: '100%', padding: '5vw' }}>
-                                            <TableHead sx={{ width: '100%' }}>
-                                                <TableRow sx={{ width: '100%' }}>
-                                                    <TableCell align="left">Product</TableCell>
-                                                    <TableCell align="right">Quantity</TableCell>
-                                                    <TableCell align="right">Unit Price</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                <TableRow
-                                                    sx={{ width: '100%' }}
-                                                >
-                                                    <TableCell align="left">
-                                                        <ProdSelect />
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <TextField
-                                                        id="outlined-number"
-                                                        name="quantity"
-                                                        sx={{
-                                                            width: '10vw',
-                                                            background: 'rgba(255, 255, 255, 0.6)',
-                                                            borderRadius: '.27em'
-                                                        }}
-                                                    />
-
-                                                </TableCell>
-                                                <TableCell align="right">
-                                                    <OutlinedInput
-                                                        id="outlined-adornment-amount"
-                                                        name="unitPrice"
-                                                        sx={{
-                                                            width: '10vw',
-                                                            background: 'rgba(255, 255, 255, 0.6)',
-                                                            borderRadius: '.27em'
-                                                        }}
-                                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                                    />
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow align="center" sx={{ width: '100%' }}>
-                                                <TableCell colSpan={6} align="center">
-                                                    <button type="submit">Add To Order</button>
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Box>
-                        </Modal>
-                    </TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
+                                <ProdSelect />
+                            </Modal>
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
         </TableContainer >
     );
 }

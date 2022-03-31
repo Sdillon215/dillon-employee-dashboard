@@ -1,33 +1,49 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useStoreContext } from '../../utils/GlobalState';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import { Box } from '@mui/system';
 
 
-function getStyles(product, productId, theme) {
-    return {
-        fontWeight:
-            productId.indexOf(product) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
+
+
 
 export default function BasicSelect() {
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+
+
+
+    function getStyles(product, productId, theme) {
+        return {
+            fontWeight:
+                productId.indexOf(product) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
+
+
     const [state] = useStoreContext();
     const { products } = state;
     const theme = useTheme();
@@ -42,28 +58,104 @@ export default function BasicSelect() {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
+    const handleAddSubmit = (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+
+        const productId = data.getAll('product');
+        const quantString = data.get('quantity');
+        const priceString = data.get('unitPrice');
+
+        console.log(productId, quantString, priceString);
+    }
+
+
 
     return (
-        <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <Select
-                    id="demo-multiple-name"
-                    name="product"
-                    onChange={handleChange}
-                    MenuProps={MenuProps}
-                    input={<OutlinedInput />}
-                >
-                    {products.map((product) => (
-                        <MenuItem
-                            key={product._id}
-                            value={product._id}
-                            style={getStyles(product, productId, theme)}
-                        >
-                            {product.name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <>
+            <Box
+                component="form"
+                onSubmit={handleAddSubmit}
+                sx={{
+                    width: '60vw',
+                    border: '1px solid rgba(255, 255, 255, 0.6)',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 255, .9)'
+                }}>
+                <TableContainer sx={{
+                    width: '100%',
+                    marginTop: '10px',
+                    padding: '10px'
+                }}>
+                    <Table aria-label="simple table" sx={{ width: '100%', padding: '5vw' }}>
+                        <TableHead sx={{ width: '100%' }}>
+                            <TableRow sx={{ width: '100%' }}>
+                                <TableCell align="left">Product</TableCell>
+                                <TableCell align="right">Quantity</TableCell>
+                                <TableCell align="right">Unit Price</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow
+                                sx={{ width: '100%' }}
+                            >
+                                <TableCell align="left">
+                                    <FormControl sx={{ m: 1, width: 300 }}>
+                                        <Select
+                                            id="demo-multiple-name"
+                                            name="product"
+                                            onChange={handleChange}
+                                            MenuProps={MenuProps}
+                                            input={<OutlinedInput />}
+                                        >
+                                            {products.map((product) => (
+                                                <MenuItem
+                                                    key={product._id}
+                                                    value={product._id}
+                                                    style={getStyles(product, productId, theme)}
+                                                >
+                                                    {product.name}
+                                                </MenuItem>
+                                            ))}
+                                        </Select>
+                                    </FormControl>
+                                </TableCell>
+                                <TableCell align="right">
+                                    <TextField
+                                        id="outlined-number"
+                                        name="quantity"
+                                        sx={{
+                                            width: '10vw',
+                                            background: 'rgba(255, 255, 255, 0.6)',
+                                            borderRadius: '.27em'
+                                        }}
+                                    />
+
+                                </TableCell>
+                                <TableCell align="right">
+                                    <OutlinedInput
+                                        id="outlined-adornment-amount"
+                                        name="unitPrice"
+                                        sx={{
+                                            width: '10vw',
+                                            background: 'rgba(255, 255, 255, 0.6)',
+                                            borderRadius: '.27em'
+                                        }}
+                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                    />
+                                </TableCell>
+                            </TableRow>
+                            <TableRow align="center" sx={{ width: '100%' }}>
+                                <TableCell colSpan={6} align="center">
+                                    <button type="submit">Add To Order</button>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
+        </>
+
+
     );
 }
