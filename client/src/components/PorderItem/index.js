@@ -69,13 +69,13 @@ export default function PorderItem({ porderItem }) {
                 // 
                 // fix BUG fix BUG
             >${calculateTotal()}</TableCell>
-            <span
+            <TableCell
                 role="img"
                 aria-label="trash"
                 onClick={() => removeFromCart(porderItem)}
             >
-                🗑️
-            </span>
+                <button>Delete</button>
+            </TableCell>
         </TableRow>
     );
 }

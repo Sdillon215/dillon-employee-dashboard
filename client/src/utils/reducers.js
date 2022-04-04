@@ -7,16 +7,16 @@ import {
     REMOVE_FROM_PO_CART,
     UPDATE_PO_CART_QUANTITY,
     CLEAR_PO_CART,
-    UPDATE_DEP_ORDERS
+    UPDATE_DEPARTMENTS
 } from "./actions";
 
 export const reducer = (state, action) => {
     switch (action.type) {
-        // if action type value is the value of `UPDATE_DEP_ORDERS`, return a new state object with an updated department orders array
-        case UPDATE_DEP_ORDERS:
+        // if action type value is the value of `UPDATE_DEPARTMENTS`, return a new state object with an updated department orders array
+        case UPDATE_DEPARTMENTS:
             return {
                 ...state,
-                depOrders: [...action.depOrders]
+                departments: [...action.departments]
             };
         // if action type value is the value of `UPDATE_CATEGORIES`, return a new state object with an updated categories array
         case UPDATE_PRODUCTS:

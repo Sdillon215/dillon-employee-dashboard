@@ -127,11 +127,11 @@ export default function OrderForm() {
                 </TableHead>
                 <TableBody>
                     {state.poCart.length ? (
-                        <div>
+                        <>
                             {state.poCart.map(porderItem => (
                                 <PorderItem key={porderItem._id} porderItem={porderItem} />
                             ))}
-                        </div>
+                        </>
                     ) : (
                         <div>no products</div>
                     )}

@@ -24,10 +24,10 @@ export default function ProductSelect() {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const [state, dispatch] = useStoreContext();
-    const { products, poCart } = state;
+    const { products, poCart, currentDepartment } = state;
     const theme = useTheme();
     const [productId, setproductId] = React.useState([]);
-
+	
     const MenuProps = {
         PaperProps: {
             style: {

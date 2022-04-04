@@ -2,7 +2,7 @@ import * as React from 'react';
 // import { useState, useEffect } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import { OutlinedInput } from '@mui/material';
-import { UPDATE_CURRENT_DEPARTMENT } from '../../utils/actions';
+import { UPDATE_CURRENT_DEPARTMENT, UPDATE_PRODUCTS } from '../../utils/actions';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -12,7 +12,7 @@ import { useTheme } from '@mui/material/styles';
 
 export default function DepartmentSelect() {
     const [state, dispatch] = useStoreContext();
-    const { currentDepartment, depOrders } = state;
+    const { departments, currentDepartment } = state;
     const [departmentId, setDepartment] = React.useState([]);
     const theme = useTheme();
     const ITEM_HEIGHT = 48;
@@ -28,10 +28,10 @@ export default function DepartmentSelect() {
         },
     };
 
-    function getStyles(product, productId, theme) {
+    function getStyles(department, departmentId, theme) {
         return {
             fontWeight:
-                productId.indexOf(product) === -1
+                departmentId.indexOf(department) === -1
                     ? theme.typography.fontWeightRegular
                     : theme.typography.fontWeightMedium,
         };
@@ -45,10 +45,17 @@ export default function DepartmentSelect() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
+        const currentDep = departments.find((department) => department._id === value);
         dispatch({
             type: UPDATE_CURRENT_DEPARTMENT,
-            currentDepartment: value
+            currentDepartment: currentDep
           });
+        const products = currentDep.products;
+        console.log(products)
+        dispatch({
+            type: UPDATE_PRODUCTS,
+            products: products
+        })
     };
     return (
         <Box sx={{ minWidth: 120 }}>
@@ -60,7 +67,7 @@ export default function DepartmentSelect() {
                     MenuProps={MenuProps}
                     value={departmentId}
                 >
-                    {depOrders.map((department) => (
+                    {departments.map((department) => (
                         <MenuItem
                             // onClick={() => {
                             //     handleClick(department._id)
@@ -72,6 +79,7 @@ export default function DepartmentSelect() {
                             {department.name}
                         </MenuItem>
                     ))}
+                    <MenuItem value={''}>All</MenuItem>
                 </Select>
             </FormControl>
         </Box>
