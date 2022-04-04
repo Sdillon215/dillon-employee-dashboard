@@ -3,35 +3,38 @@ import Grid from '@mui/material/Grid';
 import { useStoreContext } from '../../utils/GlobalState';
 import { idbPromise } from '../../utils/helpers';
 import { useQuery } from '@apollo/client';
-import { QUERY_PRODUCTS } from '../../utils/queries';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
+import { QUERY_DEP_ORDERS } from '../../utils/queries';
+import { UPDATE_DEP_ORDERS } from '../../utils/actions';
 import Chart from '../Chart';
 import OrderForm from '../OrderForm';
 
 
 function Buyer() {
-  const [state, dispatch] = useStoreContext();
-  const { loading, data: prodData } = useQuery(QUERY_PRODUCTS);
+	const [state, dispatch] = useStoreContext();
+	const { loading, data: depData } = useQuery(QUERY_DEP_ORDERS);
 
-  useEffect(() => {
-    if (prodData) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: prodData.products
-      });
-
-      prodData.products.forEach((product) => {
-        idbPromise('products', 'put', product);
-      });
-    } else if (!loading) {
-      idbPromise('products', 'get').then((products) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products
-        });
-      });
-    }
-  }, [prodData, loading, dispatch]);
+	useEffect(() => {
+		if (depData) {
+		  dispatch({
+			type: UPDATE_DEP_ORDERS,
+			depOrders: depData.departments
+		  });
+	
+		  depData.departments.forEach((depOrders) => {
+			idbPromise('depOrders', 'put', depOrders);
+		  });
+		  // add else if to check if `loading` is undefined in `useQuery()` Hook
+		} else if (!loading) {
+		  // since we're offline, get all of the data from the `products` store
+		  idbPromise('depOrders', 'get').then((depOrders) => {
+			// use retrieved data to set global state for offline browsing
+			dispatch({
+			  type: UPDATE_DEP_ORDERS,
+			  depOrders: depOrders
+			});
+		  });
+		}
+	}, [depData, dispatch]);
   
   return (
     <Grid container
