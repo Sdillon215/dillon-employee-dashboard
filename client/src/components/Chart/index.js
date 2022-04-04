@@ -13,7 +13,8 @@ export default function Chart() {
 	if (!currentDepartment) {
 		curdepartments = departments;
 	} else {
-		curdepartments = departments.filter(department => department._id === currentDepartment);
+		console.log(currentDepartment)
+		curdepartments = departments.filter(department => department._id === currentDepartment._id);
 	}
 
 	for (let i = 0; i < curdepartments.length; i++) {

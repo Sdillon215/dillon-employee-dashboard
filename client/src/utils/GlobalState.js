@@ -9,7 +9,7 @@ const StoreProvider = ({ value = [], ...props }) => {
         departments: [],
         products: [],
         poCart: [],
-        currentDepartment: [],
+        currentDepartment: '',
     });
     // use this to confirm it works!
     console.log(state);

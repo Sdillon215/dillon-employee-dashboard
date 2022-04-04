@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,11 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import ProdSelect from '../ProdSelect';
-import { Button } from '@mui/material';
-import ModalUnstyled from '@mui/base/ModalUnstyled';
-import clsx from 'clsx';
-import { styled } from '@mui/system';
-import PropTypes from 'prop-types';
+
 import PorderItem from '../PorderItem';
 import { idbPromise } from '../../utils/helpers';
 import { ADD_MULTIPLE_TO_PO_CART } from '../../utils/actions';
@@ -22,7 +18,7 @@ import DepartmentSelect from '../DepartmentSelect';
 
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
-
+    const { currentDepartment } = state;
     useEffect(() => {
         async function getPoCart() {
             const poCart = await idbPromise('poCart', 'get');
@@ -31,48 +27,10 @@ export default function OrderForm() {
 
         if (!state.poCart.length) {
             getPoCart();
-        }
+        };
     }, [state.poCart.length, dispatch]);
 
-    // Order Modal
-    const BackdropUnstyled = React.forwardRef((props, ref) => {
-        const { open, className, ...other } = props;
-        return (
-            <div
-                className={clsx({ 'MuiBackdrop-open': open }, className)}
-                ref={ref}
-                {...other}
-            />
-        );
-    });
-
-    BackdropUnstyled.propTypes = {
-        className: PropTypes.string.isRequired,
-        open: PropTypes.bool,
-    };
-
-    const Modal = styled(ModalUnstyled)`
-      position: fixed;
-      z-index: 1300;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      left: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `;
-
-    const Backdrop = styled(BackdropUnstyled)`
-      z-index: -1;
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      -webkit-tap-highlight-color: transparent;
-    `;
+    
 
     // function submitCheckout() {
     //     const productIds = [];
@@ -89,12 +47,7 @@ export default function OrderForm() {
     // };
 
 
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = (e) => {
-        e.stopPropagation();
-        setOpen(false);
-    }
+    
 
     // let modalText = '';
 
@@ -105,7 +58,7 @@ export default function OrderForm() {
     //     modalText = 'Add porderItem'
     // }
 
-    
+
 
     return (
         <TableContainer sx={{
@@ -125,6 +78,13 @@ export default function OrderForm() {
                         </TableCell>
                     </TableRow>
                 </TableHead>
+                {!currentDepartment ? (
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>Please select a department to start a purchase order</TableCell>
+                        </TableRow>
+                    </TableBody>
+                ) : (
                 <TableBody>
                     {state.poCart.length ? (
                         <>
@@ -133,26 +93,18 @@ export default function OrderForm() {
                             ))}
                         </>
                     ) : (
-                        <div>no products</div>
+                        <TableRow>
+                            <TableCell>
+
+                            no products
+                            </TableCell>
+                            </TableRow>
                     )}
                     <TableRow align="center">
-                        <TableCell colSpan={6} align="center">
-                            <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
-                                {/* {modalText} */}
-                                Add To Order
-                            </Button>
-                            <Modal
-                                aria-labelledby="unstyled-modal-title"
-                                aria-describedby="unstyled-modal-description"
-                                open={open}
-                                onClose={handleClose}
-                                BackdropComponent={Backdrop}
-                            >
-                                <ProdSelect />
-                            </Modal>
-                        </TableCell>
+                        <ProdSelect />
                     </TableRow>
                 </TableBody>
+                )}
             </Table>
         </TableContainer >
     );

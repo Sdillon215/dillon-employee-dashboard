@@ -50,12 +50,14 @@ export default function DepartmentSelect() {
             type: UPDATE_CURRENT_DEPARTMENT,
             currentDepartment: currentDep
           });
-        const products = currentDep.products;
-        console.log(products)
-        dispatch({
-            type: UPDATE_PRODUCTS,
-            products: products
-        })
+          if (!value === '') {
+              const products = currentDep.products;
+              console.log(products)
+              dispatch({
+                  type: UPDATE_PRODUCTS,
+                  products: products
+              })
+          }
     };
     return (
         <Box sx={{ minWidth: 120 }}>
