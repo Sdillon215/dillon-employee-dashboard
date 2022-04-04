@@ -7,30 +7,22 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import ProdSelect from '../ProdSelect';
 import { Button } from '@mui/material';
-import { OutlinedInput } from '@mui/material';
 import ModalUnstyled from '@mui/base/ModalUnstyled';
 import clsx from 'clsx';
 import { styled } from '@mui/system';
 import PropTypes from 'prop-types';
 import PorderItem from '../PorderItem';
 import { idbPromise } from '../../utils/helpers';
-import { ADD_MULTIPLE_TO_PO_CART, UPDATE_CURRENT_DEPARTMENT, UPDATE_DEP_ORDERS } from '../../utils/actions';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
+import { ADD_MULTIPLE_TO_PO_CART } from '../../utils/actions';
+import DepartmentSelect from '../DepartmentSelect';
 
 
 
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
-    const { currentDepartment, depOrders } = state;
+
     useEffect(() => {
         async function getPoCart() {
             const poCart = await idbPromise('poCart', 'get');
@@ -113,12 +105,7 @@ export default function OrderForm() {
     //     modalText = 'Add porderItem'
     // }
 
-    const handleClick = name => {
-        dispatch({
-          type: UPDATE_CURRENT_DEPARTMENT,
-          currentDepartment: name
-        });
-      };
+    
 
     return (
         <TableContainer sx={{
@@ -134,26 +121,7 @@ export default function OrderForm() {
                         <TableCell align="right">Unit Price</TableCell>
                         <TableCell align="right">Total</TableCell>
                         <TableCell align="right">
-                            <Box sx={{ minWidth: 120 }}>
-                                <FormControl fullWidth>
-                                    <InputLabel id="demo-simple-select-label">{currentDepartment}</InputLabel>
-                                    <Select
-                                        value={currentDepartment}
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        label="Age"
-                                    >
-                                        {depOrders.map(department => (
-                                            <MenuItem 
-                                            onClick={() => {
-                                                handleClick(department.name)
-                                            }}
-                                            >{department.name}</MenuItem>
-                                        ))}
-                                        
-                                    </Select>
-                                </FormControl>
-                            </Box>
+                            <DepartmentSelect />
                         </TableCell>
                     </TableRow>
                 </TableHead>
