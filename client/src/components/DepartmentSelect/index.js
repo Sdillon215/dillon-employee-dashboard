@@ -19,7 +19,7 @@ export default function DepartmentSelect() {
     const ITEM_PADDING_TOP = 8;
 
 
-      const MenuProps = {
+    const MenuProps = {
         PaperProps: {
             style: {
                 maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
@@ -37,7 +37,7 @@ export default function DepartmentSelect() {
         };
     }
 
-      const handleChange = (event) => {
+    const handleChange = (event) => {
         const {
             target: { value },
         } = event;
@@ -45,19 +45,28 @@ export default function DepartmentSelect() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-        const currentDep = departments.find((department) => department._id === value);
-        dispatch({
-            type: UPDATE_CURRENT_DEPARTMENT,
-            currentDepartment: currentDep
-          });
-          if (!value === '') {
-              const products = currentDep.products;
-              console.log(products)
-              dispatch({
-                  type: UPDATE_PRODUCTS,
-                  products: products
-              })
-          }
+        if (value) {
+            const currentDep = departments.find((department) => department._id === value);
+            dispatch({
+                type: UPDATE_CURRENT_DEPARTMENT,
+                currentDepartment: currentDep
+            });
+            const products = currentDep.products;
+            console.log(products)
+            dispatch({
+                type: UPDATE_PRODUCTS,
+                products: products
+            })
+        } else {
+            dispatch({
+                type: UPDATE_CURRENT_DEPARTMENT,
+                currentDepartment: ''
+            });
+            dispatch({
+                type: UPDATE_PRODUCTS,
+                products: []
+            })
+        }
     };
     return (
         <Box sx={{ minWidth: 120 }}>

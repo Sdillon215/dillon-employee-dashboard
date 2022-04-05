@@ -7,7 +7,8 @@ import {
     REMOVE_FROM_PO_CART,
     UPDATE_PO_CART_QUANTITY,
     CLEAR_PO_CART,
-    UPDATE_DEPARTMENTS
+    UPDATE_DEPARTMENTS,
+    TOGGLE_ADD_MODAL
 } from "./actions";
 
 export const reducer = (state, action) => {

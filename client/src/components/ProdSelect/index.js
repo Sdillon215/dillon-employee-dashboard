@@ -30,7 +30,7 @@ export default function ProductSelect() {
     const [state, dispatch] = useStoreContext();
     const { products, poCart, currentDepartment } = state;
     const theme = useTheme();
-    const [productId, setproductId] = React.useState([]);
+    const [productId, setproductId] = React.useState(['']);
 
     const MenuProps = {
         PaperProps: {
@@ -88,6 +88,7 @@ export default function ProductSelect() {
             });
             idbPromise('poCart', 'put', porderItem);
         }
+        handleClose();
     }
 
     // Order Modal
@@ -132,7 +133,6 @@ export default function ProductSelect() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = (e) => {
-        e.stopPropagation();
         setOpen(false);
     }
 
@@ -184,6 +184,7 @@ export default function ProductSelect() {
                                                     onChange={handleChange}
                                                     MenuProps={MenuProps}
                                                     input={<OutlinedInput />}
+                                                    value={productId}
                                                 >
                                                     {products.map((product) => (
                                                         <MenuItem
@@ -201,6 +202,7 @@ export default function ProductSelect() {
                                             <TextField
                                                 id="outlined-number"
                                                 name="quantity"
+                                                type="number"
                                                 sx={{
                                                     width: '10vw',
                                                     background: 'rgba(255, 255, 255, 0.6)',
@@ -213,6 +215,7 @@ export default function ProductSelect() {
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
                                                 name="unitPrice"
+                                                type="number"
                                                 sx={{
                                                     width: '10vw',
                                                     background: 'rgba(255, 255, 255, 0.6)',

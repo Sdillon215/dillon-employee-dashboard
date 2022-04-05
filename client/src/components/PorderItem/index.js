@@ -11,12 +11,12 @@ import { idbPromise } from '../../utils/helpers';
 export default function PorderItem({ porderItem }) {
     const [state, dispatch] = useStoreContext();
 
-    const removeFromCart = item => {
+    const removeFromCart = porderItem => {
         dispatch({
             type: REMOVE_FROM_PO_CART,
-            _id: item._id
+            _id: porderItem._id
         });
-        idbPromise('cart', 'delete', { ...item });
+        idbPromise('poCart', 'delete', { ...porderItem });
     };
 
     function calculateTotal() {
