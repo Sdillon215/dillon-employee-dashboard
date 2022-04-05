@@ -10,6 +10,7 @@ import { idbPromise } from '../../utils/helpers';
 
 export default function PorderItem({ porderItem }) {
     const [state, dispatch] = useStoreContext();
+    const { currentDepartment, poCart } = state;
 
     const removeFromCart = porderItem => {
         dispatch({
@@ -21,9 +22,9 @@ export default function PorderItem({ porderItem }) {
 
     function calculateTotal() {
         let sum = 0;
-        state.poCart.forEach(porderItem => {
+        // state.poCart.forEach(porderItem => {
             sum += porderItem.unitPrice * porderItem.quantity;
-        });
+        // });
         return sum.toFixed(2);
     };
 

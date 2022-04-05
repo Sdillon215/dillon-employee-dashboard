@@ -14,7 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Box } from '@mui/system';
-import { ADD_TO_PO_CART, UPDATE_PO_CART_QUANTITY } from '../../utils/actions';
+import { ADD_TO_PO_CART, UPDATE_PO_CART } from '../../utils/actions';
 import { idbPromise } from '../../utils/helpers';
 import { Button } from '@mui/material';
 import ModalUnstyled from '@mui/base/ModalUnstyled';
@@ -62,24 +62,26 @@ export default function ProductSelect() {
     const handleAddSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-
+        const depId = currentDepartment._id;
         const productId = data.get('product');
         const addItem = products.find((product) => product._id === productId);
-        console.log(addItem);
+        console.log(addItem.name);
+        const name = addItem.name;
         const _id = productId;
         const quantity = data.get('quantity');
         const unitPrice = data.get('unitPrice');
-        const porderItem = { _id, quantity, unitPrice };
+        const porderItem = { _id, depId, name, quantity, unitPrice };
         const itemInCart = poCart.find((porderItem) => porderItem._id === productId)
         if (itemInCart) {
             dispatch({
-                type: UPDATE_PO_CART_QUANTITY,
+                type: UPDATE_PO_CART,
                 _id: productId,
-                quantity: parseInt(itemInCart.quantity) + 1
+                quantity: parseInt(quantity),
+                unitPrice: parseInt(unitPrice)
             });
             idbPromise('poCart', 'put', {
                 ...itemInCart,
-                quantity: parseInt(itemInCart.quantity) + 1
+                quantity: parseInt(itemInCart.quantity)
             });
         } else {
             dispatch({

@@ -18,47 +18,22 @@ import DepartmentSelect from '../DepartmentSelect';
 
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
-    const { currentDepartment } = state;
+    const { currentDepartment, poCart } = state;
+    let depCart;
     useEffect(() => {
         async function getPoCart() {
             const poCart = await idbPromise('poCart', 'get');
             dispatch({ type: ADD_MULTIPLE_TO_PO_CART, products: [...poCart] });
         };
 
-        if (!state.poCart.length) {
+        if (!poCart.length) {
             getPoCart();
         };
-    }, [state.poCart.length, dispatch]);
+    }, [poCart.length, dispatch]);
 
-    
-
-    // function submitCheckout() {
-    //     const productIds = [];
-
-    //     state.poCart.forEach((porderItem) => {
-    //         for (let i = 0; i < porderItem.purchaseQuantity; i++) {
-    //             productIds.push(porderItem._id);
-    //         }
-    //     });
-
-    //     getCheckout({
-    //         variables: { products: productIds }
-    //     });
-    // };
-
-
-    
-
-    // let modalText = '';
-
-    // if (!rows.length) {
-    //     modalText = 'Start Order'
-    // }
-    // if (rows.length) {
-    //     modalText = 'Add porderItem'
-    // }
-
-
+    if (currentDepartment) {
+        depCart = poCart.filter(porderItem => porderItem.depId === currentDepartment._id);
+    } 
 
     return (
         <TableContainer sx={{
@@ -86,9 +61,9 @@ export default function OrderForm() {
                     </TableBody>
                 ) : (
                 <TableBody>
-                    {state.poCart.length ? (
+                    {depCart.length ? (
                         <>
-                            {state.poCart.map(porderItem => (
+                            {depCart.map(porderItem => (
                                 <PorderItem key={porderItem._id} porderItem={porderItem} />
                             ))}
                         </>

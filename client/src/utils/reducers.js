@@ -5,10 +5,9 @@ import {
     ADD_TO_PO_CART,
     ADD_MULTIPLE_TO_PO_CART,
     REMOVE_FROM_PO_CART,
-    UPDATE_PO_CART_QUANTITY,
+    UPDATE_PO_CART,
     CLEAR_PO_CART,
     UPDATE_DEPARTMENTS,
-    TOGGLE_ADD_MODAL
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -54,7 +53,7 @@ export const reducer = (state, action) => {
                 poCart: newState
             };
 
-        case UPDATE_PO_CART_QUANTITY:
+        case UPDATE_PO_CART:
             return {
                 ...state,
                 poCart: state.poCart.map(product => {
