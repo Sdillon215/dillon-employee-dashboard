@@ -21,7 +21,7 @@ export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitPo, { error }] = useMutation(PO_SUBMIT);
     const { currentDepartment, poCart } = state;
-    let depCart = [{productTotal: ''}];
+    let depCart = [{ productTotal: '' }];
     let total;
     const porderItems = [];
 
@@ -53,7 +53,7 @@ export default function OrderForm() {
 
 
         const porder = depCart;
-        
+
         for (let i = 0; i < porder.length; i++) {
             const productId = porder[i]._id;
             const departmentId = porder[i].departmentId;
@@ -61,17 +61,17 @@ export default function OrderForm() {
             const unitPrice = porder[i].unitPrice;
             const quantity = porder[i].quantity;
             const productTotal = porder[i].productTotal;
-            porderItems.push({productId, departmentId, name, unitPrice, quantity, productTotal});
-            
+            porderItems.push({ productId, departmentId, name, unitPrice, quantity, productTotal });
+
         };
     }
-    
-    
+
+
     const handleOrderSubmit = async (e) => {
         e.preventDefault();
-        
+
         try {
-             await submitPo({
+            await submitPo({
                 variables: {
                     departmentId: currentDepartment._id,
                     orderTotal: total,
@@ -90,7 +90,7 @@ export default function OrderForm() {
             removeFromCart(porderItem);
         }
     }
-    
+
     const removeFromCart = porderItem => {
         dispatch({
             type: REMOVE_FROM_PO_CART,
@@ -108,21 +108,26 @@ export default function OrderForm() {
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="left">Product</TableCell>
-                        <TableCell align="right">Quantity</TableCell>
-                        <TableCell align="right">Unit Price</TableCell>
-                        <TableCell align="right">Total</TableCell>
+                        <TableCell colSpan={12} align="center">Purchase Order</TableCell>
+                    </TableRow>
+                    <TableRow>
+                        {!currentDepartment ? (
+                            <TableCell align={'center'} colSpan={6}>Please select a department to start a purchase order </TableCell>
+                        ) : (
+                            <>
+                            <TableCell align="left">Product</TableCell>
+                            <TableCell align="right">Quantity</TableCell>
+                            <TableCell sx={{ minWidth: '69px' }} align="right">Unit Price</TableCell>
+                            <TableCell align="right">Total</TableCell>
+                            </>
+                        )}
                         <TableCell align="right">
                             <DepartmentSelect />
                         </TableCell>
                     </TableRow>
                 </TableHead>
                 {!currentDepartment ? (
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>Please select a department to start a purchase order</TableCell>
-                        </TableRow>
-                    </TableBody>
+                    <></>
                 ) : (
                     <TableBody>
                         {depCart.length ? (
@@ -132,47 +137,56 @@ export default function OrderForm() {
                                 ))}
                             </>
                         ) : (
-                            <TableRow>
-                                <TableCell>
-
-                                    no products
-                                </TableCell>
-                            </TableRow>
+                            <></>
                         )}
-                        <TableRow>
+                            <TableRow align="center">
+                        {depCart.length ? (
+                            <>
                                 <TableCell
-                                    colSpan={12}
-                                    align="center"
-                                    
-                                // calculate total is putting out same total every time fix
-                                // 
-                                // 
-                                // 
-                                // fix BUG fix BUG
-                                >
-                                    <TextField
-                                    align="center"
-                                    sx={{
-                                        width: '10vw',
-                                        background: 'rgba(255, 255, 255, 0.6)',
-                                        borderRadius: '.27em'
-                                    }}
-                                    value={total}
-                                    ></TextField>
-                                    </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <ProdSelect />
-                            <TableCell colSpan={3} align="center">
-                                <Button
-                                sx={{ color: 'black', background: 'green' }}
-                                type="button"
-                                onClick={handleOrderSubmit}
-                                >
-                                    Submit Order
-                                </Button>
+                                    colSpan={1}
+                                    align="left">
+                                    Purchase Order Total:
+                                </TableCell>
+                                <TableCell
+                                    colSpan={1}
+                                    align="right">
+                                    ${total}
+                                </TableCell>
+                                <TableCell colSpan={1}></TableCell>
+                                <TableCell colSpan={1}></TableCell>
+                                <TableCell colSpan={1} align="right">
+                                    <ProdSelect />
+                                    <Button
+                                        sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '12vw', marginLeft: '26px' }}
+                                        type="button"
+                                        onClick={handleOrderSubmit}
+                                    >
+                                        Submit Order
+                                    </Button>
+                                </TableCell>
+                                </>
+                        ) : (
+                            <TableCell colSpan={12} align="center">
+                                <ProdSelect />
                             </TableCell>
-                        </TableRow>
+                        )}
+                            </TableRow>
+                        {/* <TableRow >
+                            <ProdSelect />
+                            {depCart.length ? (
+                                <TableCell align="right">
+                                    <Button
+                                        sx={{ color: 'black', background: 'green' }}
+                                        type="button"
+                                        onClick={handleOrderSubmit}
+                                    >
+                                        Submit Order
+                                    </Button>
+                                </TableCell>
+                            ) : (
+                                <></>
+                            )}
+                        </TableRow> */}
                     </TableBody>
                 )}
             </Table>

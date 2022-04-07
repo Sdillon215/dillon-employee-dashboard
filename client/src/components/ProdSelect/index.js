@@ -141,10 +141,10 @@ export default function ProductSelect() {
 
     return (
         <>
-            <TableCell colSpan={3} align="center">
-                <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
-                    {/* {modalText} */}
-                    Add To Order
+                <Button sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '12vw'}}
+                //  type="button" 
+                 onClick={handleOpen}>
+                    Add/Edit Product
                 </Button>
                 <Modal
                     aria-labelledby="unstyled-modal-title"
@@ -238,7 +238,6 @@ export default function ProductSelect() {
                         </TableContainer>
                     </Box>
                 </Modal>
-            </TableCell>
         </>
     );
 }

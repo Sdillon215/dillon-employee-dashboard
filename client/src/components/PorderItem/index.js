@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import TableCell from '@mui/material/TableCell';
+import { Button } from '@mui/material';
 import TableRow from '@mui/material/TableRow';
 import { REMOVE_FROM_PO_CART } from '../../utils/actions';
 import { idbPromise } from '../../utils/helpers';
@@ -9,7 +10,7 @@ import { idbPromise } from '../../utils/helpers';
 
 
 export default function PorderItem({ porderItem }) {
-    const [dispatch] = useStoreContext();
+    const [state, dispatch] = useStoreContext();
 
     const removeFromCart = porderItem => {
         dispatch({
@@ -25,43 +26,46 @@ export default function PorderItem({ porderItem }) {
         >
             <TableCell
                 align="left"
-                sx={{
-                    width: '20vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                }}>
+            // sx={{
+            //     width: '20vw',
+            //     background: 'rgba(255, 255, 255, 0.6)',
+            //     borderRadius: '.27em'
+            // }}
+            >
                 {porderItem.name}
             </TableCell>
             <TableCell
                 align="right"
-                sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                }}
+            // sx={{
+            //     width: '10vw',
+            //     background: 'rgba(255, 255, 255, 0.6)',
+            //     borderRadius: '.27em'
+            // }}
             >{porderItem.quantity}</TableCell>
             <TableCell
                 align="right"
-                sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                }}
+            // sx={{
+            //     width: '10vw',
+            //     background: 'rgba(255, 255, 255, 0.6)',
+            //     borderRadius: '.27em'
+            // }}
             >${porderItem.unitPrice}</TableCell>
             <TableCell
                 align="right"
-                sx={{
-                    width: '10vw',
-                    background: 'rgba(255, 255, 255, 0.6)',
-                    borderRadius: '.27em'
-                }}
+            // sx={{
+            //     width: '10vw',
+            //     background: 'rgba(255, 255, 255, 0.6)',
+            //     borderRadius: '.27em'
+            // }}
             >${porderItem.productTotal}</TableCell>
-            <TableCell
-                role="img"
-                aria-label="trash"
-                onClick={() => removeFromCart(porderItem)}
-            >
-                <button>Delete</button>
+            <TableCell align="right">
+                <Button
+                    sx={{ color: 'black', background: 'rgb(219, 49, 49)', width: '12vw'}}
+                    type="button"
+                    onClick={() => removeFromCart(porderItem)}
+                >
+                    Delete
+                </Button>
             </TableCell>
         </TableRow>
     );

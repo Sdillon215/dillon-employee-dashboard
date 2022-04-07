@@ -19,10 +19,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Verdana',
-      'Geneva',
-      'Tahoma',
-      'sans-serif'
+      'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'
+
     ].join(','),
   },
 });

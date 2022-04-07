@@ -15,15 +15,13 @@ export default function DepartmentSelect() {
     const { departments, currentDepartment } = state;
     const [departmentId, setDepartment] = React.useState([]);
     const theme = useTheme();
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
 
 
     const MenuProps = {
         PaperProps: {
             style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width: 250,
+                width: '15vw',
+                
             },
         },
     };
@@ -69,10 +67,10 @@ export default function DepartmentSelect() {
         }
     };
     return (
-        <Box sx={{ minWidth: 120 }}>
-            <FormControl sx={{ m: 1, width: 300 }}>
+        <Box sx={{ minWidth: '20vw' }}>
+            <FormControl sx={{ width: '15vw', textAlign: 'center' }}>
                 <Select
-                    // id="demo-multiple-name"
+                    displayEmpty
                     name="product"
                     onChange={handleChange}
                     MenuProps={MenuProps}
@@ -90,7 +88,7 @@ export default function DepartmentSelect() {
                             {department.name}
                         </MenuItem>
                     ))}
-                    <MenuItem value={''}>All</MenuItem>
+                    <MenuItem value={''}>Departments</MenuItem>
                 </Select>
             </FormControl>
         </Box>

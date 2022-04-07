@@ -38,8 +38,8 @@ a {
 }
 .formCard {
     color: #fff;
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 20px;
 }
 .blurLogin {
@@ -82,8 +82,7 @@ a {
 
 
 .blurNav {
-    background: rgba(255, 255, 255, 0.4);
-    background-color: rgba(46, 214, 138, 0.5);
+    background-color: rgb(21, 108, 69);
     width: 100%;
     z-index: 9000;
 }
@@ -102,12 +101,19 @@ img {
 
 .blurContainer {
     width: 80vw;
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.8);
     margin-top: 3vh;
 }
 
 .btm {
     margin-bottom: 3vh;
+}
+
+.MuiTableHead-root .MuiTableCell-root {
+    font-size: 1.9vw;
+}
+.MuiTableRow-root .MuiTableCell-root {
+    font-size: 1.4vw;
 }
