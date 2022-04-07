@@ -20,14 +20,6 @@ export default function PorderItem({ porderItem }) {
         idbPromise('poCart', 'delete', { ...porderItem });
     };
 
-    function calculateTotal() {
-        let sum = 0;
-        // state.poCart.forEach(porderItem => {
-            sum += porderItem.unitPrice * porderItem.quantity;
-        // });
-        return sum.toFixed(2);
-    };
-
     return (
         <TableRow
             sx={{ width: '100%' }}
@@ -64,12 +56,7 @@ export default function PorderItem({ porderItem }) {
                     background: 'rgba(255, 255, 255, 0.6)',
                     borderRadius: '.27em'
                 }}
-                // calculate total is putting out same total every time fix
-                // 
-                // 
-                // 
-                // fix BUG fix BUG
-            >${calculateTotal()}</TableCell>
+            >${porderItem.productTotal}</TableCell>
             <TableCell
                 role="img"
                 aria-label="trash"

@@ -62,22 +62,23 @@ export default function ProductSelect() {
     const handleAddSubmit = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        const depId = currentDepartment._id;
+        const departmentId = currentDepartment._id;
         const productId = data.get('product');
         const addItem = products.find((product) => product._id === productId);
-        console.log(addItem.name);
         const name = addItem.name;
         const _id = productId;
-        const quantity = data.get('quantity');
-        const unitPrice = data.get('unitPrice');
-        const porderItem = { _id, depId, name, quantity, unitPrice };
+        const stringQuantity = data.get('quantity');
+        const stringUnitPrice = data.get('unitPrice');
+        const quantity = parseInt(stringQuantity);
+        const unitPrice = parseFloat(stringUnitPrice);
+        const porderItem = { _id, departmentId, name, quantity, unitPrice };
         const itemInCart = poCart.find((porderItem) => porderItem._id === productId)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_PO_CART,
                 _id: productId,
                 quantity: parseInt(quantity),
-                unitPrice: parseInt(unitPrice)
+                unitPrice: parseFloat(unitPrice)
             });
             idbPromise('poCart', 'put', {
                 ...itemInCart,
@@ -140,7 +141,7 @@ export default function ProductSelect() {
 
     return (
         <>
-            <TableCell colSpan={6} align="center">
+            <TableCell colSpan={3} align="center">
                 <Button sx={{ color: 'black', background: 'green' }} type="button" onClick={handleOpen}>
                     {/* {modalText} */}
                     Add To Order
@@ -217,7 +218,7 @@ export default function ProductSelect() {
                                             <OutlinedInput
                                                 id="outlined-adornment-amount"
                                                 name="unitPrice"
-                                                type="number"
+                                                type="float"
                                                 sx={{
                                                     width: '10vw',
                                                     background: 'rgba(255, 255, 255, 0.6)',

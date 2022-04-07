@@ -3,10 +3,6 @@ const porderItemSchema = require('./PorderItems');
 const { Schema } = mongoose;
 
 const porderSchema = new Schema({
-    username: {
-        type: String,
-        required: true
-    },
     purchaseDate: {
         type: Date,
         default: Date.now

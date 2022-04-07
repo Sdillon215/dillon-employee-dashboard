@@ -11,7 +11,7 @@ const porderItemSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
     },
-    productName: {
+    name: {
         type: String,
         required: true
     },

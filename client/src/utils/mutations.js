@@ -6,7 +6,25 @@ export const LOGIN = gql`
       token
       user {
         _id
+        username
       }
     }
   }
 `;
+
+export const PO_SUBMIT = gql`
+mutation PurchaseOrder($departmentId: ID!, $orderTotal: Float!, $porderItems: [PorderItemsInput]) {
+  purchaseOrder(departmentId: $departmentId, orderTotal: $orderTotal, porderItems: $porderItems) {
+    _id
+    departmentId
+    orderTotal
+    porderItems {
+      productId
+      departmentId
+      name
+      quantity
+      unitPrice
+      productTotal
+    }
+  }
+}`;
