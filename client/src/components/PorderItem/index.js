@@ -9,8 +9,7 @@ import { idbPromise } from '../../utils/helpers';
 
 
 export default function PorderItem({ porderItem }) {
-    const [state, dispatch] = useStoreContext();
-    const { currentDepartment, poCart } = state;
+    const [dispatch] = useStoreContext();
 
     const removeFromCart = porderItem => {
         dispatch({

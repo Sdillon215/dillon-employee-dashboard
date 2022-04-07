@@ -24,7 +24,6 @@ export default function OrderForm() {
     let depCart = [{productTotal: ''}];
     let total;
     const porderItems = [];
-    let removeCart = [{}];
 
     useEffect(() => {
         async function getPoCart() {
@@ -72,7 +71,7 @@ export default function OrderForm() {
         e.preventDefault();
         
         try {
-            const mutationResponse = await submitPo({
+             await submitPo({
                 variables: {
                     departmentId: currentDepartment._id,
                     orderTotal: total,

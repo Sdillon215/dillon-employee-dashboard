@@ -14,6 +14,18 @@ import Dashboard from './pages/Dashboard';
 import NoMatch from './pages/NoMatch';
 import Nav from './components/Nav';
 import { StoreProvider } from './utils/GlobalState';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      'Verdana',
+      'Geneva',
+      'Tahoma',
+      'sans-serif'
+    ].join(','),
+  },
+});
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -39,6 +51,7 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
       <Router>
         <div>
           <StoreProvider>
@@ -51,6 +64,7 @@ function App() {
           </StoreProvider>
         </div>
       </Router>
+      </ThemeProvider>
     </ApolloProvider>
   );
 }
