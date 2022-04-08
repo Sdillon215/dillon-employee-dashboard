@@ -50,18 +50,18 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-      <Router>
-        <div>
-          <StoreProvider>
-            <Nav />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route component={NoMatch} />
-            </Switch>
-          </StoreProvider>
-        </div>
-      </Router>
+        <Router>
+          <div>
+            <StoreProvider>
+              <Nav />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/dashboard" component={Dashboard} />
+                <Route component={NoMatch} />
+              </Switch>
+            </StoreProvider>
+          </div>
+        </Router>
       </ThemeProvider>
     </ApolloProvider>
   );

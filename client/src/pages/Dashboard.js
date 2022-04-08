@@ -17,7 +17,7 @@ if (token.data.dept === 'Sales') {
     );
 } if (token.data.dept === 'Buyer') {
     return (
-        <Buyer />
+        <Buyer /> 
     );
 } else {
     return <Redirect to='/' />

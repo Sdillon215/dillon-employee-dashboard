@@ -74,7 +74,6 @@ const resolvers = {
         purchaseOrder: async (parent, args) => {
             const porder = await Porder.create({ ...args });
             const pItemArr = args.porderItems;
-            console.log(pItemArr);
             for (let i = 0; i < pItemArr.length; i++) {
                 const increment = Math.abs(pItemArr[i].quantity) * +1;
                 await Product.findByIdAndUpdate(

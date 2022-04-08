@@ -3,10 +3,6 @@ const saleItemSchema = require('./SaleItems');
 const { Schema } = mongoose;
 
 const sorderSchema = new Schema({
-    username: {
-        type: String,
-        required: true
-    },
     saleDate: {
         type: Date,
         default: Date.now

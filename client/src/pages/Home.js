@@ -8,7 +8,7 @@ function Home() {
 const token = Auth.loggedIn() ? Auth.getToken() : null;
 
 if (token) {
-  return <Redirect to='/dashboard/' />
+  return <Redirect to='/dashboard' />
 } 
   return (
     <Grid

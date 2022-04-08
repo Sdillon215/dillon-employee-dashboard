@@ -57,15 +57,6 @@ export default function Chart() {
 		}
 	};
 
-	const toggleDataSeries = (e) => {
-		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-			e.dataSeries.visible = false;
-		}
-		else{
-			e.dataSeries.visible = true;
-		}
-	};
-
 	const options = {
 		backgroundColor: "rgba(0,0,0,0)",
 		theme: "light2",
@@ -76,7 +67,7 @@ export default function Chart() {
 		axisX: {
 			title: "Months",
 			interval: 1,
-			intervalType: "month"
+			intervalType: "month",
 		},
 		axisY: {
 			titleFontColor: "#6D78AD",
