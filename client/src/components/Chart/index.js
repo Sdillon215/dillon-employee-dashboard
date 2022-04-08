@@ -6,15 +6,17 @@ import { useStoreContext } from '../../utils/GlobalState';
 export default function Chart() {
 	const [state] = useStoreContext();
 	const { departments, currentDepartment } = state;
-
 	const orderData = [];
 	const saleData = [];
 	let curdepartments = [];
+	let chartHeading;
 	if (!currentDepartment) {
 		curdepartments = departments;
+		chartHeading = 'All Purchase Orders & Sales ';
 	} else {
 		console.log(currentDepartment)
 		curdepartments = departments.filter(department => department._id === currentDepartment._id);
+		chartHeading = currentDepartment.name + ' Purchase Orders & Sales';
 	}
 
 	for (let i = 0; i < curdepartments.length; i++) {
@@ -55,55 +57,51 @@ export default function Chart() {
 		}
 	};
 
+	const toggleDataSeries = (e) => {
+		if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else{
+			e.dataSeries.visible = true;
+		}
+	};
+
 	const options = {
 		backgroundColor: "rgba(0,0,0,0)",
 		theme: "light2",
 		animationEnabled: true,
 		title: {
-			text: "Sales & Purchase Order History"
+			text: chartHeading
 		},
-		subtitles: [{
-			text: ""
-		}],
 		axisX: {
-			title: "Months"
+			title: "Months",
+			interval: 1,
+			intervalType: "month"
 		},
 		axisY: {
-			// title: "Purchase Orders",
 			titleFontColor: "#6D78AD",
 			lineColor: "#6D78AD",
 			labelFontColor: "#0a0a0a",
 			tickColor: "#6D78AD"
 		},
-		// axisY2: {
-		// 	title: "Sales",
-		// 	titleFontColor: "#51CDA0",
-		// 	lineColor: "#51CDA0",
-		// 	labelFontColor: "#51CDA0",
-		// 	tickColor: "#51CDA0"
-		// },
 		toolTip: {
-			shared: true
-		},
-		legend: {
-			cursor: "pointer",
-			// itemclick: this.toggleDataSeries
+			shared: false
 		},
 		data: [
 			{
 				type: "spline",
 				name: "Sales",
 				showInLegend: true,
-				xValueFormatString: "MMM YYYY",
-				yValueFormatString: "$#,##0.#",
+				xValueFormatString: "MMM D, YYYY",
+				yValueFormatString: "$#,##0.##",
 				dataPoints: saleData
 			},
 			{
 				type: "spline",
 				name: "Purchase Orders",
 				showInLegend: true,
-				xValueFormatString: "MMM YYYY",
-				yValueFormatString: "$#,##0.#",
+				xValueFormatString: "MMM D, YYYY",
+				yValueFormatString: "$#,##0.##",
 				dataPoints: orderData
 			}
 		]
