@@ -48,11 +48,11 @@ db.once('open', async () => {
 
   // create  plant kingdom products
   const pk = [
-    {name: 'Aglaonema Chinese Evergreen 4in', unitPrice: '15.65', image: 'aglaonema.jpg'},
-    {name: 'Air Plant Nautilus Shell hanging', unitPrice: '17.95', image: 'nautilus-shell.jpg'},
-    {name : 'Tropiflora in Metal Cone', unitPrice: '20.12', image: 'tropiflora.jpg'},
+    {name: 'Aglaonema Chinese Evergreen 4in', unitPrice: '13.65', image: 'aglaonema.jpg'},
+    {name: 'Air Plant Nautilus Shell hanging', unitPrice: '15.95', image: 'nautilus-shell.jpg'},
+    {name : 'Tropiflora in Metal Cone', unitPrice: '15.12', image: 'tropiflora.jpg'},
     {name: 'Alocasia, Ivory Coast', unitPrice: '14.95', image: 'alocasia.jpg'},
-    {name: 'Anthurium 6in', unitPrice: '16.95', image: 'anthurium.jpg'},
+    {name: 'Anthurium 6in', unitPrice: '13.95', image: 'anthurium.jpg'},
     {name: 'Cactus 4in', unitPrice: '14.20', image: 'cactus.jpg'}
   ];
   const pkData = [];
@@ -73,12 +73,12 @@ db.once('open', async () => {
 
   // create  Fresh cut products
   const fc = [
-    {name: 'Lily, Dillon Grown, Assorted, 1-2 Blooms', unitPrice: '17.95', image: 'lily.jpg'},
-    {name: 'Gerbera, Acapulco, Yellow/Orange, Dark Center', unitPrice: '16.49', image: 'gerbera.jpg'},
-    {name : 'Tulips, Red/White', unitPrice: '12.50', image: 'tulip.jpg'},
+    {name: 'Lily, Dillon Grown, Assorted, 1-2 Blooms', unitPrice: '14.95', image: 'lily.jpg'},
+    {name: 'Gerbera, Acapulco, Yellow/Orange, Dark Center', unitPrice: '14.49', image: 'gerbera.jpg'},
+    {name : 'Tulips, Red/White', unitPrice: '13.50', image: 'tulip.jpg'},
     {name: 'Aspidistra, Green', unitPrice: '13.95', image: 'aspid.jpg'},
-    {name: 'Rose, Amsterdam, 40cm', unitPrice: '16.15', image: 'rose-amsterdam.jpg'},
-    {name: 'Rose, Metallic Purple', unitPrice: '20.85', image: 'rose-purple.jpg'}
+    {name: 'Rose, Amsterdam, 40cm', unitPrice: '14.15', image: 'rose-amsterdam.jpg'},
+    {name: 'Rose, Metallic Purple', unitPrice: '15.85', image: 'rose-purple.jpg'}
   ];
   const freshData = [];
   for (let i = 0; i < fc.length; i += 1) {
@@ -99,8 +99,8 @@ db.once('open', async () => {
   // create  Supply products
   const sup = [
     {name: 'Wood Cube, 5in, Natural', unitPrice: '13.75', image: 'cube.jpg'},
-    {name: 'Oasis Floracage, Grande', unitPrice: '16.00', image: 'oasis.jpg'},
-    {name : '8in Rose Vase, clear glass', unitPrice: '17.45', image: 'rose-vase.jpg'},
+    {name: 'Oasis Floracage, Grande', unitPrice: '14.00', image: 'oasis.jpg'},
+    {name : '8in Rose Vase, clear glass', unitPrice: '15.45', image: 'rose-vase.jpg'},
     {name: 'Spanish Moss, Natural', unitPrice: '14.70', image: 'moss.jpg'},
     {name: 'Tia Hanging Basket, 7.25"', unitPrice: '14.45', image: 'basket.jpg'},
     {name: 'Rooney Pot, 4.5in Tan/Cement', unitPrice: '15.30', image: 'pot.jpg'}
@@ -153,31 +153,112 @@ db.once('open', async () => {
 
   // create purchase orders
   const purchaseOrderDates = [
-    '2021, 10, 01',
+    // '2021, 10, 01',
+    '2021, 10, 02',
+    // '2021, 10, 03',
     '2021, 10, 05',
-    '2021, 10, 15',
+    '2021, 10, 07',
+    // '2021, 10, 09',
+    // '2021, 10, 10',
+    '2021, 10, 11',
+    // '2021, 10, 15',
+    '2021, 10, 16',
+    '2021, 10, 18',
+    // '2021, 10, 19',
+    // '2021, 10, 21',
+    '2021, 10, 22',
+    // '2021, 10, 24',
     '2021, 10, 25',
+    '2021, 10, 28',
+    // '2021, 11, 01',
+    // '2021, 11, 02',
     '2021, 11, 03',
-    '2021, 11, 05',
-    '2021, 11, 13',
-    '2021, 11, 27',
-    '2021, 12, 06',
+    // '2021, 11, 05',
+    '2021, 11, 07',
+    '2021, 11, 09',
+    // '2021, 11, 10',
+    // '2021, 11, 11',
+    '2021, 11, 15',
+    // '2021, 11, 16',
+    '2021, 11, 18',
+    '2021, 11, 19',
+    // '2021, 11, 21',
+    // '2021, 11, 22',
+    '2021, 11, 24',
+    // '2021, 11, 25',
+    '2021, 11, 28',
+    '2021, 12, 01',
+    // '2021, 12, 02',
+    // '2021, 12, 03',
+    '2021, 12, 05',
+    // '2021, 12, 07',
     '2021, 12, 09',
+    '2021, 12, 10',
+    // '2021, 12, 11',
+    // '2021, 12, 15',
+    '2021, 12, 16',
+    // '2021, 12, 18',
     '2021, 12, 19',
-    '2021, 12, 22',
+    '2021, 12, 21',
+    // '2021, 12, 22',
+    // '2021, 12, 24',
+    '2021, 12, 25',
+    // '2021, 12, 28',
     '2022, 01, 01',
-    '2022, 01, 05',
-    '2022, 01, 15',
-    '2022, 01, 20',
+    '2022, 01, 02',
+    // '2022, 01, 03',
+    // '2022, 01, 05',
+    '2022, 01, 07',
+    // '2022, 01, 09',
+    '2022, 01, 10',
+    '2022, 01, 11',
+    // '2022, 01, 15',
+    // '2022, 01, 16',
+    '2022, 01, 18',
+    // '2022, 01, 19',
+    '2022, 01, 21',
+    '2022, 01, 22',
+    // '2022, 01, 24',
+    // '2022, 01, 25',
+    '2022, 01, 28',
+    // '2022, 02, 01',
     '2022, 02, 02',
-    '2022, 02, 07',
-    '2022, 02, 14',
+    '2022, 02, 03',
+    // '2022, 02, 05',
+    // '2022, 02, 07',
+    '2022, 02, 09',
+    // '2022, 02, 10',
+    '2022, 02, 11',
+    '2022, 02, 15',
+    // '2022, 02, 16',
+    // '2022, 02, 18',
+    '2022, 02, 19',
+    // '2022, 02, 21',
+    '2022, 02, 22',
     '2022, 02, 24',
-    '2022, 03, 04',
-    '2022, 03, 08',
-    '2022, 03, 18',
-    '2022, 03, 27',
-    '2022, 04, 02'
+    // '2022, 02, 25',
+    // '2022, 02, 28',
+    '2022, 03, 01',
+    // '2022, 03, 02',
+    '2022, 03, 03',
+    '2022, 03, 05',
+    // '2022, 03, 07',
+    // '2022, 03, 09',
+    '2022, 03, 10',
+    // '2022, 03, 11',
+    '2022, 03, 15',
+    '2022, 03, 16',
+    // '2022, 03, 18',
+    // '2022, 03, 19',
+    '2022, 03, 21',
+    // '2022, 03, 22',
+    '2022, 03, 24',
+    '2022, 03, 25',
+    // '2022, 03, 28',
+    // '2022, 04, 01',
+    '2022, 04, 03',
+    // '2022, 04, 05',
+    '2022, 04, 07',
   ];
 
   const saleOrderDates = [];
@@ -192,7 +273,7 @@ db.once('open', async () => {
     const purchaseDate = purchaseOrderDates[i];
     const departmentId = depId._id;
     const name = prodInfo.name;
-    const quantity = Math.floor(Math.random() * (1000 - 9900 + 1)) + 9900;
+    const quantity = Math.floor(Math.random() * (11000 - 10000 + 1)) + 10000;
     const increment = Math.abs(quantity) * +1;
     const updateQuantity = await Product.findByIdAndUpdate(
       { _id: prodId },

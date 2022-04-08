@@ -13,13 +13,17 @@ import PorderItem from '../PorderItem';
 import { idbPromise } from '../../utils/helpers';
 import { ADD_MULTIPLE_TO_PO_CART } from '../../utils/actions';
 import DepartmentSelect from '../DepartmentSelect';
-import { TextField } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { PO_SUBMIT } from '../../utils/mutations';
 import { REMOVE_FROM_PO_CART } from '../../utils/actions';
+import { useLazyQuery } from '@apollo/client';
+import { QUERY_DEPARTMENTS } from '../../utils/queries';
+
+
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitPo, { error }] = useMutation(PO_SUBMIT);
+    const [getDep, { data }] = useLazyQuery(QUERY_DEPARTMENTS);
     const { currentDepartment, poCart } = state;
     let depCart = [{ productTotal: '' }];
     let total;
@@ -42,11 +46,8 @@ export default function OrderForm() {
         for (let i = 0; i < depCart.length; i++) {
             const unitPrice = depCart[i].unitPrice;
             const quantity = depCart[i].quantity;
-            let sum = 0;
-            sum += unitPrice * quantity;
-            const productTotal = sum.toFixed(2);
-            depCart[i].productTotal = parseFloat(productTotal);
-            porderItemTotals.push(sum);
+            const productTotal = depCart[i].productTotal;
+            porderItemTotals.push(productTotal);
         };
         const depCartTotal = porderItemTotals.reduce((a, b) => a + b, 0);
         total = parseFloat(depCartTotal.toFixed(2));
@@ -89,6 +90,8 @@ export default function OrderForm() {
             console.log(porderItem)
             removeFromCart(porderItem);
         }
+
+        getDep();
     }
 
     const removeFromCart = porderItem => {
@@ -153,11 +156,11 @@ export default function OrderForm() {
                                     ${total}
                                 </TableCell>
                                 <TableCell colSpan={1}></TableCell>
-                                <TableCell colSpan={1}></TableCell>
-                                <TableCell colSpan={1} align="right">
+                                {/* <TableCell colSpan={1}></TableCell> */}
+                                <TableCell colSpan={2} align="right">
                                     <ProdSelect />
                                     <Button
-                                        sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '12vw', marginLeft: '26px' }}
+                                        sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw', marginLeft: '26px' }}
                                         type="button"
                                         onClick={handleOrderSubmit}
                                     >
@@ -171,22 +174,6 @@ export default function OrderForm() {
                             </TableCell>
                         )}
                             </TableRow>
-                        {/* <TableRow >
-                            <ProdSelect />
-                            {depCart.length ? (
-                                <TableCell align="right">
-                                    <Button
-                                        sx={{ color: 'black', background: 'green' }}
-                                        type="button"
-                                        onClick={handleOrderSubmit}
-                                    >
-                                        Submit Order
-                                    </Button>
-                                </TableCell>
-                            ) : (
-                                <></>
-                            )}
-                        </TableRow> */}
                     </TableBody>
                 )}
             </Table>

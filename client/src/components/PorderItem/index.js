@@ -60,7 +60,7 @@ export default function PorderItem({ porderItem }) {
             >${porderItem.productTotal}</TableCell>
             <TableCell align="right">
                 <Button
-                    sx={{ color: 'black', background: 'rgb(219, 49, 49)', width: '12vw'}}
+                    sx={{ color: 'black', background: 'rgb(219, 49, 49)', width: '10vw'}}
                     type="button"
                     onClick={() => removeFromCart(porderItem)}
                 >

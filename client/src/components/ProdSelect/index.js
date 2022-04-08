@@ -71,18 +71,21 @@ export default function ProductSelect() {
         const stringUnitPrice = data.get('unitPrice');
         const quantity = parseInt(stringQuantity);
         const unitPrice = parseFloat(stringUnitPrice);
-        const porderItem = { _id, departmentId, name, quantity, unitPrice };
+        const total = quantity * unitPrice;
+        const productTotal = parseFloat(total.toFixed(2));
+        const porderItem = { _id, departmentId, name, quantity, unitPrice, productTotal };
         const itemInCart = poCart.find((porderItem) => porderItem._id === productId)
         if (itemInCart) {
             dispatch({
                 type: UPDATE_PO_CART,
                 _id: productId,
-                quantity: parseInt(quantity),
-                unitPrice: parseFloat(unitPrice)
+                quantity: quantity,
+                unitPrice: unitPrice,
+                productTotal: productTotal
             });
             idbPromise('poCart', 'put', {
                 ...itemInCart,
-                quantity: parseInt(itemInCart.quantity)
+                quantity: itemInCart.quantity
             });
         } else {
             dispatch({
@@ -141,10 +144,9 @@ export default function ProductSelect() {
 
     return (
         <>
-                <Button sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '12vw'}}
-                //  type="button" 
+                <Button sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw'}}
                  onClick={handleOpen}>
-                    Add/Edit Product
+                    Add Product
                 </Button>
                 <Modal
                     aria-labelledby="unstyled-modal-title"

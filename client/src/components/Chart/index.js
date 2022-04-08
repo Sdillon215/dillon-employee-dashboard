@@ -57,6 +57,7 @@ export default function Chart() {
 		}
 	};
 
+	console.log(saleData)
 	const options = {
 		backgroundColor: "rgba(0,0,0,0)",
 		theme: "light2",
@@ -66,8 +67,8 @@ export default function Chart() {
 		},
 		axisX: {
 			title: "Months",
-			interval: 1,
-			intervalType: "month",
+			interval: 2,
+			intervalType: "week",
 		},
 		axisY: {
 			titleFontColor: "#6D78AD",
@@ -81,19 +82,19 @@ export default function Chart() {
 		data: [
 			{
 				type: "spline",
-				name: "Sales",
-				showInLegend: true,
-				xValueFormatString: "MMM D, YYYY",
-				yValueFormatString: "$#,##0.##",
-				dataPoints: saleData
-			},
-			{
-				type: "spline",
 				name: "Purchase Orders",
 				showInLegend: true,
 				xValueFormatString: "MMM D, YYYY",
 				yValueFormatString: "$#,##0.##",
 				dataPoints: orderData
+			},
+			{
+				type: "spline",
+				name: "Sales",
+				showInLegend: true,
+				xValueFormatString: "MMM D, YYYY",
+				yValueFormatString: "$#,##0.##",
+				dataPoints: saleData
 			}
 		]
 	}

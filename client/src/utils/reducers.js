@@ -59,6 +59,8 @@ export const reducer = (state, action) => {
                 poCart: state.poCart.map(product => {
                     if (action._id === product._id) {
                         product.quantity = action.quantity;
+                        product.unitPrice = action.unitPrice;
+                        product.productTotal = action.productTotal;
                     }
                     return product;
                 })
