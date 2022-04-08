@@ -11,20 +11,17 @@ import ProdSelect from '../ProdSelect';
 import { Button } from '@mui/material';
 import PorderItem from '../PorderItem';
 import { idbPromise } from '../../utils/helpers';
-import { ADD_MULTIPLE_TO_PO_CART } from '../../utils/actions';
+import { ADD_MULTIPLE_TO_PO_CART, REMOVE_FROM_PO_CART, UPDATE_DEPARTMENT_PO } from '../../utils/actions';
 import DepartmentSelect from '../DepartmentSelect';
 import { useMutation } from '@apollo/client';
 import { PO_SUBMIT } from '../../utils/mutations';
-import { REMOVE_FROM_PO_CART } from '../../utils/actions';
-import { useLazyQuery } from '@apollo/client';
-import { QUERY_DEPARTMENTS } from '../../utils/queries';
+
 
 
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitPo, { error }] = useMutation(PO_SUBMIT);
-    const [getDep, { data }] = useLazyQuery(QUERY_DEPARTMENTS);
-    const { currentDepartment, poCart } = state;
+    const { currentDepartment, poCart, departments } = state;
     let depCart = [{ productTotal: '' }];
     let total;
     const porderItems = [];
@@ -78,20 +75,29 @@ export default function OrderForm() {
                     orderTotal: total,
                     porderItems: [...porderItems],
                 }
-            })
+            });
 
         } catch (error) {
             console.log(error);
-        }
+        };
 
-        console.log(depCart);
         for (let i = 0; i < depCart.length; i++) {
             const porderItem = depCart[i];
-            console.log(porderItem)
             removeFromCart(porderItem);
+        };
+        
+        const newPo = departments.find((department) => department._id === currentDepartment._id);
+        if (newPo) {
+            dispatch({
+                type: UPDATE_DEPARTMENT_PO,
+                _id: currentDepartment._id,
+                porder: {
+                    departmentId: currentDepartment._id,
+                    orderTotal: total,
+                    porderItems: [...porderItems],
+                }
+              });
         }
-
-        getDep();
     }
 
     const removeFromCart = porderItem => {

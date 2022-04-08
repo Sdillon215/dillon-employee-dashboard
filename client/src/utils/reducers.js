@@ -8,6 +8,7 @@ import {
     UPDATE_PO_CART,
     CLEAR_PO_CART,
     UPDATE_DEPARTMENTS,
+    UPDATE_DEPARTMENT_PO
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -63,6 +64,17 @@ export const reducer = (state, action) => {
                         product.productTotal = action.productTotal;
                     }
                     return product;
+                })
+            };
+        case UPDATE_DEPARTMENT_PO:
+            return {
+                ...state,
+                departments: state.departments.map(department => {
+                    if (action._id === department._id) {
+                        ...state,
+                        department: [...state.department, ...action.porder],
+                    }
+                    return department;
                 })
             };
 

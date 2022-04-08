@@ -57,7 +57,6 @@ export default function Chart() {
 		}
 	};
 
-	console.log(saleData)
 	const options = {
 		backgroundColor: "rgba(0,0,0,0)",
 		theme: "light2",
