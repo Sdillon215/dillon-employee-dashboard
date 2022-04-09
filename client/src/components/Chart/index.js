@@ -14,7 +14,6 @@ export default function Chart() {
 		curdepartments = departments;
 		chartHeading = 'All Purchase Orders & Sales ';
 	} else {
-		console.log(currentDepartment)
 		curdepartments = departments.filter(department => department._id === currentDepartment._id);
 		chartHeading = currentDepartment.name + ' Purchase Orders & Sales';
 	}
@@ -66,7 +65,7 @@ export default function Chart() {
 		},
 		axisX: {
 			title: "Months",
-			interval: 2,
+			interval: 1,
 			intervalType: "week",
 		},
 		axisY: {
