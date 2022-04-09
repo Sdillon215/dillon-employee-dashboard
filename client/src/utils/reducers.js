@@ -71,8 +71,7 @@ export const reducer = (state, action) => {
                 ...state,
                 departments: state.departments.map(department => {
                     if (action._id === department._id) {
-                        ...state,
-                        department: [...state.department, ...action.porder],
+                        console.log(department)
                     }
                     return department;
                 })

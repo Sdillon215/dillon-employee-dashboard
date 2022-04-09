@@ -13,18 +13,23 @@ export const LOGIN = gql`
 `;
 
 export const PO_SUBMIT = gql`
-mutation PurchaseOrder($departmentId: ID!, $orderTotal: Float!, $porderItems: [PorderItemsInput]) {
+mutation PurchaseOrder($departmentId: ID, $orderTotal: Float, $porderItems: [PorderItemsInput]) {
   purchaseOrder(departmentId: $departmentId, orderTotal: $orderTotal, porderItems: $porderItems) {
     _id
-    departmentId
-    orderTotal
-    porderItems {
-      productId
-      departmentId
+    name
+    products {
+      _id
       name
-      quantity
-      unitPrice
-      productTotal
+    }
+    porders {
+      _id
+      purchaseDate
+      orderTotal
+    }
+    sorders {
+      _id
+      saleDate
+      saleTotal
     }
   }
 }`;

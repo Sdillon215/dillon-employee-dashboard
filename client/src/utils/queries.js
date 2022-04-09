@@ -22,6 +22,28 @@ export const QUERY_DEPARTMENTS = gql`
   }
 }`;
 
+export const QUERY_DEP = gql`
+query Department($id: ID!) {
+  department(_id: $id) {
+    _id
+    name
+    porders {
+      _id
+      purchaseDate
+      orderTotal
+    }
+    sorders {
+      _id
+      saleDate
+      saleTotal
+    }
+    products {
+      _id
+      name
+    }
+  }
+}`
+;
 
 export const QUERY_PORDERS = gql`
   {
@@ -30,8 +52,8 @@ export const QUERY_PORDERS = gql`
     purchaseDate
     total
   }
-}
-`;
+}`
+;
 
 export const QUERY_SORDERS = gql`
   {

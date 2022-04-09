@@ -72,6 +72,7 @@ const resolvers = {
             return department;
         },
         purchaseOrder: async (parent, args) => {
+            console.log(args.departmentId);
             const porder = await Porder.create({ ...args });
             const pItemArr = args.porderItems;
             for (let i = 0; i < pItemArr.length; i++) {
@@ -82,13 +83,18 @@ const resolvers = {
     
                 );
             }
-
             await Department.findByIdAndUpdate(
                 { _id: args.departmentId },
-                { $push: { porders: porder._id }},
+                { $addToSet: { porders: {...porder} }},
                 { new: true }
-            )
-            return porder;
+            );
+
+            const department = await Department.findById({ _id: args.departmentId })
+            .populate('products')
+            .populate('porders')
+            .populate('sorders');
+        console.log(department)
+            return department;
         },
         saleOrder: async (parent, args) => {
             const sorder = await Sorder.create({ ...args });
