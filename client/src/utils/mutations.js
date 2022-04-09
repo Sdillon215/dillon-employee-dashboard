@@ -33,3 +33,10 @@ mutation PurchaseOrder($departmentId: ID, $orderTotal: Float, $porderItems: [Por
     }
   }
 }`;
+
+export const SO_SUBMIT = gql`
+mutation SalesOrder($id: ID) {
+  saleOrder(_id: $ID) {
+    _id
+  }
+}`;

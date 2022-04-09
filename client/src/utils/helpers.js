@@ -20,6 +20,7 @@ export function idbPromise(storeName, method, object) {
       db.createObjectStore('departments', { keyPath: '_id' });
       db.createObjectStore('products', { keyPath: '_id'});
       db.createObjectStore('poCart', { keyPath: '_id'});
+      db.createObjectStore('soCart', { keyPath: '_id'});
     };
 
     // handle any errors with connecting

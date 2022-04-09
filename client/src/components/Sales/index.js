@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-
 import Chart from '../Chart';
-// import SalesOrderForm from '../SalesOrderForm';
+import SalesOrderForm from '../SalesOrderForm';
 
 
 function Sales() {
@@ -19,7 +18,7 @@ function Sales() {
       alignItems="center"
       justifyContent="center">
       <div class='blurContainer'>
-        {/* <SalesOrderForm /> */}
+        <SalesOrderForm />
       </div>
       <div class='blurContainer btm'>
         <Chart />

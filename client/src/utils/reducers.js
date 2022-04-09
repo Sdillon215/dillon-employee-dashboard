@@ -2,13 +2,15 @@ import { useReducer } from 'react';
 import {
     UPDATE_PRODUCTS,
     UPDATE_CURRENT_DEPARTMENT,
+    UPDATE_DEPARTMENTS,
     ADD_TO_PO_CART,
     ADD_MULTIPLE_TO_PO_CART,
     REMOVE_FROM_PO_CART,
     UPDATE_PO_CART,
-    CLEAR_PO_CART,
-    UPDATE_DEPARTMENTS,
-    UPDATE_DEPARTMENT_PO
+    ADD_TO_SO_CART,
+    ADD_MULTIPLE_TO_SO_CART,
+    REMOVE_FROM_SO_CART,
+    UPDATE_SO_CART,
 } from "./actions";
 
 export const reducer = (state, action) => {
@@ -45,14 +47,14 @@ export const reducer = (state, action) => {
             };
 
         case REMOVE_FROM_PO_CART:
-            let newState = state.poCart.filter(product => {
+            let newPoState = state.poCart.filter(product => {
                 return product._id !== action._id;
             });
 
-            return {
-                ...state,
-                poCart: newState
-            };
+        return {
+            ...state,
+            poCart: newPoState
+        };
 
         case UPDATE_PO_CART:
             return {
@@ -66,21 +68,40 @@ export const reducer = (state, action) => {
                     return product;
                 })
             };
-        case UPDATE_DEPARTMENT_PO:
+
+        case ADD_TO_SO_CART:
             return {
                 ...state,
-                departments: state.departments.map(department => {
-                    if (action._id === department._id) {
-                        console.log(department)
-                    }
-                    return department;
-                })
+                soCart: [...state.soCart, action.product]
             };
 
-        case CLEAR_PO_CART:
+        case ADD_MULTIPLE_TO_SO_CART:
             return {
                 ...state,
-                cart: []
+                soCart: [...state.soCart, ...action.products],
+            };
+
+        case REMOVE_FROM_SO_CART:
+            let newSoState = state.soCart.filter(product => {
+                return product._id !== action._id;
+            });
+
+        return {
+            ...state,
+            soCart: newSoState
+        };
+
+        case UPDATE_SO_CART:
+            return {
+                ...state,
+                soCart: state.soCart.map(product => {
+                    if (action._id === product._id) {
+                        product.quantity = action.quantity;
+                        product.unitPrice = action.unitPrice;
+                        product.productTotal = action.productTotal;
+                    }
+                    return product;
+                })
             };
 
         default:
