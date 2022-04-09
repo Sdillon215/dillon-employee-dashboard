@@ -1,7 +1,5 @@
 import * as React from 'react';
-// import { useState, useEffect } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
-import { OutlinedInput } from '@mui/material';
 import { UPDATE_CURRENT_DEPARTMENT, UPDATE_PRODUCTS } from '../../utils/actions';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';

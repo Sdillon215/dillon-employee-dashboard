@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { CanvasJSChart } from 'canvasjs-react-charts';
 import { useStoreContext } from '../../utils/GlobalState';
 

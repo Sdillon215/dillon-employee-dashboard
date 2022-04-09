@@ -11,18 +11,16 @@ import ProdSelect from '../ProdSelect';
 import { Button } from '@mui/material';
 import PorderItem from '../PorderItem';
 import { idbPromise } from '../../utils/helpers';
-import { ADD_MULTIPLE_TO_PO_CART, REMOVE_FROM_PO_CART, UPDATE_DEPARTMENT_PO } from '../../utils/actions';
+import { ADD_MULTIPLE_TO_PO_CART, REMOVE_FROM_PO_CART } from '../../utils/actions';
 import DepartmentSelect from '../DepartmentSelect';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { PO_SUBMIT } from '../../utils/mutations';
-// import { QUERY_DEP } from '../../utils/queries';
 
 
 export default function OrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitPo] = useMutation(PO_SUBMIT);
-    // const [getDep, { data }] = useLazyQuery(QUERY_DEP);
-    const { currentDepartment, poCart, departments } = state;
+    const { currentDepartment, poCart } = state;
     let depCart = [{ productTotal: '' }];
     let total;
     const porderItems = [];
@@ -42,8 +40,8 @@ export default function OrderForm() {
         depCart = poCart.filter(porderItem => porderItem.departmentId === currentDepartment._id);
         let porderItemTotals = [];
         for (let i = 0; i < depCart.length; i++) {
-            const unitPrice = depCart[i].unitPrice;
-            const quantity = depCart[i].quantity;
+            // const unitPrice = depCart[i].unitPrice;
+            // const quantity = depCart[i].quantity;
             const productTotal = depCart[i].productTotal;
             porderItemTotals.push(productTotal);
         };
@@ -70,15 +68,13 @@ export default function OrderForm() {
         e.preventDefault();
 
         try {
-            const mutationResponse = await submitPo({
+            await submitPo({
                 variables: {
                     departmentId: currentDepartment._id,
                     orderTotal: total,
                     porderItems: [...porderItems],
                 }
             })
-
-            console.log(mutationResponse.data.department);
         } catch (error) {
             console.log(error);
         };
@@ -87,29 +83,6 @@ export default function OrderForm() {
             const porderItem = depCart[i];
             removeFromCart(porderItem);
         };
-        
-        // try {
-        //     await getDep({ variables: { _id: currentDepartment._id} });
-        // } catch (error) {
-        //     console.log(error);
-        // };
-        
-        // if (data) {
-        //     console.log(data)
-        // }
-        // const newPo = departments.find((department) => department._id === currentDepartment._id);
-        // if (newPo) {
-        //     dispatch({
-        //         type: UPDATE_DEPARTMENT_PO,
-        //         _id: currentDepartment._id,
-        //         porder: {
-        //             departmentId: currentDepartment._id,
-        //             orderTotal: total,
-        //             porderItems: [{...porderItems}],
-        //         }
-        //       });
-        // }
-
     };
 
     const removeFromCart = porderItem => {
@@ -136,10 +109,10 @@ export default function OrderForm() {
                             <TableCell align={'center'} colSpan={6}>Please select a department to start a purchase order </TableCell>
                         ) : (
                             <>
-                            <TableCell align="left">Product</TableCell>
-                            <TableCell align="right">Quantity</TableCell>
-                            <TableCell sx={{ minWidth: '69px' }} align="right">Unit Price</TableCell>
-                            <TableCell align="right">Total</TableCell>
+                                <TableCell align="left">Product</TableCell>
+                                <TableCell align="right">Quantity</TableCell>
+                                <TableCell sx={{ minWidth: '69px' }} align="right">Unit Price</TableCell>
+                                <TableCell align="right">Total</TableCell>
                             </>
                         )}
                         <TableCell align="right">
@@ -160,38 +133,38 @@ export default function OrderForm() {
                         ) : (
                             <></>
                         )}
-                            <TableRow align="center">
-                        {depCart.length ? (
-                            <>
-                                <TableCell
-                                    colSpan={1}
-                                    align="left">
-                                    Purchase Order Total:
-                                </TableCell>
-                                <TableCell
-                                    colSpan={1}
-                                    align="right">
-                                    ${total}
-                                </TableCell>
-                                <TableCell colSpan={1}></TableCell>
-                                {/* <TableCell colSpan={1}></TableCell> */}
-                                <TableCell colSpan={2} align="right">
-                                    <ProdSelect />
-                                    <Button
-                                        sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw', marginLeft: '26px' }}
-                                        type="button"
-                                        onClick={handleOrderSubmit}
-                                    >
-                                        Submit Order
-                                    </Button>
-                                </TableCell>
+                        <TableRow align="center">
+                            {depCart.length ? (
+                                <>
+                                    <TableCell
+                                        colSpan={1}
+                                        align="left">
+                                        Purchase Order Total:
+                                    </TableCell>
+                                    <TableCell
+                                        colSpan={1}
+                                        align="right">
+                                        ${total}
+                                    </TableCell>
+                                    <TableCell colSpan={1}></TableCell>
+                                    {/* <TableCell colSpan={1}></TableCell> */}
+                                    <TableCell colSpan={2} align="right">
+                                        <ProdSelect />
+                                        <Button
+                                            sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw', marginLeft: '26px' }}
+                                            type="button"
+                                            onClick={handleOrderSubmit}
+                                        >
+                                            Submit Order
+                                        </Button>
+                                    </TableCell>
                                 </>
-                        ) : (
-                            <TableCell colSpan={12} align="center">
-                                <ProdSelect />
-                            </TableCell>
-                        )}
-                            </TableRow>
+                            ) : (
+                                <TableCell colSpan={12} align="center">
+                                    <ProdSelect />
+                                </TableCell>
+                            )}
+                        </TableRow>
                     </TableBody>
                 )}
             </Table>
