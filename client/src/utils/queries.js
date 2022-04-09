@@ -5,6 +5,14 @@ export const QUERY_DEPARTMENTS = gql`
   departments {
     _id
     name
+    products {
+      _id
+      name
+      description
+      image
+      price
+      invQuantity
+    }
     porders {
       _id
       purchaseDate
@@ -14,10 +22,6 @@ export const QUERY_DEPARTMENTS = gql`
       _id
       saleDate
       saleTotal
-    }
-    products {
-      _id
-      name
     }
   }
 }`;

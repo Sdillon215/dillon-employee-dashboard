@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import SaleProdSelect from '../ProdSelect';
+import SalesProdSelect from '../SalesProdSelect';
 import { Button } from '@mui/material';
 import SorderItem from '../SorderItem';
 import { idbPromise } from '../../utils/helpers';
@@ -146,7 +146,7 @@ export default function SalesOrderForm() {
                                     </TableCell>
                                     <TableCell colSpan={1}></TableCell>
                                     <TableCell colSpan={2} align="right">
-                                        <SaleProdSelect />
+                                        <SalesProdSelect />
                                         <Button
                                             sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw', marginLeft: '26px' }}
                                             type="button"
@@ -158,7 +158,7 @@ export default function SalesOrderForm() {
                                 </>
                             ) : (
                                 <TableCell colSpan={12} align="center">
-                                    <SaleProdSelect />
+                                    <SalesProdSelect />
                                 </TableCell>
                             )}
                         </TableRow>

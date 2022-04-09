@@ -62,8 +62,8 @@ db.once('open', async () => {
     const department = 'Plant Kingdom';
     const image = pk[i].image;
     const price = pk[i].unitPrice;
-    const quantity = 0;
-    pkData.push({ name, description, image, price, quantity, department });
+    const invQuantity = 0;
+    pkData.push({ name, description, image, price, invQuantity, department });
   }
 
   const plantData = await Product.collection.insertMany(pkData);
@@ -87,8 +87,8 @@ db.once('open', async () => {
     const department = 'Fresh Cut';
     const image = fc[i].image;
     const price = fc[i].unitPrice;
-    const quantity = 0;
-    freshData.push({ name, description, image, price, quantity, department });
+    const invQuantity = 0;
+    freshData.push({ name, description, image, price, invQuantity, department });
   }
 
   const fcData = await Product.collection.insertMany(freshData);
@@ -112,8 +112,8 @@ db.once('open', async () => {
     const department = 'Supply';
     const image = sup[i].image;
     const price = sup[i].unitPrice;
-    const quantity = 0;
-    supData.push({ name, description, image, price, quantity, department });
+    const invQuantity = 0;
+    supData.push({ name, description, image, price, invQuantity, department });
   }
 
   const supplyData = await Product.collection.insertMany(supData);
@@ -151,7 +151,7 @@ db.once('open', async () => {
 
 
 
-  // create purchase orders
+  // create purchase orders shared with sale orders
   const purchaseOrderDates = [
     // '2021, 10, 01',
     // '2021, 10, 02',
@@ -289,6 +289,7 @@ db.once('open', async () => {
 
   const saleOrderDates = [];
 
+  // purchase order seed
   const depIds = await Department.find();
   for (let i = 0; i < purchaseOrderDates.length; i += 1) {
     const PoData = [];
@@ -303,7 +304,7 @@ db.once('open', async () => {
     const increment = Math.abs(quantity) * +1;
     const updateQuantity = await Product.findByIdAndUpdate(
       { _id: prodId },
-      { $inc: { quantity: increment } }
+      { $inc: { invQuantity: increment } }
     );
     const price = prodInfo.price * .6;
     const unitPrice = price.toFixed(2);
@@ -324,34 +325,8 @@ db.once('open', async () => {
     );
   }
 
-  // const saleOrderDates = [
-  //   '2021, 10, 01',
-  //   '2021, 10, 05',
-  //   '2021, 10, 15',
-  //   '2021, 10, 25',
-  //   '2021, 11, 03',
-  //   '2021, 11, 05',
-  //   '2021, 11, 13',
-  //   '2021, 11, 27',
-  //   '2021, 12, 06',
-  //   '2021, 12, 09',
-  //   '2021, 12, 19',
-  //   '2021, 12, 22',
-  //   '2022, 01, 01',
-  //   '2022, 01, 05',
-  //   '2022, 01, 15',
-  //   '2022, 01, 20',
-  //   '2022, 02, 02',
-  //   '2022, 02, 07',
-  //   '2022, 02, 14',
-  //   '2022, 02, 24',
-  //   '2022, 03, 04',
-  //   '2022, 03, 08',
-  //   '2022, 03, 18',
-  //   '2022, 03, 27',
-  //   '2022, 04, 02'
-  // ];
 
+// Sales Order seed
   for (let i = 0; i < saleOrderDates.length; i += 1) {
     const saleItems = [];
     const SoData = [];
@@ -366,7 +341,7 @@ db.once('open', async () => {
     const decrement = Math.abs(quantity) * -1;
     const updateSaleQuantity = await Product.findByIdAndUpdate(
       { _id: prodId },
-      { $inc: { quantity: decrement } }
+      { $inc: { invQuantity: decrement } }
     );
     const total = unitPrice * quantity;
     const saleTotal = total.toFixed(2);

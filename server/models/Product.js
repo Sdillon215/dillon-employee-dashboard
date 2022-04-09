@@ -19,7 +19,7 @@ const productSchema = new Schema({
     required: true,
     min: 0.99
   },
-  quantity: {
+  invQuantity: {
     type: Number,
     min: 0,
     default: 0

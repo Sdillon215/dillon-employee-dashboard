@@ -7,7 +7,7 @@ type Product {
   description: String
   image: String
   price: Float
-  quantity: Int
+  invQuantity: Int
 }
 
 type Department {
@@ -101,7 +101,7 @@ type User {
 
   type Mutation {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
-    addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, quantity: Int!): Product
+    addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, invQuantity: Int!): Product
     purchaseOrder(purchaseDate: String, departmentId: ID, orderTotal: Float, porderItems: [PorderItemsInput]): Department
     saleOrder(saleDate: String, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Sorder
     addDepartment(name: String!): Department

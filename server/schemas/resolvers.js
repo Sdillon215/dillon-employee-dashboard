@@ -79,7 +79,7 @@ const resolvers = {
                 const increment = Math.abs(pItemArr[i].quantity) * +1;
                 await Product.findByIdAndUpdate(
                     { _id: pItemArr[i].productId },
-                    { $inc: { quantity: increment } }
+                    { $inc: { invQuantity: increment } }
     
                 );
             }
@@ -103,7 +103,7 @@ const resolvers = {
                 const decrement = Math.abs(sItemArr[i].quantity) * -1;
                 await Product.findByIdAndUpdate(
                     { _id: sItemArr[i].productId },
-                    { $inc: { quantity: decrement } }
+                    { $inc: { invQuantity: decrement } }
     
                 );
             }
