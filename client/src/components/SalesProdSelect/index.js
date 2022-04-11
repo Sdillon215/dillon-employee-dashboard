@@ -12,7 +12,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import { Box } from '@mui/system';
 import { ADD_TO_SO_CART, UPDATE_SO_CART } from '../../utils/actions';
 import { idbPromise } from '../../utils/helpers';
@@ -59,10 +58,7 @@ export default function SaleProductSelect() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-        // const curDep = departments.find((department) => department._id === currentDepartment._id);
-        //     console.log(curDep)
         const curProd = products.find((product) => product._id === value);
-        console.log(curProd)
         setFormState({
             inventory: curProd.invQuantity,
             price: curProd.price

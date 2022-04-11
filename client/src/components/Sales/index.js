@@ -2,6 +2,7 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Chart from '../Chart';
 import SalesOrderForm from '../SalesOrderForm';
+import ProductList from '../ProductList';
 
 
 function Sales() {
@@ -20,9 +21,10 @@ function Sales() {
       <div class='blurContainer'>
         <SalesOrderForm />
       </div>
-      <div class='blurContainer btm'>
+      <div class='blurContainer'>
         <Chart />
       </div>
+      <ProductList />
     </Grid>
   );
 };

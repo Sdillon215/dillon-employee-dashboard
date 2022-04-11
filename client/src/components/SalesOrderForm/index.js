@@ -110,7 +110,7 @@ export default function SalesOrderForm() {
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={12} align="center">Sale Order</TableCell>
+                        <TableCell colSpan={12} align="center"><h2>Sales Order</h2></TableCell>
                     </TableRow>
                     <TableRow>
                         {!currentDepartment ? (

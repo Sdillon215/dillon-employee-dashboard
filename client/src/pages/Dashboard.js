@@ -14,7 +14,6 @@ function Dashboard() {
   const { currentDepartment } = state;
   const { loading, data: depData } = useQuery(QUERY_DEPARTMENTS);
   const token = Auth.loggedIn() ? Auth.getProfile() : null;
-  const allDepProd = [];
 
   useEffect(() => {
     if (depData) {
@@ -27,7 +26,7 @@ function Dashboard() {
       });
       // add else if to check if `loading` is undefined in `useQuery()` Hook
     } else if (!loading) {
-      // since we're offline, get all of the data from the `products` store
+      // since we're offline, get all of the data from the `departments` store
       idbPromise('departments', 'get').then((departments) => {
         // use retrieved data to set global state for offline browsing
         dispatch({
@@ -37,13 +36,11 @@ function Dashboard() {
       });
     }
     if (currentDepartment) {
-        const curDep = depData.departments.find((department) => department._id === currentDepartment._id);
-
-      console.log('dashboard', curDep.products)
+      const curDep = depData.departments.find((department) => department._id === currentDepartment._id);
       dispatch({
         type: UPDATE_PRODUCTS,
         products: curDep.products
-    });
+      });
 
     }
   }, [depData, dispatch]);

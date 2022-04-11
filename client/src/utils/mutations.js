@@ -20,6 +20,7 @@ mutation PurchaseOrder($departmentId: ID, $orderTotal: Float, $porderItems: [Por
     products {
       _id
       name
+      invQuantity
     }
     porders {
       _id

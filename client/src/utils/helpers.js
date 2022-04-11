@@ -18,7 +18,6 @@ export function idbPromise(storeName, method, object) {
       const db = request.result;
       // create object store for each type of data and set "primary" key index to be the `_id` of the data
       db.createObjectStore('departments', { keyPath: '_id' });
-      db.createObjectStore('products', { keyPath: '_id'});
       db.createObjectStore('poCart', { keyPath: '_id'});
       db.createObjectStore('soCart', { keyPath: '_id'});
     };

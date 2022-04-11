@@ -79,7 +79,7 @@ export default function Chart() {
 		},
 		data: [
 			{
-				type: "spline",
+				type: "line",
 				name: "Purchase Orders",
 				showInLegend: true,
 				xValueFormatString: "MMM D, YYYY",
@@ -87,7 +87,7 @@ export default function Chart() {
 				dataPoints: orderData
 			},
 			{
-				type: "spline",
+				type: "line",
 				name: "Sales",
 				showInLegend: true,
 				xValueFormatString: "MMM D, YYYY",

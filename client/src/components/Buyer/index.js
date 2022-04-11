@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import Chart from '../Chart';
 import OrderForm from '../OrderForm';
+import ProductList from '../ProductList';
 
 
 function Buyer() {
@@ -22,6 +23,7 @@ function Buyer() {
       <div class='blurContainer btm'>
         <Chart />
       </div>
+      <ProductList />
     </Grid>
   );
 };

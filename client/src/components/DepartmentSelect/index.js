@@ -48,7 +48,6 @@ export default function DepartmentSelect() {
                 currentDepartment: currentDep
             });
             const products = currentDep.products;
-            console.log(products)
             dispatch({
                 type: UPDATE_PRODUCTS,
                 products: products
