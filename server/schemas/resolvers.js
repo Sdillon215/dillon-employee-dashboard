@@ -10,15 +10,15 @@ const resolvers = {
         },
         departments: async () => {
             return Department.find()
-            .populate('products')
-            .populate('porders')
-            .populate('sorders');
+                .populate('products')
+                .populate('porders')
+                .populate('sorders');
         },
         department: async (parent, { _id }) => {
             return Department.findById(_id)
-            .populate('products')
-            .populate('porders')
-            .populate('sorders');
+                .populate('products')
+                .populate('porders')
+                .populate('sorders');
         },
         product: async (parent, { _id }) => {
             return await Product.findById(_id);
@@ -80,20 +80,20 @@ const resolvers = {
                 await Product.findByIdAndUpdate(
                     { _id: pItemArr[i].productId },
                     { $inc: { invQuantity: increment } }
-    
+
                 );
             }
             await Department.findByIdAndUpdate(
                 { _id: args.departmentId },
-                { $addToSet: { porders: {...porder} }},
+                { $addToSet: { porders: { ...porder } } },
                 { new: true }
             );
 
             const department = await Department.findById({ _id: args.departmentId })
-            .populate('products')
-            .populate('porders')
-            .populate('sorders');
-        console.log(department)
+                .populate('products')
+                .populate('porders')
+                .populate('sorders');
+            console.log(department)
             return department;
         },
         saleOrder: async (parent, args) => {
@@ -104,16 +104,22 @@ const resolvers = {
                 await Product.findByIdAndUpdate(
                     { _id: sItemArr[i].productId },
                     { $inc: { invQuantity: decrement } }
-    
+
                 );
             }
 
             await Department.findByIdAndUpdate(
                 { _id: args.departmentId },
-                { $push: { sorders: sorder._id }},
+                { $addToSet: { sorders: { ...sorder } } },
                 { new: true }
-            )
-            return sorder;
+            );
+
+            const department = await Department.findById({ _id: args.departmentId })
+                .populate('products')
+                .populate('porders')
+                .populate('sorders');
+            console.log(department)
+            return department;
         }
     }
 };

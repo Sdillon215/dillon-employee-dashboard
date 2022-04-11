@@ -117,3 +117,6 @@ img {
 .MuiTableRow-root .MuiTableCell-root {
     font-size: 1.4vw;
 }
+.MuiOutlinedInput-input {
+    text-align: center;
+}

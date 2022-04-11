@@ -13,6 +13,7 @@ export default function SorderItem({ sorderItem }) {
     const [state, dispatch] = useStoreContext();
 
     const removeFromCart = sorderItem => {
+        console.log(sorderItem)
         dispatch({
             type: REMOVE_FROM_SO_CART,
             _id: sorderItem._id

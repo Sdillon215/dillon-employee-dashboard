@@ -28,10 +28,10 @@ export default function SaleProductSelect() {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const [state, dispatch] = useStoreContext();
-    const { products, soCart, currentDepartment } = state;
+    const { products, soCart, currentDepartment, departments } = state;
     const theme = useTheme();
     const [productId, setproductId] = useState(['']);
-    const [formState, setFormState] = useState({ inventory: '', quantity: '' });
+    const [formState, setFormState] = useState({ inventory: '', price: '' });
     const MenuProps = {
         PaperProps: {
             style: {
@@ -50,7 +50,7 @@ export default function SaleProductSelect() {
         };
     }
 
-    let curInv;
+
     const handleChange = (event) => {
         const {
             target: { name, value },
@@ -59,42 +59,15 @@ export default function SaleProductSelect() {
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-        // const prodId = value;
-        // handleInvChange(prodId);
+        // const curDep = departments.find((department) => department._id === currentDepartment._id);
+        //     console.log(curDep)
+        const curProd = products.find((product) => product._id === value);
+        console.log(curProd)
+        setFormState({
+            inventory: curProd.invQuantity,
+            price: curProd.price
+        })
     };
-    
-    // const handleInvChange = (e) => {
-    //     if (typeof e === 'string') {
-    //         console.log(e)
-    //         const curProd = products.find((product) => product._id === e);
-    //         curInv = curProd.invQuantity;
-            
-    //         console.log(curInv)
-    //         setFormState({
-    //             ...formState,
-    //             inventory: curInv,
-    //             quantity: ''
-    //          });
-
-
-    //     } else {
-    //         const {
-    //             target: { name, value },
-    //         } = e;
-    //         // console.log(e.target.value)
-    //         // const newInv = formState.inventory - e.target.value;
-    //         // console.log(newInv)
-    //         setFormState({
-    //             ...formState,
-    //             [name]: value,
-    //          });
-    //     }
-    //     // const invChg = curProdInv.inv - parseInt(value);
-    //     // console.log(curProdInv.inv, '-', value, '=', invChg)
-    //     // setProdInv({inv: invChg});
-    //     // if (tacos) {
-    //     //     }
-    // };
 
     const handleAddSubmit = (e) => {
         e.preventDefault();
@@ -105,13 +78,12 @@ export default function SaleProductSelect() {
         const name = addItem.name;
         const _id = productId;
         const stringQuantity = data.get('quantity');
-        const stringUnitPrice = data.get('unitPrice');
         const quantity = parseInt(stringQuantity);
-        const unitPrice = parseFloat(stringUnitPrice);
+        const unitPrice = parseFloat(formState.price);
         const total = quantity * unitPrice;
         const productTotal = parseFloat(total.toFixed(2));
         const sorderItem = { _id, departmentId, name, quantity, unitPrice, productTotal };
-        const itemInCart = soCart.find((sorderItem) => sorderItem._id === productId)
+        const itemInCart = soCart.find((sorderItem) => sorderItem._id === productId);
         if (itemInCart) {
             dispatch({
                 type: UPDATE_SO_CART,
@@ -123,6 +95,7 @@ export default function SaleProductSelect() {
             idbPromise('soCart', 'put', {
                 ...itemInCart,
                 quantity: itemInCart.quantity
+                // this probably needs to be fixed check it
             });
         } else {
             dispatch({
@@ -131,6 +104,12 @@ export default function SaleProductSelect() {
             });
             idbPromise('soCart', 'put', sorderItem);
         }
+
+        
+        setFormState({
+            inventory: '',
+            price: ''
+        })
         handleClose();
     }
 
@@ -210,9 +189,9 @@ export default function SaleProductSelect() {
                             <TableHead sx={{ width: '100%' }}>
                                 <TableRow sx={{ width: '100%' }}>
                                     <TableCell align="left">Product</TableCell>
-                                    <TableCell align="right">Inventory</TableCell>
-                                    <TableCell align="right">Quantity</TableCell>
+                                    <TableCell align="right">Units Available</TableCell>
                                     <TableCell align="right">Unit Price</TableCell>
+                                    <TableCell align="right">Quantity</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -242,8 +221,8 @@ export default function SaleProductSelect() {
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="right">
-                                        <TextField
-                                            id="outlined-number"
+                                        {/* <TextField
+                                            id="outlined-read-only-number"
                                             name="inventory"
                                             type="text"
                                             sx={{
@@ -252,34 +231,38 @@ export default function SaleProductSelect() {
                                                 borderRadius: '.27em'
                                             }}
                                             value={formState.inventory}
-                                            onChange={handleChange} 
-                                            />
+                                            /> */}
+                                        {formState.inventory}
                                     </TableCell>
+                                    {!formState.price ? (
+                                        <TableCell align="right"></TableCell>
+                                    ) : (
+                                        <TableCell align="right">
+                                            {/* <OutlinedInput
+                                                    id="outlined-adornment-amount"
+                                                    name="unitPrice"
+                                                    type="float"
+                                                    sx={{
+                                                        width: '10vw',
+                                                        background: 'rgba(255, 255, 255, 0.6)',
+                                                        borderRadius: '.27em'
+                                                    }}
+                                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                                /> */}
+                                            ${formState.price}
+
+                                        </TableCell>
+                                    )}
                                     <TableCell align="right">
                                         <TextField
                                             id="outlined-number"
                                             name="quantity"
-                                            type="text"
+                                            type="number"
                                             sx={{
                                                 width: '10vw',
                                                 background: 'rgba(255, 255, 255, 0.6)',
-                                                borderRadius: '.27em'
+                                                borderRadius: '.27em',
                                             }}
-                                            value={formState.quantity}
-                                            onChange={handleChange}
-                                        />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <OutlinedInput
-                                            id="outlined-adornment-amount"
-                                            name="unitPrice"
-                                            type="float"
-                                            sx={{
-                                                width: '10vw',
-                                                background: 'rgba(255, 255, 255, 0.6)',
-                                                borderRadius: '.27em'
-                                            }}
-                                            startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                         />
                                     </TableCell>
                                 </TableRow>

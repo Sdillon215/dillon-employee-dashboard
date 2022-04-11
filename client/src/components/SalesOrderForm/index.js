@@ -11,7 +11,7 @@ import SalesProdSelect from '../SalesProdSelect';
 import { Button } from '@mui/material';
 import SorderItem from '../SorderItem';
 import { idbPromise } from '../../utils/helpers';
-import { ADD_MULTIPLE_TO_SO_CART, REMOVE_FROM_SO_CART } from '../../utils/actions';
+import { ADD_MULTIPLE_TO_SO_CART, REMOVE_FROM_SO_CART, UPDATE_PRODUCTS } from '../../utils/actions';
 import DepartmentSelect from '../DepartmentSelect';
 import { useMutation } from '@apollo/client';
 import { SO_SUBMIT } from '../../utils/mutations';
@@ -20,7 +20,7 @@ import { SO_SUBMIT } from '../../utils/mutations';
 export default function SalesOrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitSo] = useMutation(SO_SUBMIT);
-    const { currentDepartment, soCart } = state;
+    const { currentDepartment, soCart, departments } = state;
     let depCart = [{ productTotal: '' }];
     let total;
     const sorderItems = [];
@@ -48,7 +48,6 @@ export default function SalesOrderForm() {
 
 
         const sorder = depCart;
-
         for (let i = 0; i < sorder.length; i++) {
             const productId = sorder[i]._id;
             const departmentId = sorder[i].departmentId;
@@ -57,7 +56,6 @@ export default function SalesOrderForm() {
             const quantity = sorder[i].quantity;
             const productTotal = sorder[i].productTotal;
             sorderItems.push({ productId, departmentId, name, unitPrice, quantity, productTotal });
-
         };
     }
 
@@ -69,8 +67,8 @@ export default function SalesOrderForm() {
             await submitSo({
                 variables: {
                     departmentId: currentDepartment._id,
-                    orderTotal: total,
-                    sorderItems: [...sorderItems],
+                    saleTotal: total,
+                    saleItems: [...sorderItems],
                 }
             })
         } catch (error) {
@@ -81,7 +79,19 @@ export default function SalesOrderForm() {
             const sorderItem = depCart[i];
             removeFromCart(sorderItem);
         };
+
+        // updateProducts();
     };
+
+    // const updateProducts = () => {
+    //     const curDep = departments.find((department) => department._id === currentDepartment._id);
+    //     const products = curDep.products;
+    //     console.log(products)
+    //     // dispatch({
+    //     //     type: UPDATE_PRODUCTS,
+    //     //     products: products
+    //     // });
+    // }
 
     const removeFromCart = sorderItem => {
         dispatch({

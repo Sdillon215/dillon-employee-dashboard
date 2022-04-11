@@ -52,7 +52,7 @@ export default function DepartmentSelect() {
             dispatch({
                 type: UPDATE_PRODUCTS,
                 products: products
-            })
+            });
         } else {
             dispatch({
                 type: UPDATE_CURRENT_DEPARTMENT,

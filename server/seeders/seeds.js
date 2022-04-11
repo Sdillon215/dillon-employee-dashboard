@@ -62,8 +62,7 @@ db.once('open', async () => {
     const department = 'Plant Kingdom';
     const image = pk[i].image;
     const price = pk[i].unitPrice;
-    const invQuantity = 0;
-    pkData.push({ name, description, image, price, invQuantity, department });
+    pkData.push({ name, description, image, price, department });
   }
 
   const plantData = await Product.collection.insertMany(pkData);

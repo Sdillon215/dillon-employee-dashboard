@@ -56,7 +56,6 @@ type SaleItems {
 }
 
 input SaleItemsInput {
-  _id: ID
   productId: ID
   departmentId: ID
   name: String
@@ -103,7 +102,7 @@ type User {
     addUser(dept: String!, username: String!, firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addProduct(departmentId: ID!, name: String!, description: String, image: String, price: Float!, invQuantity: Int!): Product
     purchaseOrder(purchaseDate: String, departmentId: ID, orderTotal: Float, porderItems: [PorderItemsInput]): Department
-    saleOrder(saleDate: String, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Sorder
+    saleOrder(saleDate: String, departmentId: ID!, saleTotal: Float!, saleItems: [SaleItemsInput]): Department
     addDepartment(name: String!): Department
     updateUser(_id: ID!, dept: String!, username: String!, firstName: String, lastName: String, email: String, password: String): User
     login(email: String!, password: String!): Auth

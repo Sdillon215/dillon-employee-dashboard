@@ -35,8 +35,24 @@ mutation PurchaseOrder($departmentId: ID, $orderTotal: Float, $porderItems: [Por
 }`;
 
 export const SO_SUBMIT = gql`
-mutation SalesOrder($id: ID) {
-  saleOrder(_id: $ID) {
+mutation SaleOrder($departmentId: ID!, $saleTotal: Float!, $saleItems: [SaleItemsInput]) {
+  saleOrder(departmentId: $departmentId, saleTotal: $saleTotal, saleItems: $saleItems) {
     _id
+    name
+    products {
+      _id
+      name
+      invQuantity
+    }
+    porders {
+      _id
+      purchaseDate
+      orderTotal
+    }
+    sorders {
+      _id
+      saleDate
+      saleTotal
+    }
   }
 }`;
