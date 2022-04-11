@@ -102,7 +102,7 @@ export default function OrderForm() {
             <Table aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell colSpan={12} align="center"><h1>Purchase Order</h1></TableCell>
+                        <TableCell colSpan={12} align="center"><h2>Purchase Order</h2></TableCell>
                     </TableRow>
                     <TableRow>
                         {!currentDepartment ? (

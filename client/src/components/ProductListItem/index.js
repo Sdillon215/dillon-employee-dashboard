@@ -1,18 +1,8 @@
 import * as React from 'react';
-import { useStoreContext } from '../../utils/GlobalState';
 import TableCell from '@mui/material/TableCell';
-import { Button } from '@mui/material';
 import TableRow from '@mui/material/TableRow';
-import { REMOVE_FROM_SO_CART } from '../../utils/actions';
-import { idbPromise } from '../../utils/helpers';
-
-
-
 
 export default function ProductListItem({ product }) {
-    const [state, dispatch] = useStoreContext();
-
-    
 
     return (
         <TableRow

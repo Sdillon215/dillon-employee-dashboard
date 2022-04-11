@@ -25,39 +25,15 @@ export default function PorderItem({ porderItem }) {
             sx={{ width: '100%' }}
         >
             <TableCell
-                align="left"
-            // sx={{
-            //     width: '20vw',
-            //     background: 'rgba(255, 255, 255, 0.6)',
-            //     borderRadius: '.27em'
-            // }}
-            >
+                align="left">
                 {porderItem.name}
             </TableCell>
             <TableCell
-                align="right"
-            // sx={{
-            //     width: '10vw',
-            //     background: 'rgba(255, 255, 255, 0.6)',
-            //     borderRadius: '.27em'
-            // }}
-            >{porderItem.quantity}</TableCell>
+                align="right">{porderItem.quantity}</TableCell>
             <TableCell
-                align="right"
-            // sx={{
-            //     width: '10vw',
-            //     background: 'rgba(255, 255, 255, 0.6)',
-            //     borderRadius: '.27em'
-            // }}
-            >${porderItem.unitPrice}</TableCell>
+                align="right">${porderItem.unitPrice}</TableCell>
             <TableCell
-                align="right"
-            // sx={{
-            //     width: '10vw',
-            //     background: 'rgba(255, 255, 255, 0.6)',
-            //     borderRadius: '.27em'
-            // }}
-            >${porderItem.productTotal}</TableCell>
+                align="right">${porderItem.productTotal}</TableCell>
             <TableCell align="right">
                 <Button
                     sx={{ color: 'black', background: 'rgb(219, 49, 49)', width: '10vw'}}

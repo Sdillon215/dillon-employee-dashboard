@@ -43,7 +43,7 @@ function Dashboard() {
       });
 
     }
-  }, [depData, dispatch]);
+  }, [depData, dispatch, loading, currentDepartment]);
 
 
   if (!token) {

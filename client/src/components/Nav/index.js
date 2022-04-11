@@ -21,7 +21,7 @@ export default function Nav(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar class='blurNav' position="fixed">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontSize: '30px' }}>
+          <Typography variant="h2" component="div" sx={{ flexGrow: 1, fontSize: '3.5vw' }}>
             Dillon Floral Corporation
           </Typography>
           {renderButton()}

@@ -6,11 +6,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useTheme } from '@mui/material/styles';
+import { idbPromise } from '../../utils/helpers';
 
 
 export default function DepartmentSelect() {
     const [state, dispatch] = useStoreContext();
-    const { departments, currentDepartment } = state;
+    const { departments } = state;
     const [departmentId, setDepartment] = React.useState([]);
     const theme = useTheme();
 
@@ -19,7 +20,7 @@ export default function DepartmentSelect() {
         PaperProps: {
             style: {
                 width: '15vw',
-                
+
             },
         },
     };
@@ -47,6 +48,7 @@ export default function DepartmentSelect() {
                 type: UPDATE_CURRENT_DEPARTMENT,
                 currentDepartment: currentDep
             });
+            idbPromise('currentDepartment', 'put', currentDep);
             const products = currentDep.products;
             dispatch({
                 type: UPDATE_PRODUCTS,
@@ -75,9 +77,6 @@ export default function DepartmentSelect() {
                 >
                     {departments.map((department) => (
                         <MenuItem
-                            // onClick={() => {
-                            //     handleClick(department._id)
-                            // }}
                             key={department._id}
                             value={department._id}
                             style={getStyles(department, departmentId, theme)}

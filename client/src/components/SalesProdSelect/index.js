@@ -27,7 +27,7 @@ export default function SaleProductSelect() {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const [state, dispatch] = useStoreContext();
-    const { products, soCart, currentDepartment, departments } = state;
+    const { products, soCart, currentDepartment } = state;
     const theme = useTheme();
     const [productId, setproductId] = useState(['']);
     const [formState, setFormState] = useState({ inventory: '', price: '' });
@@ -52,7 +52,7 @@ export default function SaleProductSelect() {
 
     const handleChange = (event) => {
         const {
-            target: { name, value },
+            target: { value },
         } = event;
         setproductId(
             // On autofill we get a stringified value.

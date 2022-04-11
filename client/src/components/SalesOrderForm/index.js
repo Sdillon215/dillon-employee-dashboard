@@ -11,7 +11,7 @@ import SalesProdSelect from '../SalesProdSelect';
 import { Button } from '@mui/material';
 import SorderItem from '../SorderItem';
 import { idbPromise } from '../../utils/helpers';
-import { ADD_MULTIPLE_TO_SO_CART, REMOVE_FROM_SO_CART, UPDATE_PRODUCTS } from '../../utils/actions';
+import { ADD_MULTIPLE_TO_SO_CART, REMOVE_FROM_SO_CART } from '../../utils/actions';
 import DepartmentSelect from '../DepartmentSelect';
 import { useMutation } from '@apollo/client';
 import { SO_SUBMIT } from '../../utils/mutations';
@@ -20,7 +20,7 @@ import { SO_SUBMIT } from '../../utils/mutations';
 export default function SalesOrderForm() {
     const [state, dispatch] = useStoreContext();
     const [submitSo] = useMutation(SO_SUBMIT);
-    const { currentDepartment, soCart, departments } = state;
+    const { currentDepartment, soCart } = state;
     let depCart = [{ productTotal: '' }];
     let total;
     const sorderItems = [];
@@ -80,18 +80,7 @@ export default function SalesOrderForm() {
             removeFromCart(sorderItem);
         };
 
-        // updateProducts();
     };
-
-    // const updateProducts = () => {
-    //     const curDep = departments.find((department) => department._id === currentDepartment._id);
-    //     const products = curDep.products;
-    //     console.log(products)
-    //     // dispatch({
-    //     //     type: UPDATE_PRODUCTS,
-    //     //     products: products
-    //     // });
-    // }
 
     const removeFromCart = sorderItem => {
         dispatch({

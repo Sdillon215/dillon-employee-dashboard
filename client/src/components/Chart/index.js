@@ -61,7 +61,10 @@ export default function Chart() {
 		theme: "light2",
 		animationEnabled: true,
 		title: {
-			text: chartHeading
+			text: chartHeading,
+			fontSize: 26,
+			fontWieght: "bolder",
+			fontFamily: "Franklin Gothic Medium, Arial Narrow, Arial, sans-serif"
 		},
 		axisX: {
 			title: "Months",
