@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// mongodb shopping-cart
+// mongodb dillon
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dillon', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
