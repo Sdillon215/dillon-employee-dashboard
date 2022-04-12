@@ -1,14 +1,14 @@
 // const faker = require('faker');
 
 const db = require('../config/connection');
-const { Sorder, Porder, Product, Department } = require('../models');
+const { Sorder, Porder, Product, Department, User } = require('../models');
 
 db.once('open', async () => {
   await Porder.deleteMany({});
   await Sorder.deleteMany({});
   await Product.deleteMany({});
   await Department.deleteMany({});
-  // await User.deleteMany({});
+  await User.deleteMany({});
 
 
 
@@ -24,34 +24,24 @@ db.once('open', async () => {
   const createdDeps = await Department.collection.insertMany(depData);
 
   // create user data
-  // const userData = [];
+    await User.create({
+      username: 'sales_test',
+      dept: 'Sales',
+      firstName: 'Sales',
+      lastName: 'Test',
+      email: 'sales@email.com',
+      password: 'password',
+    });
+    
+    await User.create({
+      username: 'buyer_test',
+      dept: 'Buyer',
+      firstName: 'Buyer',
+      lastName: 'Test',
+      email: 'buyer@email.com',
+      password: 'password',
+    });
 
-  // for (let i = 0; i < 2; i += 1) {
-  //   if (i === 0) {
-  //     var username = 'Sales1';
-  //     var dept = 'Sales';
-  //     var firstName = 'Sales';
-  //     var lastName = 'Sales';
-  //     var email = 'sales@email.com';
-  //     var password = 'passowrd';
-
-  //   } else {
-  //     var username = 'Buyer1';
-  //     var dept = 'Buyer';
-  //     var firstName = 'Buyer';
-  //     var lastName = 'Buyer';
-  //     var email = 'buyer@email.com';
-  //     var password = 'passowrd';
-  //   }
-  //   // const email = faker.internet.email(username);
-  //   // const firstName = faker.name.firstName();
-  //   // const lastName = faker.name.firstName();
-  //   // const password = 'password';
-
-  //   userData.push({ dept, username, firstName, lastName, email, password });
-  // }
-
-  // const createdUsers = await User.collection.insertMany(userData);
 
 
 
