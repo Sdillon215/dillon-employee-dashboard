@@ -57,8 +57,6 @@ function Dashboard() {
     return (
       <Buyer />
     );
-  } else {
-    return <Redirect to='/' />
   }
 };
 
