@@ -185,6 +185,7 @@ export default function ProductSelect() {
                                         <FormControl sx={{ m: 1, width: 300 }}>
                                             <Select
                                                 id="demo-multiple-name"
+                                                required
                                                 name="product"
                                                 onChange={handleChange}
                                                 MenuProps={MenuProps}
@@ -206,6 +207,7 @@ export default function ProductSelect() {
                                     <TableCell align="right">
                                         <TextField
                                             id="outlined-number"
+                                            required
                                             name="quantity"
                                             type="number"
                                             sx={{
@@ -219,6 +221,7 @@ export default function ProductSelect() {
                                     <TableCell align="right">
                                         <OutlinedInput
                                             id="outlined-adornment-amount"
+                                            required
                                             name="unitPrice"
                                             type="float"
                                             sx={{

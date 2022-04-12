@@ -199,6 +199,7 @@ export default function SaleProductSelect() {
                                             <Select
                                                 id="demo-multiple-name"
                                                 name="product"
+                                                required
                                                 onChange={handleChange}
                                                 MenuProps={MenuProps}
                                                 input={<OutlinedInput />}
@@ -229,6 +230,7 @@ export default function SaleProductSelect() {
                                     <TableCell align="right">
                                         <TextField
                                             id="outlined-number"
+                                            required
                                             name="quantity"
                                             type="number"
                                             sx={{
