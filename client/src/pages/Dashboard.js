@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Auth from '../utils/auth';
 import Sales from '../components/Sales';
 import Buyer from '../components/Buyer';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useStoreContext } from '../utils/GlobalState';
 import { idbPromise } from '../utils/helpers';
 import { useQuery } from '@apollo/client';
@@ -47,7 +47,7 @@ function Dashboard() {
 
 
   if (!token) {
-    return <Redirect to='/' />
+    return <Navigate to='/' />
   }
   if (token.data.dept === 'Sales') {
     return (
@@ -57,6 +57,8 @@ function Dashboard() {
     return (
       <Buyer />
     );
+  } else {
+    return <Navigate to='/' />
   }
 };
 
