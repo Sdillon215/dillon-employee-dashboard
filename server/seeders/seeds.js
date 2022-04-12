@@ -61,7 +61,7 @@ db.once('open', async () => {
     const department = 'Plant Kingdom';
     const image = pk[i].image;
     const price = pk[i].unitPrice;
-    const invQuantity = 0;
+    const invQuantity = 3000;
     pkData.push({ name, description, image, price, invQuantity, department });
   }
 
@@ -86,7 +86,7 @@ db.once('open', async () => {
     const department = 'Fresh Cut';
     const image = fc[i].image;
     const price = fc[i].unitPrice;
-    const invQuantity = 0;
+    const invQuantity = 3000;
     freshData.push({ name, description, image, price, invQuantity, department });
   }
 
@@ -111,7 +111,7 @@ db.once('open', async () => {
     const department = 'Supply';
     const image = sup[i].image;
     const price = sup[i].unitPrice;
-    const invQuantity = 0;
+    const invQuantity = 3000;
     supData.push({ name, description, image, price, invQuantity, department });
   }
 
