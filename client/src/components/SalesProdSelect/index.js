@@ -217,36 +217,13 @@ export default function SaleProductSelect() {
                                         </FormControl>
                                     </TableCell>
                                     <TableCell align="right">
-                                        {/* <TextField
-                                            id="outlined-read-only-number"
-                                            name="inventory"
-                                            type="text"
-                                            sx={{
-                                                width: '10vw',
-                                                background: 'rgba(255, 255, 255, 0.6)',
-                                                borderRadius: '.27em'
-                                            }}
-                                            value={formState.inventory}
-                                            /> */}
                                         {formState.inventory}
                                     </TableCell>
                                     {!formState.price ? (
                                         <TableCell align="right"></TableCell>
                                     ) : (
                                         <TableCell align="right">
-                                            {/* <OutlinedInput
-                                                    id="outlined-adornment-amount"
-                                                    name="unitPrice"
-                                                    type="float"
-                                                    sx={{
-                                                        width: '10vw',
-                                                        background: 'rgba(255, 255, 255, 0.6)',
-                                                        borderRadius: '.27em'
-                                                    }}
-                                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                                /> */}
                                             ${formState.price}
-
                                         </TableCell>
                                     )}
                                     <TableCell align="right">
@@ -264,7 +241,9 @@ export default function SaleProductSelect() {
                                 </TableRow>
                                 <TableRow align="center" sx={{ width: '100%' }}>
                                     <TableCell colSpan={6} align="center">
-                                        <button type="submit">Add To Order</button>
+                                    <Button type="submit" sx={{ color: 'black', background: 'rgb(27, 131, 85)', width: '10vw' }}>
+                                            Add Product
+                                        </Button>
                                     </TableCell>
                                 </TableRow>
                             </TableBody>

@@ -2,13 +2,13 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Login from '../components/Login';
 import Auth from '../utils/auth';
-import {Redirect} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 function Home() {
 const token = Auth.loggedIn() ? Auth.getToken() : null;
 
 if (token) {
-  return <Redirect to='/dashboard' />
+  return <Navigate to='/dashboard' />
 } 
   return (
     <Grid
