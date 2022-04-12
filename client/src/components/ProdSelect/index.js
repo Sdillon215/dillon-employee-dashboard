@@ -223,7 +223,7 @@ export default function ProductSelect() {
                                             id="outlined-adornment-amount"
                                             required
                                             name="unitPrice"
-                                            type="float"
+                                            type="number"
                                             sx={{
                                                 width: '10vw',
                                                 background: 'rgba(255, 255, 255, 0.6)',
