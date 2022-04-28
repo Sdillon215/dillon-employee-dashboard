@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Swal from 'sweetalert2';
 import Grid from '@mui/material/Grid';
 import Login from '../components/Login';
 import Auth from '../utils/auth';
@@ -9,7 +10,9 @@ const token = Auth.loggedIn() ? Auth.getToken() : null;
 
 if (token) {
   return <Navigate to='/dashboard' />
-} 
+} else {
+  Swal.fire('To demo use Email: sales@email.com or buyer@email.com and Password: password');
+}
   return (
     <Grid
       container
