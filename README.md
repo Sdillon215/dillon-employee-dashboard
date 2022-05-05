@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Dillon Floral Corporation Employee Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Purpose
+This is a prototype for an application that will eventually replace the archaic command line apps used for purchase orders, sales orders, inventory management, etc at my family's wholesale floral business.
 
-## Available Scripts
+## Built With
+* MongoDB
+* Express.js
+* React.js
+* Node.js
+* Material UI
+* Canvasjs-react-charts
+* IndexedDB
+* Heroku
 
-In the project directory, you can run:
+## Repository
+https://github.com/Sdillon215/dillon-employee-dashboard
 
-### `npm start`
+## Demo Instructions
+To demo the app simply click the link below and use one of the two login options. Currently there is a demo login for "buyer@email.com" and "sales@email.com" the password is the same and presented in the modal when the page opens. On both the sales and buyer dashboard initial render all department's sales and purchase order history is displayed on a graph. Employees must choose a department to start an order or view current inventory details. Once a department is chosen the employee is able to start an order and the current inventory for the current department is displayed below the graph. After a purchase or sales order is submitted the current inventory is immediately updated and the graph is re-rendered to display the most up-to-date information.
+ 
+## Deployed Heroku link
+https://dillon-dash.herokuapp.com/
+ 
+## Current Functionality & Future Development
+ 
+### Current
+This application is in its earliest stage of MVP. The first goals were to...
+* Create a usable interface
+* Enable login/password encryption
+* Have users routed to dashboard associated with their assigned responsibilities
+* Render purchase order/sales order history on page load and after department select
+* After page load render current department inventory
+* Ability to input sales order/purchase order and update all relevant components
+* Handle state globally
+ 
+### Future
+* Finalize IndexedDB so that the application is fully functional offline
+* Style updates
+* Mobile responsive
+* Reevaluate Database structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contribution
+Made by Sean
